@@ -156,12 +156,16 @@ const setAlpha = (alpha) => {
   updateColor()
 }
 
-const setHue = (hue) => {
-  const clamped  = clamp(hue)
+const setHue = (hueX) => {
+
+  const clamped  = clamp(hueX)
   dataModel.hueX = clamped
   document.getElementById("hue-knob"       ).style.left       = `${clamped}%`
-  document.getElementById("swatch-gradient").style.background = `hsla(${calcHueDegrees(hue)}deg, 100%, 50%, 100%)`
-  updateColor()
+  document.getElementById("swatch-gradient").style.background = `hsla(${calcHueDegrees(hueX)}deg, 100%, 50%, 100%)`
+
+  const { hue, saturation, lightness } = updateColor()
+  updateAlphaGradient(hue, saturation, lightness)
+
 }
 
 const setSwatchCoords = (x, y) => {
@@ -176,7 +180,8 @@ const setSwatchCoords = (x, y) => {
   swatchPointer.style.left = `${clampedX}%`
   swatchPointer.style.top  = `${clampedY}%`
 
-  updateColor()
+  const { hue, saturation, lightness } = updateColor()
+  updateAlphaGradient(hue, saturation, lightness)
 
 }
 
@@ -193,6 +198,14 @@ const updateColor = () => {
 
   refreshReprValues(hue, saturation, lightness, alpha)
 
+  return { hue, saturation, lightness, alpha }
+
+}
+
+const updateAlphaGradient = (hue, saturation, lightness) => {
+  const hslStr = `${hue} ${saturation} ${lightness}`
+  document.querySelector(".slider-background.alpha").style.background =
+    `linear-gradient(to right, hsla(${hslStr} / 0%) 0%, hsl(${hslStr}) 100%)`
 }
 
 setupDrag2D(document.getElementById("swatch-container"), setSwatchCoords)

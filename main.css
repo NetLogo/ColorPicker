@@ -128,10 +128,6 @@
   position: absolute;
 }
 
-.slider-background.alpha {
-  background: linear-gradient(to right, rgba(25, 77, 51, 0) 0%, rgb(25, 77, 51) 100%);
-}
-
 .slider-background.checkerboard {
   background-image:      var(--checkerboard);
   background-position-x: left;
