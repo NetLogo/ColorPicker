@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8"/>
+    <link href="./main.css" rel="stylesheet">
+    <title>Color Picker Test</title>
+    <script src="./nl-color-model.js"></script>
+  </head>
+
+  <body>
+    <div id="main">
+
+      <div class="picker">
+
+        <div id="swatch-container" class="swatch-container" draggable="true">
+          <div id="swatch-gradient" class="swatch-gradient" style="background: rgb(0, 255, 128);">
+            <div class="swatch-gradient white">
+              <div class="swatch-gradient black"></div>
+              <div id="swatch-pointer" class="pointer" style="left: 66.6667%; top: 70%;">
+                <div id="swatch-pointer-circle" class="pointer-circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mixer-controls">
+
+          <div class="flex-row">
+
+            <div class="preview-container">
+              <div class="preview">
+                <div id="preview-color" class="preview-color" style="background: rgb(25, 77, 51);"></div>
+                <div class="preview-background"></div>
+              </div>
+            </div>
+
+            <div class="sliders">
+
+              <div class="input-bar" style="margin-bottom: 8px;">
+                <div class="slider-background hue">
+                  <div id="hue-slider" class="slider-track" draggable="true">
+                    <div id="hue-knob" class="slider-knob" style="left: 41.6667%;">
+                      <div id="hue-knob-circle" class="slider-knob-circle"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="input-bar">
+                <div id="alpha-slider" class="slider-background" draggable="true">
+                  <div class="slider-background" style="overflow: hidden;">
+                    <div class="slider-background checkerboard"></div>
+                  </div>
+                  <div class="slider-background alpha"></div>
+                  <div class="slider-track">
+                    <div id="alpha-knob" class="slider-knob" style="left: 100%;">
+                      <div id="alpha-knob-circle" class="slider-knob-circle"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div>
+            <div>
+              <label class="repr-dropdown-label">
+                Format
+                <select id="repr-dropdown">
+                  <option value="nl-number">NetLogo number</option>
+                  <option value="nl-word">NetLogo word</option>
+                  <option value="rgb">Red, Green, Blue (RGB)</option>
+                  <option value="rgba">Red, Green, Blue, Alpha (RGBA)</option>
+                  <option value="hsl">Hue, Saturation, Lightness (HSL)</option>
+                  <option value="hsla">Hue, Saturation, Lightness, Alpha (HSLA)</option>
+                  <option value="hex">Hexadecimal</option>
+                </select>
+              </label>
+
+              <div class="repr-controls-wrapper">
+
+                <div>
+                  <svg id="copy-icon" class="repr-copy-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 5.00005C7.01165 5.00082 6.49359 5.01338 6.09202 5.21799C5.71569 5.40973 5.40973 5.71569 5.21799 6.09202C5 6.51984 5 7.07989 5 8.2V17.8C5 18.9201 5 19.4802 5.21799 19.908C5.40973 20.2843 5.71569 20.5903 6.09202 20.782C6.51984 21 7.07989 21 8.2 21H15.8C16.9201 21 17.4802 21 17.908 20.782C18.2843 20.5903 18.5903 20.2843 18.782 19.908C19 19.4802 19 18.9201 19 17.8V8.2C19 7.07989 19 6.51984 18.782 6.09202C18.5903 5.71569 18.2843 5.40973 17.908 5.21799C17.5064 5.01338 16.9884 5.00082 16 5.00005M8 5.00005V7H16V5.00005M8 5.00005V4.70711C8 4.25435 8.17986 3.82014 8.5 3.5C8.82014 3.17986 9.25435 3 9.70711 3H14.2929C14.7456 3 15.1799 3.17986 15.5 3.5C15.8201 3.82014 16 4.25435 16 4.70711V5.00005" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+
+                <div class="repr-controls-container">
+
+                  <div id="netlogo-number-controls" class="repr-controls">
+                    <input id="netlogo-number" class="repr-input solo" type="number" min="0" max="140" />
+                  </div>
+
+                  <div id="netlogo-word-controls" class="repr-controls">
+                    <input id="netlogo-word" class="repr-input solo" type="text" />
+                  </div>
+
+                  <div id="hsl-controls" class="repr-controls">
+                    <div class="repr-pair">
+                      <input id="hsl-h" type="number" class="repr-input" min="0" max="360" />
+                      <label for="hsl-h">Hue</label>
+                    </div>
+                    <div class="repr-pair">
+                      <input id="hsl-s" type="number" class="repr-input" min="0" max="100" />
+                      <label for="hsl-s">Saturation</label>
+                    </div>
+                    <div class="repr-pair">
+                      <input id="hsl-l" type="number" class="repr-input" min="0" max="100" />
+                      <label for="hsl-l">Lightness</label>
+                    </div>
+                  </div>
+
+                  <div id="hsla-controls" class="repr-controls">
+                    <div class="repr-pair">
+                      <input id="hsla-h" type="number" class="repr-input" min="0" max="360" />
+                      <label for="hsla-h">Hue</label>
+                    </div>
+                    <div class="repr-pair">
+                      <input id="hsla-s" type="number" class="repr-input" min="0" max="100" />
+                      <label for="hsla-s">Saturation</label>
+                    </div>
+                    <div class="repr-pair">
+                      <input id="hsla-l" type="number" class="repr-input" min="0" max="100" />
+                      <label for="hsla-l">Lightness</label>
+                    </div>
+                    <div class="repr-pair">
+                      <input id="hsla-a" class="repr-input" type="number" min="0" max="100" />
+                      <label for="hsla-a">Alpha</label>
+                    </div>
+                  </div>
+
+                  <div id="rgb-controls" class="repr-controls">
+                    <div class="repr-pair">
+                      <input id="rgb-r" class="repr-input" type="number" min="0" max="255" />
+                      <label for="rgb-r">Red</label>
+                    </div>
+                    <div class="repr-pair">
+                      <input id="rgb-g" class="repr-input" type="number" min="0" max="255" />
+                      <label for="rgb-g">Green</label>
+                    </div>
+                    <div class="repr-pair">
+                      <input id="rgb-b" class="repr-input" type="number" min="0" max="255" />
+                      <label for="rgb-b">Blue</label>
+                    </div>
+                  </div>
+
+                  <div id="rgba-controls" class="repr-controls">
+                    <div class="repr-pair">
+                      <input id="rgba-r" class="repr-input" type="number" min="0" max="255" />
+                      <label for="rgba-r">Red</label>
+                    </div>
+                    <div class="repr-pair">
+                      <input id="rgba-g" class="repr-input" type="number" min="0" max="255" />
+                      <label for="rgba-g">Green</label>
+                    </div>
+                    <div class="repr-pair">
+                      <input id="rgba-b" class="repr-input" type="number" min="0" max="255" />
+                      <label for="rgba-b">Blue</label>
+                    </div>
+                    <div class="repr-pair">
+                      <input id="rgba-a" class="repr-input" type="number" min="0" max="100" />
+                      <label for="rgba-a">Alpha</label>
+                    </div>
+                  </div>
+
+                  <div id="hex-controls" class="repr-controls">
+                    <input id="hex" class="repr-input solo" type="text" />
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="form-buttons">
+              <input type="button" value="OK" />
+              <input type="button" value="Cancel" />
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </body>
+
+  <script src="./main.js"></script>
+
+</html>
