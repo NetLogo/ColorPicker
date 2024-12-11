@@ -368,7 +368,7 @@ const updateFromRepr = () => {
       const hex       = fullHex.slice(1)
       if (hex.length === 6 || hex.length === 8) {
         const [red, green, blue, a] = [0, 2, 4, 6].map((n) => parseInt(hex.slice(n, n + 2), 16))
-        const alpha                 = (a !== "") ? Math.floor(a / 255 * 100) : 100
+        const alpha                 = (!isNaN(a)) ? Math.floor(a / 255 * 100) : 100
         updateFromRGBA(red, green, blue, alpha)
       }
       break;
