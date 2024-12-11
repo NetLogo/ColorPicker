@@ -239,7 +239,7 @@ const updateReprControls = () => {
 }
 
 const handleAlphaSlider = (formatName) => {
-  if (["hsba", "hsla", "rgba"].includes(formatName)) {
+  if (["hsba", "hsla", "rgba", "hex"].includes(formatName)) {
     document.getElementById("alpha-bar").classList.remove("hidden")
   } else {
     setAlpha(100)
