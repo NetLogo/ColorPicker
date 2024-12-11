@@ -219,8 +219,19 @@ const updateReprControls = () => {
   const targetElemID = optionValueToContainerID[dropdown.value]
   document.getElementById(targetElemID).style.display = "flex"
 
+  handleAlphaSlider(dropdown.value)
+
   updateColor()
 
+}
+
+const handleAlphaSlider = (formatName) => {
+  if (["hsba", "hsla", "rgba"].includes(formatName)) {
+    document.getElementById("alpha-bar").classList.remove("hidden")
+  } else {
+    setAlpha(100)
+    document.getElementById("alpha-bar").classList.add("hidden")
+  }
 }
 
 const updateFromRepr = () => {
