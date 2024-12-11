@@ -79,10 +79,10 @@ const [RGBCache, RGBMap] = (() => {
 
 const colorToRGB = (num) => {
   const wrapColor = (x) => {
-    const modColor = color % ColorMax
+    const modColor = x % ColorMax
     return (modColor >= 0) ? modColor : ColorMax + modColor
   }
-  RGBCache[Math.floor(wrapColor(num) * 10)]
+  return RGBCache[Math.floor(wrapColor(num) * 10)]
 }
 
 // (Number, Number, Number, Number, Number, Number) => Number
