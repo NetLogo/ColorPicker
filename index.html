@@ -74,6 +74,8 @@
                   <option value="nl-word">NetLogo word</option>
                   <option value="rgb">RGB (Red, Green, Blue)</option>
                   <option value="rgba">RGBA (Red, Green, Blue, Alpha)</option>
+                  <option value="hsb">HSB (Hue, Saturation, Brightness)</option>
+                  <option value="hsba">HSBA (Hue, Saturation, Brightness, Alpha)</option>
                   <option value="hsl">HSL (Hue, Saturation, Lightness)</option>
                   <option value="hsla">HSLA (Hue, Saturation, Lightness, Alpha)</option>
                   <option value="hex">Hexadecimal</option>
@@ -96,6 +98,40 @@
 
                   <div id="netlogo-word-controls" class="repr-controls">
                     <input id="netlogo-word" class="repr-input solo" type="text" />
+                  </div>
+
+                  <div id="hsb-controls" class="repr-controls">
+                    <div class="repr-pair">
+                      <input id="hsb-h" type="number" class="repr-input" min="0" max="360" />
+                      <label for="hsb-h">Hue</label>
+                    </div>
+                    <div class="repr-pair">
+                      <input id="hsb-s" type="number" class="repr-input" min="0" max="100" />
+                      <label for="hsb-s">Saturation</label>
+                    </div>
+                    <div class="repr-pair">
+                      <input id="hsb-b" type="number" class="repr-input" min="0" max="100" />
+                      <label for="hsb-b">Brightness</label>
+                    </div>
+                  </div>
+
+                  <div id="hsba-controls" class="repr-controls">
+                    <div class="repr-pair">
+                      <input id="hsba-h" type="number" class="repr-input" min="0" max="360" />
+                      <label for="hsba-h">Hue</label>
+                    </div>
+                    <div class="repr-pair">
+                      <input id="hsba-s" type="number" class="repr-input" min="0" max="100" />
+                      <label for="hsba-s">Saturation</label>
+                    </div>
+                    <div class="repr-pair">
+                      <input id="hsba-b" type="number" class="repr-input" min="0" max="100" />
+                      <label for="hsba-b">Brightness</label>
+                    </div>
+                    <div class="repr-pair">
+                      <input id="hsba-a" class="repr-input" type="number" min="0" max="100" />
+                      <label for="hsba-a">Alpha</label>
+                    </div>
                   </div>
 
                   <div id="hsl-controls" class="repr-controls">

@@ -27,6 +27,8 @@ const nlWordsToNumbers =
 const optionValueToContainerID =
   { "nl-number": "netlogo-number-controls"
   , "nl-word":   "netlogo-word-controls"
+  , "hsb":       "hsb-controls"
+  , "hsba":      "hsba-controls"
   , "hsl":       "hsl-controls"
   , "hsla":      "hsla-controls"
   , "rgb":       "rgb-controls"
@@ -223,6 +225,14 @@ const updateReprControls = () => {
 
 const updateFromRepr = () => {
 
+  // Courtesy of Roko C. Buljan at https://stackoverflow.com/a/31322636/5288538
+  const getSLAsHSL = (s, b) => {
+    const l          = (2 - s / 100) * b / 2
+    const saturation = Math.round(s * b / ((l < 50) ? (l * 2) : (200 - (l * 2)))) | 0
+    const lightness  = Math.round(l)
+    return [saturation, lightness]
+  }
+
   const updateFromHSLA = (hue, saturation, lightness, alpha) => {
 
     const scalingFactor = 1 - ((saturation / 100) * 0.5)
@@ -294,6 +304,18 @@ const updateFromRepr = () => {
       }
       break;
     }
+    case "hsb": {
+      const [hue, saturation, brightness] = inputValues.map((v) => parseInt(v))
+      const [hslSaturation, lightness]    = getSLAsHSL(saturation, brightness)
+      updateFromHSLA(hue, hslSaturation, brightness, 100)
+      break;
+    }
+    case "hsba": {
+      const [hue, saturation, brightness, alpha] = inputValues.map((v) => parseInt(v))
+      const [hslSaturation, lightness]           = getSLAsHSL(saturation, brightness)
+      updateFromHSLA(hue, hslSaturation, brightness, alpha)
+      break;
+    }
     case "hsl": {
       const [hue, saturation, lightness] = inputValues.map((v) => parseInt(v))
       updateFromHSLA(hue, saturation, lightness, 100)
@@ -332,6 +354,14 @@ const updateFromRepr = () => {
 }
 
 const refreshReprValues = (hue, saturation, lightness, alpha) => {
+
+  // Courtesy of Roko C. Buljan at https://stackoverflow.com/a/31322636/5288538
+  const getSBAsHSB = (s, l) => {
+    const temp = s * ((l < 50) ? l : (100 - l)) / 100
+    const hsbS = Math.round(200 * temp / (l + temp)) | 0
+    const hsbB = Math.round(temp + l)
+    return [hsbS, hsbB]
+  }
 
   // Courtesy of Kamil Kiełczewski at https://stackoverflow.com/a/64090995/5288538
   const asRGB = () => {
@@ -386,6 +416,21 @@ const refreshReprValues = (hue, saturation, lightness, alpha) => {
     }
     case "netlogo-word-controls": {
       document.getElementById("netlogo-word").value = findColorWord(...asRGB())
+      break;
+    }
+    case "hsb-controls": {
+      const [hsbSaturation, brightness] = getSBAsHSB(saturation, lightness)
+      document.getElementById("hsb-h").value = hue
+      document.getElementById("hsb-s").value = hsbSaturation
+      document.getElementById("hsb-b").value = brightness
+      break;
+    }
+    case "hsba-controls": {
+      const [hsbSaturation, brightness] = getSBAsHSB(saturation, lightness)
+      document.getElementById("hsba-h").value = hue
+      document.getElementById("hsba-s").value = hsbSaturation
+      document.getElementById("hsba-b").value = brightness
+      document.getElementById("hsba-a").value = alpha
       break;
     }
     case "hsl-controls": {
