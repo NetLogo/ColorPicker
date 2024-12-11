@@ -281,8 +281,11 @@ const updateFromRepr = () => {
       const c    = v - Math.min(rx, gx, bx)
       const f    = 1 - Math.abs(v + v - c - 1)
 
-      const subH = (c && ((v == rx)) ? ((gx - bx) / c) :
-                   ((v === g) ? (2 + (bx - rx) / c) : (4 + (rx - gx) / c)))
+      const subH = (c && (
+                      (v === rx) ? ((gx - bx)     / c) :
+                      (v === gx) ? (2 + (bx - rx) / c) :
+                                   (4 + (rx - gx) / c)
+                   ))
       const h    = 60 * (subH < 0 ? subH + 6 : subH)
 
       const subS = (f !== 0) ? (c / f) : 0
