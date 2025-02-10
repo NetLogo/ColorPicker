@@ -11,7 +11,7 @@ const hideGhost = (elem: Elem): void => {
   }, false)
 }
 
-export class Draggable {
+export class DragManager {
 
   setupDrag1D(elem: Elem, setter: (x: Num) => void): void {
 
