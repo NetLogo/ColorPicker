@@ -60,7 +60,7 @@ export class RepresentationReader {
     const updateFromHSLA = (hue: Num, saturation: Num, lightness: Num, alpha: Num): void => {
 
       const scalingFactor = 1 - ((saturation / 100) * 0.5)
-      const y             = (100 - lightness / scalingFactor)
+      const y             = 100 - (lightness / scalingFactor)
 
       const h = hue / 360 * 100
       this.updateColor(h, saturation, y, alpha)
