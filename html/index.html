@@ -24,34 +24,16 @@
 
         <div id="advanced-pane" class="advanced pane hidden">
 
-          <div id="swatch-container" class="swatch-container" draggable="true">
-            <div id="swatch-gradient" class="swatch-gradient" style="background: rgb(0, 255, 128);">
-              <div class="swatch-gradient white">
-                <div class="swatch-gradient black"></div>
-                <div id="swatch-pointer" class="pointer" style="left: 66.6667%; top: 70%;">
-                  <div id="swatch-pointer-circle" class="pointer-circle"></div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div class="flex-row">
 
-          <div class="mixer-controls">
+            <div class="slider-controls flex-column">
 
-            <div class="flex-row">
+              <div class="sliders flex-row">
 
-              <div class="preview-container">
-                <div class="preview">
-                  <div id="preview-color" class="preview-color" style="background: rgb(25, 77, 51);"></div>
-                  <div class="preview-background"></div>
-                </div>
-              </div>
-
-              <div class="sliders">
-
-                <div class="input-bar" style="margin-bottom: 8px;">
+                <div class="input-bar">
                   <div class="slider-background hue">
                     <div id="hue-slider" class="slider-track" draggable="true">
-                      <div id="hue-knob" class="slider-knob" style="left: 41.6667%;">
+                      <div id="hue-knob" class="slider-knob" style="bottom: 41.6667%;">
                         <div id="hue-knob-circle" class="slider-knob-circle"></div>
                       </div>
                     </div>
@@ -65,7 +47,7 @@
                     </div>
                     <div class="slider-background alpha"></div>
                     <div class="slider-track">
-                      <div id="alpha-knob" class="slider-knob" style="left: 100%;">
+                      <div id="alpha-knob" class="slider-knob" style="bottom: 100%;">
                         <div id="alpha-knob-circle" class="slider-knob-circle"></div>
                       </div>
                     </div>
@@ -74,7 +56,29 @@
 
               </div>
 
+              <div class="preview-container">
+                <div class="preview">
+                  <div id="preview-color" class="preview-color" style="background: rgb(25, 77, 51);"></div>
+                  <div class="preview-background"></div>
+                </div>
+              </div>
+
             </div>
+
+            <div id="swatch-container" class="swatch-container" draggable="true">
+              <div id="swatch-gradient" class="swatch-gradient" style="background: rgb(0, 255, 128);">
+                <div class="swatch-gradient white">
+                  <div class="swatch-gradient black"></div>
+                  <div id="swatch-pointer" class="pointer" style="left: 66.6667%; top: 70%;">
+                    <div id="swatch-pointer-circle" class="pointer-circle"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="lower-controls">
 
             <div>
               <div>

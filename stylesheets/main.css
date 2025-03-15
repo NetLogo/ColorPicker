@@ -3,6 +3,16 @@
   display: inline-block;
 }
 
+.flex-column {
+  display:        flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display:        flex;
+  flex-direction: row;
+}
+
 .form-buttons {
   display:         flex;
   flex-direction:  row;

@@ -12,8 +12,8 @@ export class Picker {
 
   public dom: DOMManager
 
-  private alphaX:  number
-  private hueX:    number
+  private alphaY:  number
+  private hueY:    number
   private swatchX: number
   private swatchY: number
 
@@ -24,8 +24,8 @@ export class Picker {
 
     this.dom = new DOMManager(doc)
 
-    this.alphaX  = 0
-    this.hueX    = 0
+    this.alphaY  = 0
+    this.hueY    = 0
     this.swatchX = 0
     this.swatchY = 0
 
@@ -54,9 +54,9 @@ export class Picker {
     )
 
     const dragMan = new DragManager()
-    dragMan.setupDrag2D(this.dom.findElemByID("swatch-container"), (x: Num, y: Num) => this.setSwatchCoords(x, y))
-    dragMan.setupDrag1D(this.dom.findElemByID(    "alpha-slider"), (a: Num)         => this.setAlpha(a))
-    dragMan.setupDrag1D(this.dom.findElemByID(      "hue-slider"), (h: Num)         => this.setHue(h))
+    dragMan.setupDrag2D (this.dom.findElemByID("swatch-container"), (x: Num, y: Num) => this.setSwatchCoords(x, y))
+    dragMan.setupDrag1DY(this.dom.findElemByID(    "alpha-slider"), (a: Num)         => this.setAlpha(a))
+    dragMan.setupDrag1DY(this.dom.findElemByID(      "hue-slider"), (h: Num)         => this.setHue(h))
 
     this.dom.findElemByID("copy-icon").addEventListener("click", () => this.copyToClipboard())
 
@@ -74,17 +74,17 @@ export class Picker {
 
   setAlpha(alpha: Num): void {
     const clamped = clamp(alpha)
-    this.alphaX   = clamped
-    this.dom.findElemByID("alpha-knob").style.left = `${clamped.toFixed(2)}%`
+    this.alphaY   = clamped
+    this.dom.findElemByID("alpha-knob").style.bottom = `${clamped.toFixed(2)}%`
     this.updateColor()
   }
 
-  setHue(hueX: Num): void {
+  setHue(hueY: Num): void {
 
-    const clamped = clamp(hueX)
-    this.hueX     = clamped
-    this.dom.findElemByID("hue-knob"       ).style.left       = `${clamped.toFixed(2)}%`
-    this.dom.findElemByID("swatch-gradient").style.background = `hsla(${calcHueDegrees(hueX)}deg, 100%, 50%, 100%)`
+    const clamped = clamp(hueY)
+    this.hueY     = clamped
+    this.dom.findElemByID("hue-knob"       ).style.bottom     = `${clamped.toFixed(2)}%`
+    this.dom.findElemByID("swatch-gradient").style.background = `hsla(${calcHueDegrees(hueY)}deg, 100%, 50%, 100%)`
 
     const { hue, saturation, lightness } = this.updateColor()
     this.updateAlphaGradient(hue, saturation, lightness)
@@ -110,12 +110,12 @@ export class Picker {
 
   updateColor(): ColorUpdate {
 
-    const hue        = calcHueDegrees(this.hueX)
+    const hue        = calcHueDegrees(this.hueY)
     const saturation = this.swatchX
     const maxL       = 100 - this.swatchY
     const minL       = maxL / 2
     const lightness  = Math.round(minL + ((maxL - minL) * ((100 - saturation) / 100)))
-    const alpha      = this.alphaX
+    const alpha      = this.alphaY
 
     this.dom.findElemByID("preview-color").style.background = `hsla(${hue}deg, ${saturation}%, ${lightness}%, ${alpha}%)`
 
@@ -128,7 +128,7 @@ export class Picker {
   private updateAlphaGradient(hue: Num, saturation: Num, lightness: Num): void {
     const hslStr = `${hue} ${saturation} ${lightness}`
     const [elem] = this.dom.findElems(".slider-background.alpha") as [Elem]
-    elem.style.background = `linear-gradient(to right, hsla(${hslStr} / 0%) 0%, hsl(${hslStr}) 100%)`
+    elem.style.background = `linear-gradient(to top, hsla(${hslStr} / 0%) 0%, hsl(${hslStr}) 100%)`
   }
 
   private updateReprControls(): void {
@@ -147,10 +147,10 @@ export class Picker {
 
   private handleAlphaSlider(formatName: Str): void {
     if (["hsba", "hsla", "rgba", "hex"].includes(formatName)) {
-      this.dom.findElemByID("alpha-bar").classList.remove("invis")
+      this.dom.findElemByID("alpha-bar").classList.remove("hidden")
     } else {
       this.setAlpha(100)
-      this.dom.findElemByID("alpha-bar").classList.add("invis")
+      this.dom.findElemByID("alpha-bar").classList.add("hidden")
     }
   }
 

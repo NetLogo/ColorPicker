@@ -13,7 +13,7 @@ const hideGhost = (elem: Elem): void => {
 
 export class DragManager {
 
-  setupDrag1D(elem: Elem, setter: (x: Num) => void): void {
+  setupDrag1DX(elem: Elem, setter: (x: Num) => void): void {
 
     const onMouseLocation = (e: MouseEvent): void => {
 
@@ -27,6 +27,34 @@ export class DragManager {
         const clampedX   = (absX < left) ? left : (absX > right) ? right : absX
         const relX       = clampedX - left
         const percentage = Math.round(relX / width * 100)
+
+        setter(percentage)
+
+      }
+
+    }
+
+    hideGhost(elem)
+
+    elem.addEventListener("click", onMouseLocation, false)
+    elem.addEventListener("drag" , onMouseLocation, false)
+
+  }
+
+  setupDrag1DY(elem: Elem, setter: (y: Num) => void): void {
+
+    const onMouseLocation = (e: MouseEvent): void => {
+
+      if (e.clientY > 0) {
+
+        const target = e.target as Elem
+
+        const { bottom, top, height } = target.getBoundingClientRect()
+
+        const absY       = e.clientY
+        const clampedY   = (absY < top) ? top : (absY > bottom) ? bottom : absY
+        const relY       = bottom - clampedY
+        const percentage = Math.round(relY / height * 100)
 
         setter(percentage)
 
