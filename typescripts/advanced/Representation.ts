@@ -663,7 +663,7 @@ class Hexadecimal implements Representation, RGBLike, HasAlpha {
     this.green = green
     this.blue  = blue
     this.alpha = alpha
-    this.proxy = this.toRGBA()
+    this.proxy = new RGBA(red, green, blue, alpha)
   }
 
   static parse(hexStr: Str): Hexadecimal {
