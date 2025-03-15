@@ -175,19 +175,8 @@ export class Picker {
     const targetElemID = unsafe(optionValueToContainerID[dropdown.value])
     this.dom.findElemByID(targetElemID).style.display = "flex"
 
-    this.handleAlphaSlider(dropdown.value)
-
     this.updateColor()
 
-  }
-
-  private handleAlphaSlider(formatName: Str): void {
-    if (["hsba", "hsla", "rgba", "hex"].includes(formatName)) {
-      this.dom.findElemByID("alpha-bar").classList.remove("hidden")
-    } else {
-      this.setAlpha(100)
-      this.dom.findElemByID("alpha-bar").classList.add("hidden")
-    }
   }
 
   private activateOutputs(outputTypes: Set<OutputType>): void {
