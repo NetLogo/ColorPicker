@@ -163,7 +163,7 @@
 
 .pointer-circle {
   border-radius: 0.375rem;
-  box-shadow:    rgb(255, 255, 255) 0px 0px 0px 1px inset;
+  box-shadow:    inset rgb(0, 0, 0) 0px 0px 0px 1px, rgb(255, 255, 255) 0px 0px 2px 1px;
   cursor:        pointer;
   height:        0.75rem;
   transform:     translate(-0.375rem, -0.375rem);
