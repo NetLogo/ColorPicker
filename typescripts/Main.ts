@@ -1,6 +1,7 @@
 import { findElemByID, findElems } from "./common/DOM.js"
 
 import { Picker         } from "./advanced/Picker.js"
+import { OutputType     } from "./advanced/OutputType.js"
 import { StandardSwatch } from "./StandardSwatch.js"
 
 declare global {
@@ -27,6 +28,6 @@ window.addEventListener("load", () => {
   setUpTabListener("advanced-tab", "advanced-pane")
 
   window.standard = new StandardSwatch(document)
-  window.advanced = new Picker(document)
+  window.advanced = new Picker(document, new Set([OutputType.HSLA]))
 
 });

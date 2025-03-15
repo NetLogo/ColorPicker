@@ -1,3 +1,5 @@
+import { OutputType } from "./OutputType.js"
+
 import type { Num, Str } from "./Types.js"
 
 const calcHueDegrees = (hue: Num): Num => Math.round(360 * (hue / 100))
@@ -35,4 +37,21 @@ const optionValueToContainerID =
   , "hex":       "hex-controls"
   } as Record<Str, Str>
 
-export { calcHueDegrees, clamp, nlWordsToNumbers, optionValueToContainerID }
+
+const outputTypeToHTMLValue =
+  new Map([
+    [OutputType.NLNumber, "nl-number"]
+  , [OutputType.NLWord  , "nl-word"  ]
+  , [OutputType.RGB     , "rgb"      ]
+  , [OutputType.RGBA    , "rgba"     ]
+  , [OutputType.HSB     , "hsb"      ]
+  , [OutputType.HSBA    , "hsba"     ]
+  , [OutputType.HSL     , "hsl"      ]
+  , [OutputType.HSLA    , "hsla"     ]
+  ]) as Map<OutputType, Str>
+
+const switchMap = <T, U>(target: T, map: Map<T, U>, orElse: (target: T) => U): U => {
+  return map.get(target) || orElse(target)
+}
+
+export { calcHueDegrees, clamp, nlWordsToNumbers, optionValueToContainerID, outputTypeToHTMLValue, switchMap }

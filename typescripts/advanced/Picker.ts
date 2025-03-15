@@ -1,10 +1,12 @@
 import { unsafe } from "../common/DOM.js"
 
-import { DOMManager                                      } from "./DOMManager.js"
-import { DragManager                                     } from "./DragManager.js"
-import { RepresentationReader                            } from "./RepresentationReader.js"
-import { RepresentationWriter                            } from "./RepresentationWriter.js"
-import { calcHueDegrees, clamp, optionValueToContainerID } from "./Util.js"
+import { DOMManager           } from "./DOMManager.js"
+import { DragManager          } from "./DragManager.js"
+import { OutputType           } from "./OutputType.js"
+import { RepresentationReader } from "./RepresentationReader.js"
+import { RepresentationWriter } from "./RepresentationWriter.js"
+
+import { calcHueDegrees, clamp, optionValueToContainerID, outputTypeToHTMLValue, switchMap } from "./Util.js"
 
 import type { ColorUpdate, Elem, Input, Num, Str } from "./Types.js"
 
@@ -20,7 +22,7 @@ export class Picker {
   private reprReader: RepresentationReader
   private reprWriter: RepresentationWriter
 
-  constructor(doc: Document) {
+  constructor(doc: Document, outputTypes: Set<OutputType>) {
 
     this.dom = new DOMManager(doc)
 
@@ -37,6 +39,8 @@ export class Picker {
 
     this.reprReader = new RepresentationReader(changeColor, this.dom)
     this.reprWriter = new RepresentationWriter(this.dom)
+
+    this.activateOutputs(outputTypes)
 
     const reprDropdown = this.dom.findReprDropdown()
     reprDropdown.addEventListener("change", () => this.updateReprControls())
@@ -63,13 +67,8 @@ export class Picker {
   }
 
   copyToClipboard(): void {
-
-    const controls = this.dom.findActiveControls()
-    const inputs   = this.dom.findInputs(controls, ".repr-input")
-    const text     = inputs.map((input: Input) => input.value).join(" ")
-
-    navigator.clipboard.writeText(text)
-
+    const output = this.dom.findElemByID("output-field")
+    navigator.clipboard.writeText(output.innerText)
   }
 
   setAlpha(alpha: Num): void {
@@ -121,6 +120,12 @@ export class Picker {
 
     this.reprWriter.refreshReprValues(hue, saturation, lightness, alpha)
 
+    const controls   = this.dom.findActiveControls()
+    const inputs     = this.dom.findInputs(controls, ".repr-input")
+    const text       = inputs.map((input: Input) => input.value).join(" ")
+    const output     = this.dom.findElemByID("output-field")
+    output.innerText = text
+
     return { hue, saturation, lightness, alpha }
 
   }
@@ -152,6 +157,28 @@ export class Picker {
       this.setAlpha(100)
       this.dom.findElemByID("alpha-bar").classList.add("hidden")
     }
+  }
+
+  private activateOutputs(outputTypes: Set<OutputType>): void {
+
+    outputTypes.forEach(
+      (ot) => {
+
+        const optionValue =
+          switchMap(ot
+            , outputTypeToHTMLValue
+            , (target: OutputType) => {
+              throw new Error(`Impossible output type: ${JSON.stringify(target)}`)
+            }
+          )
+
+        const elem    = this.dom.findElems(`#output-format-dropdown > option[value=${optionValue}]`)[0] as HTMLOptionElement
+        elem.disabled = false
+        elem.selected = true
+
+      }
+    )
+
   }
 
 }

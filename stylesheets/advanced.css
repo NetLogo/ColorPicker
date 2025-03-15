@@ -157,6 +157,15 @@
   width:         0.75rem;
 }
 
+.output-controls-container {
+  display:        flex;
+  flex-direction: column;
+}
+
+.output-field {
+  height: 30px;
+}
+
 .swatch-container {
   overflow:       hidden;
   padding-bottom: 55%;

@@ -83,7 +83,7 @@
             <div>
               <div>
                 <label class="repr-dropdown-label form-label">
-                  Format
+                  Input Format
                   <select id="repr-dropdown">
                     <option value="nl-number">NetLogo number</option>
                     <option value="nl-word">NetLogo word</option>
@@ -217,6 +217,25 @@
 
                   </div>
 
+                </div>
+
+                <div class="output-controls-container">
+                  Output Format
+                  <select id="output-format-dropdown">
+                    <option value="nl-number" disabled selected>NetLogo number</option>
+                    <option value="nl-word" disabled>NetLogo word</option>
+                    <option value="rgb" disabled>RGB (Red, Green, Blue)</option>
+                    <option value="rgba" disabled>RGBA (Red, Green, Blue, Alpha)</option>
+                    <option value="hsb" disabled>HSB (Hue, Saturation, Brightness)</option>
+                    <option value="hsba" disabled>HSBA (Hue, Saturation, Brightness, Alpha)</option>
+                    <option value="hsl" disabled>HSL (Hue, Saturation, Lightness)</option>
+                    <option value="hsla" disabled>HSLA (Hue, Saturation, Lightness, Alpha)</option>
+                  </select>
+                  <label>Output:
+                    <output id="output-field" class="output-field"
+                            for="netlogo-number netlogo-word hsb-h hsb-s hsb-b hsba-h hsba-s hsba-b hsba-a hsl-h hsl-s hsl-l hsla-h hsla-s hsla-l hsla-a rgb-r rgb-g rgb-b rgba-r rgba-g rgba-b rgba-a hex">
+                    </output>
+                  </label>
                 </div>
 
               </div>
