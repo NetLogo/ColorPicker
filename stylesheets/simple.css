@@ -1,4 +1,4 @@
-.standard.pane {
+.simple.pane {
   border:                2px solid gray;
   display:               grid;
   grid-template-columns: repeat(11, 1fr);

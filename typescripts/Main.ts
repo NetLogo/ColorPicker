@@ -1,13 +1,13 @@
 import { findElemByID, findElems, unsafe } from "./common/DOM.js"
 
-import { Picker         } from "./advanced/Picker.js"
-import { OutputType     } from "./advanced/OutputType.js"
-import { StandardSwatch } from "./StandardSwatch.js"
+import { Picker       } from "./advanced/Picker.js"
+import { OutputType   } from "./advanced/OutputType.js"
+import { SimpleSwatch } from "./SimpleSwatch.js"
 
 declare global {
   interface Window {
 
-    standard: StandardSwatch
+    simple:   SimpleSwatch
     advanced: Picker
 
     callbackForCancel: () => void
@@ -28,11 +28,11 @@ const setUpTabListener = (tabID: string, contentID: string) => {
 
 window.addEventListener("load", () => {
 
-  setUpTabListener("standard-tab", "standard-pane")
+  setUpTabListener(  "simple-tab",   "simple-pane")
   setUpTabListener("advanced-tab", "advanced-pane")
 
-  window.standard = new StandardSwatch(document)
-  window.advanced = new Picker(document, new Set([OutputType.HSLA]))
+  window.simple   = new SimpleSwatch(document)
+  window.advanced = new Picker(document, new Set([]))
 
   findElemByID(document)("pick-button").addEventListener("click",
     (_: MouseEvent) => {
@@ -55,8 +55,8 @@ const getOutputValue = (): string => {
   const selected = unsafe(Array.from(findElems(document, "#tab-strip .tab-button.selected"))[0])
 
   switch (selected.id) {
-    case "standard-tab":
-      return window.standard.getOutputValue()
+    case "simple-tab":
+      return window.simple.getOutputValue()
     case "advanced-tab":
       return window.advanced.getOutputValue()
     default:
