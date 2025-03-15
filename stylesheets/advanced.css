@@ -163,7 +163,8 @@
 }
 
 .output-field {
-  height: 30px;
+  font-weight: bold;
+  height:      30px;
 }
 
 .swatch-container {
