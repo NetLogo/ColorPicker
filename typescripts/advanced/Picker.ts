@@ -58,7 +58,7 @@ export class Picker {
     dragMan.setupDrag1DY(this.dom.findElemByID(    "alpha-slider"), (a: Num)         => this.setAlpha(a))
     dragMan.setupDrag1DY(this.dom.findElemByID(      "hue-slider"), (h: Num)         => this.setHue(h))
 
-    this.dom.findElemByID("copy-icon").addEventListener("click", () => this.copyToClipboard())
+    this.dom.findElemByID("copy-button").addEventListener("click", () => this.copyToClipboard())
 
   }
 
