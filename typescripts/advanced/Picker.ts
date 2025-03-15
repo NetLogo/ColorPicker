@@ -132,7 +132,7 @@ export class Picker {
       case OutputType.NLNumber:
         return this.repr.toNLNumber().number.toString()
       case OutputType.NLWord:
-        return this.repr.toNLWord().word
+        return `(${this.repr.toNLWord().word})`
       case OutputType.RGB:
         const rgb = this.repr.toRGB()
         return `(rgb ${rgb.red} ${rgb.green} ${rgb.blue})`
