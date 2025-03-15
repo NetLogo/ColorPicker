@@ -42,6 +42,9 @@ export class Picker {
     this.reprReader = new ReadsReprFromInputs()
     this.reprWriter = new WritesReprToInputs()
 
+    const outputDropdown = this.dom.findElemByID("output-format-dropdown")
+    outputDropdown.addEventListener("change", () => this.updateOutput())
+
     this.activateOutputs(outputTypes)
 
     const reprDropdown = this.dom.findReprDropdown()
@@ -109,15 +112,14 @@ export class Picker {
   }
 
   updateColor(): void {
-
     const hsla = this.repr.toHSLA()
-
     this.dom.findElemByID("preview-color").style.background = `hsla(${hsla.hue}deg, ${hsla.saturation}%, ${hsla.lightness}%, ${hsla.alpha}%)`
-
     this.reprWriter.write(this.dom, this.repr)
+    this.updateOutput()
+  }
 
+  updateOutput(): void {
     this.dom.findElemByID("output-field").innerText = this.getOutputValue()
-
   }
 
   getOutputValue(): Str {
