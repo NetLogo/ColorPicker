@@ -12,5 +12,3 @@ export type Str1 = [Str]
 export type Str2 = [Str, Str]
 export type Str3 = [Str, Str, Str]
 export type Str4 = [Str, Str, Str, Str]
-
-export type ColorUpdate = { hue: Num, saturation: Num, lightness: Num, alpha: Num }

@@ -1,44 +1,46 @@
 import { unsafe } from "../common/DOM.js"
 
-import { DOMManager           } from "./DOMManager.js"
-import { DragManager          } from "./DragManager.js"
-import { OutputType           } from "./OutputType.js"
-import { RepresentationReader } from "./RepresentationReader.js"
-import { RepresentationWriter } from "./RepresentationWriter.js"
+import { DOMManager          } from "./DOMManager.js"
+import { DragManager         } from "./DragManager.js"
+import { OutputType          } from "./OutputType.js"
+import { ReadsReprFromInputs } from "./ReadsReprFromInputs.js"
+import { GUI_HSLA            } from "./Representation.js"
+import { WritesReprToInputs  } from "./WritesReprToInputs.js"
 
 import { calcHueDegrees, clamp, optionValueToContainerID, outputTypeToHTMLValue, switchMap } from "./Util.js"
 
-import type { ColorUpdate, Elem, Input, Num, Str } from "./Types.js"
+import type { Representation } from "./Representation.js"
+import type { Elem, Num, Str } from "./Types.js"
 
 export class Picker {
 
   public dom: DOMManager
 
-  private alphaY:  number
-  private hueY:    number
-  private swatchX: number
-  private swatchY: number
+  private repr: Representation
 
-  private reprReader: RepresentationReader
-  private reprWriter: RepresentationWriter
+  private reprReader: ReadsReprFromInputs
+  private reprWriter: WritesReprToInputs
 
   constructor(doc: Document, outputTypes: Set<OutputType>) {
 
     this.dom = new DOMManager(doc)
 
-    this.alphaY  = 0
-    this.hueY    = 0
-    this.swatchX = 0
-    this.swatchY = 0
+    this.repr = new GUI_HSLA(0, 0, 0, 0)
 
-    const changeColor = (h: Num, s: Num, v: Num, a: Num) => {
-      this.setHue(h)
-      this.setSwatchCoords(s, v)
-      this.setAlpha(a)
+    const setRepr = (repr: Representation) => {
+
+      this.repr = repr
+
+      const hsla = repr.toGUI_HSLA()
+
+      this.setHue(hsla.hue)
+      this.setSwatchCoords(hsla.saturation, hsla.lightness)
+      this.setAlpha(hsla.alpha)
+
     }
 
-    this.reprReader = new RepresentationReader(changeColor, this.dom)
-    this.reprWriter = new RepresentationWriter(this.dom)
+    this.reprReader = new ReadsReprFromInputs()
+    this.reprWriter = new WritesReprToInputs()
 
     this.activateOutputs(outputTypes)
 
@@ -53,7 +55,7 @@ export class Picker {
 
     Array.from(this.dom.findInputs(doc, ".repr-input")).forEach(
       (input) => {
-        input.addEventListener("change", () => this.reprReader.updateFromRepr())
+        input.addEventListener("change", () => this.reprReader.read(this.dom, setRepr))
       }
     )
 
@@ -73,7 +75,7 @@ export class Picker {
 
   setAlpha(alpha: Num): void {
     const clamped = clamp(alpha)
-    this.alphaY   = clamped
+    this.repr     = this.repr.withAlpha(clamped)
     this.dom.findElemByID("alpha-knob").style.bottom = `${clamped.toFixed(2)}%`
     this.updateColor()
   }
@@ -81,12 +83,12 @@ export class Picker {
   setHue(hueY: Num): void {
 
     const clamped = clamp(hueY)
-    this.hueY     = clamped
+    this.repr     = this.repr.toGUI_HSLA().withHue(clamped)
     this.dom.findElemByID("hue-knob"       ).style.bottom     = `${clamped.toFixed(2)}%`
     this.dom.findElemByID("swatch-gradient").style.background = `hsla(${calcHueDegrees(hueY)}deg, 100%, 50%, 100%)`
 
-    const { hue, saturation, lightness } = this.updateColor()
-    this.updateAlphaGradient(hue, saturation, lightness)
+    this.updateColor()
+    this.updateAlphaGradient()
 
   }
 
@@ -95,45 +97,74 @@ export class Picker {
     const clampedX = clamp(x)
     const clampedY = clamp(y)
 
-    this.swatchX = clampedX
-    this.swatchY = clampedY
+    this.repr = this.repr.toGUI_HSLA().withSaturation(clampedX).withLightness(clampedY)
 
     const swatchPointer = this.dom.findElemByID("swatch-pointer")
     swatchPointer.style.left = `${clampedX.toFixed(2)}%`
     swatchPointer.style.top  = `${clampedY.toFixed(2)}%`
 
-    const { hue, saturation, lightness } = this.updateColor()
-    this.updateAlphaGradient(hue, saturation, lightness)
+    this.updateColor()
+    this.updateAlphaGradient()
 
   }
 
-  updateColor(): ColorUpdate {
+  updateColor(): void {
 
-    const hue        = calcHueDegrees(this.hueY)
-    const saturation = this.swatchX
-    const maxL       = 100 - this.swatchY
-    const minL       = maxL / 2
-    const lightness  = Math.round(minL + ((maxL - minL) * ((100 - saturation) / 100)))
-    const alpha      = this.alphaY
+    const hsla = this.repr.toHSLA()
 
-    this.dom.findElemByID("preview-color").style.background = `hsla(${hue}deg, ${saturation}%, ${lightness}%, ${alpha}%)`
+    this.dom.findElemByID("preview-color").style.background = `hsla(${hsla.hue}deg, ${hsla.saturation}%, ${hsla.lightness}%, ${hsla.alpha}%)`
 
-    this.reprWriter.refreshReprValues(hue, saturation, lightness, alpha)
+    this.reprWriter.write(this.dom, this.repr)
 
-    const controls   = this.dom.findActiveControls()
-    const inputs     = this.dom.findInputs(controls, ".repr-input")
-    const text       = inputs.map((input: Input) => input.value).join(" ")
-    const output     = this.dom.findElemByID("output-field")
-    output.innerText = text
-
-    return { hue, saturation, lightness, alpha }
+    this.dom.findElemByID("output-field").innerText = this.getOutputValue()
 
   }
 
-  private updateAlphaGradient(hue: Num, saturation: Num, lightness: Num): void {
+  getOutputValue(): Str {
+
+    const value       = (this.dom.findElemByID("output-format-dropdown") as HTMLSelectElement).selectedOptions[0]!.value
+    const pairs       = Array.from(outputTypeToHTMLValue.entries()) as Array<[OutputType, Str]>
+    const reversedMap = new Map(pairs.map(([a, b]) => [b, a]))
+
+    const scaleAlpha = (alpha: Num) => Math.round(alpha / 100 * 255)
+
+    switch (reversedMap.get(value)) {
+      case OutputType.NLNumber:
+        return this.repr.toNLNumber().toString()
+      case OutputType.NLWord:
+        return this.repr.toNLWord().word
+      case OutputType.RGB:
+        const rgb = this.repr.toRGB()
+        return `(rgb ${rgb.red} ${rgb.green} ${rgb.blue})`
+      case OutputType.RGBA:
+        const rgba = this.repr.toRGBA()
+        return `[${rgba.red} ${rgba.green} ${rgba.blue} ${scaleAlpha(rgba.alpha)}]`
+      case OutputType.HSB:
+        const hsb = this.repr.toHSB()
+        return `(hsb ${hsb.hue} ${hsb.saturation} ${hsb.brightness})`
+      case OutputType.HSBA:
+        const hsba = this.repr.toHSBA()
+        return `(lput ${scaleAlpha(hsba.alpha)} (hsb ${hsba.hue} ${hsba.saturation} ${hsba.brightness}))`
+      case OutputType.HSL:
+        const hsl = this.repr.toHSL()
+        return `[${hsl.hue} ${hsl.saturation} ${hsl.lightness}]`
+      case OutputType.HSLA:
+        const hsla = this.repr.toHSLA()
+        return `[${hsla.hue} ${hsla.saturation} ${hsla.lightness} ${scaleAlpha(hsla.alpha)}]`
+      default:
+        throw new Error(`Unknown output value for output format: ${value}`)
+    }
+
+  }
+
+  private updateAlphaGradient(): void {
+
+    const { hue, saturation, lightness } = this.repr.toHSL()
+
     const hslStr = `${hue} ${saturation} ${lightness}`
     const [elem] = this.dom.findElems(".slider-background.alpha") as [Elem]
     elem.style.background = `linear-gradient(to top, hsla(${hslStr} / 0%) 0%, hsl(${hslStr}) 100%)`
+
   }
 
   private updateReprControls(): void {
