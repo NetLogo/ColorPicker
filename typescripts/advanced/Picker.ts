@@ -130,7 +130,7 @@ export class Picker {
 
     switch (reversedMap.get(value)) {
       case OutputType.NLNumber:
-        return this.repr.toNLNumber().toString()
+        return this.repr.toNLNumber().number.toString()
       case OutputType.NLWord:
         return this.repr.toNLWord().word
       case OutputType.RGB:
