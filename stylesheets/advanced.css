@@ -7,6 +7,10 @@
   flex-direction: row;
 }
 
+.form-label {
+  user-select: none;
+}
+
 .input-bar {
   height:   0.625rem;
   position: relative;
@@ -84,7 +88,6 @@
 .repr-dropdown-label {
   display:        flex;
   flex-direction: column;
-  user-select:    none;
 }
 
 .repr-input {
