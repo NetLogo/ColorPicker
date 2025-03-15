@@ -124,7 +124,7 @@ export class Picker {
 
   getOutputValue(): Str {
 
-    const value       = (this.dom.findElemByID("output-format-dropdown") as HTMLSelectElement).selectedOptions[0]!.value
+    const value       = unsafe((this.dom.findElemByID("output-format-dropdown") as HTMLSelectElement).selectedOptions[0]).value
     const pairs       = Array.from(outputTypeToHTMLValue.entries()) as Array<[OutputType, Str]>
     const reversedMap = new Map(pairs.map(([a, b]) => [b, a]))
 

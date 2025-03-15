@@ -1,3 +1,5 @@
+import { unsafe } from "./common/DOM.js"
+
 import { colorToRGB } from "./ColorModel.js"
 
 export class StandardSwatch {
@@ -8,7 +10,7 @@ export class StandardSwatch {
 
     this.colorNum = 0
 
-    const swatch = doc.getElementById("standard-pane")!
+    const swatch = unsafe(doc.getElementById("standard-pane"))
 
     const nums =
       [...Array(11 * 14).keys()].map(
