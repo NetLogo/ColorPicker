@@ -1,0 +1,28 @@
+.standard.pane {
+  border:                2px solid gray;
+  display:               grid;
+  grid-template-columns: repeat(11, 1fr);
+  height:                500px;
+  width:                 500px;
+}
+
+.swatch-color {
+  border:     2px solid black;
+  transition: transform 0.07s;
+}
+
+.swatch-color.white:hover {
+  opacity: 0.8;
+}
+
+.swatch-color:hover {
+  transform: scale(1.2);
+}
+
+.swatch-color.selected.light {
+  border-color: black !important;
+}
+
+.swatch-color.selected.dark {
+  border-color: white !important;
+}

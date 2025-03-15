@@ -147,10 +147,10 @@ export class Picker {
 
   private handleAlphaSlider(formatName: Str): void {
     if (["hsba", "hsla", "rgba", "hex"].includes(formatName)) {
-      this.dom.findElemByID("alpha-bar").classList.remove("hidden")
+      this.dom.findElemByID("alpha-bar").classList.remove("invis")
     } else {
       this.setAlpha(100)
-      this.dom.findElemByID("alpha-bar").classList.add("hidden")
+      this.dom.findElemByID("alpha-bar").classList.add("invis")
     }
   }
 
