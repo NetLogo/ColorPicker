@@ -1,4 +1,4 @@
-import { findElemByID, findElems } from "./common/DOM.js"
+import { findElemByID, findElems, unsafe } from "./common/DOM.js"
 
 import { Picker         } from "./advanced/Picker.js"
 import { OutputType     } from "./advanced/OutputType.js"
@@ -6,8 +6,12 @@ import { StandardSwatch } from "./StandardSwatch.js"
 
 declare global {
   interface Window {
+
     standard: StandardSwatch
     advanced: Picker
+
+    callbackForCancel: () => void
+
   }
 }
 
@@ -30,4 +34,33 @@ window.addEventListener("load", () => {
   window.standard = new StandardSwatch(document)
   window.advanced = new Picker(document, new Set([OutputType.HSLA]))
 
+  findElemByID(document)("pick-button").addEventListener("click",
+    (_: MouseEvent) => {
+      alert(getOutputValue())
+    }
+  )
+
+  findElemByID(document)("cancel-button").addEventListener("click",
+    (_: MouseEvent) => {
+      window.callbackForCancel()
+    }
+  )
+
+  findElemByID(document)("copy-button").addEventListener("click", () => navigator.clipboard.writeText(getOutputValue()))
+
 });
+
+const getOutputValue = (): string => {
+
+  const selected = unsafe(Array.from(findElems(document, "#tab-strip .tab-button.selected"))[0])
+
+  switch (selected.id) {
+    case "standard-tab":
+      return window.standard.getOutputValue()
+    case "advanced-tab":
+      return window.advanced.getOutputValue()
+    default:
+      throw new Error(`Unknown picker type tab ID: ${selected.id}`)
+  }
+
+}

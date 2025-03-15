@@ -54,8 +54,8 @@ export class StandardSwatch {
 
   }
 
-  getNum(): number {
-    return this.colorNum
+  getOutputValue(): string {
+    return this.colorNum.toString()
   }
 
 }
