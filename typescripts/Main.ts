@@ -12,6 +12,7 @@ declare global {
 
     useNumberOnlyPicker: () => void
     useNonPickPicker:    () => void
+    syncTheme:           (colors: { [ id: string ] : string }) => void
 
     nlBabyMonitor: {
       onPick:   (str: string) => void
@@ -78,6 +79,16 @@ window.useNonPickPicker = (): void => {
   const types = [ OutputType.NLNumber, OutputType.NLWord, OutputType.RGB, OutputType.RGBA, OutputType.HSB, OutputType.HSBA
                 , OutputType.HSL, OutputType.HSLA]
   window.advanced = new Picker(document, new Set(types))
+}
+
+window.syncTheme = (colors: { [ id: string ] : string }): void => {
+  let style = document.body.style
+
+  for (let key in colors) {
+    if (colors[key]) {
+      style.setProperty(key, colors[key])
+    }
+  }
 }
 
 const getOutputValue = (): string => {
