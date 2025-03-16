@@ -10,7 +10,11 @@ declare global {
     simple:   SimpleSwatch
     advanced: Picker
 
-    callbackForCancel: () => void
+    useNumberOnlyPicker: () => void
+    useNonPickPicker:    () => void
+
+    callbackForPick:   (str: string) => void
+    callbackForCancel: ()            => void
 
   }
 }
@@ -36,7 +40,7 @@ window.addEventListener("load", () => {
 
   findElemByID(document)("pick-button").addEventListener("click",
     (_: MouseEvent) => {
-      alert(getOutputValue())
+      window.callbackForPick(getOutputValue())
     }
   )
 
@@ -49,6 +53,17 @@ window.addEventListener("load", () => {
   findElemByID(document)("copy-button").addEventListener("click", () => navigator.clipboard.writeText(getOutputValue()))
 
 });
+
+window.useNumberOnlyPicker = (): void => {
+  window.advanced = new Picker(document, new Set([OutputType.NLNumber]))
+}
+
+window.useNonPickPicker = (): void => {
+  findElemByID(document)("pick-button").classList.add("hidden")
+  const types = [ OutputType.NLNumber, OutputType.NLWord, OutputType.RGB, OutputType.RGBA, OutputType.HSB, OutputType.HSBA
+                , OutputType.HSL, OutputType.HSLA]
+  window.advanced = new Picker(document, new Set(types))
+}
 
 const getOutputValue = (): string => {
 
