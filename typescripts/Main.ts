@@ -13,8 +13,11 @@ declare global {
     useNumberOnlyPicker: () => void
     useNonPickPicker:    () => void
 
-    callbackForPick:   (str: string) => void
-    callbackForCancel: ()            => void
+    nlBabyMonitor: {
+      onPick:   (str: string) => void
+      onCopy:   (str: string) => void
+      onCancel: ()            => void
+    }
 
   }
 }
@@ -32,6 +35,14 @@ const setUpTabListener = (tabID: string, contentID: string) => {
 
 window.addEventListener("load", () => {
 
+  window.nlBabyMonitor = {
+    onPick:   (_: string) => { return }
+  , onCopy:   (_: string) => { return }
+  , onCancel: ()          => { return }
+  }
+
+  window.nlBabyMonitor.onCopy = (str: string) => navigator.clipboard.writeText(str)
+
   setUpTabListener(  "simple-tab",   "simple-pane")
   setUpTabListener("advanced-tab", "advanced-pane")
 
@@ -40,17 +51,21 @@ window.addEventListener("load", () => {
 
   findElemByID(document)("pick-button").addEventListener("click",
     (_: MouseEvent) => {
-      window.callbackForPick(getOutputValue())
+      window.nlBabyMonitor.onPick(getOutputValue())
     }
   )
 
   findElemByID(document)("cancel-button").addEventListener("click",
     (_: MouseEvent) => {
-      window.callbackForCancel()
+      window.nlBabyMonitor.onCancel()
     }
   )
 
-  findElemByID(document)("copy-button").addEventListener("click", () => navigator.clipboard.writeText(getOutputValue()))
+  findElemByID(document)("copy-button").addEventListener("click",
+    () => {
+      window.nlBabyMonitor.onCopy(getOutputValue())
+    }
+  )
 
 });
 
