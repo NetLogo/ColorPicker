@@ -2,8 +2,8 @@
   border:                2px solid gray;
   display:               grid;
   grid-template-columns: repeat(11, 1fr);
-  height:                500px;
-  width:                 500px;
+  height:                30rem;
+  width:                 30rem;
 }
 
 .swatch-color {
