@@ -156,9 +156,9 @@ export class Picker {
 
     const { hue, saturation, lightness } = this.repr.toHSL()
 
-    const hslStr = `${hue} ${saturation} ${lightness}`
+    const hslStr = `${hue}, ${saturation}%, ${lightness}%`
     const [elem] = this.dom.findElems(".slider-background.alpha") as [Elem]
-    elem.style.background = `linear-gradient(to top, hsla(${hslStr} / 0%) 0%, hsl(${hslStr}) 100%)`
+    elem.style.background = `linear-gradient(to top, hsla(${hslStr}, 0) 0%, hsl(${hslStr}) 100%)`
 
   }
 
