@@ -17,6 +17,7 @@
 
 .swatch-color:hover {
   transform: scale(1.2);
+  z-index:   10;
 }
 
 .swatch-color.selected.light {
