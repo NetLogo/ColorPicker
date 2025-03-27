@@ -15,6 +15,7 @@ declare global {
     simple:   SimpleSwatch
     advanced: Picker
 
+    injectCSS:           (css: string)              => void
     useNumberOnlyPicker: ()                         => void
     useNonPickPicker:    ()                         => void
     useRGBAOnlyPicker:   ()                         => void
@@ -77,6 +78,12 @@ window.addEventListener("load", () => {
   window.syncTheme({})
 
 });
+
+window.injectCSS = (css: string): void => {
+  const elem       = document.createElement("style")
+  elem.textContent = css
+  document.head.append(elem)
+}
 
 window.useNumberOnlyPicker = (): void => {
   window.advanced = new Picker(document, new Set([OutputType.NLNumber]))
