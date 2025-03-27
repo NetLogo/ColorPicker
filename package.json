@@ -3,9 +3,9 @@
   "name":        "NetLogo color picker"
 , "version":     "0.0.1"
 , "description": "NetLogo color picker"
-, "homepage":    "https://github.com/NetLogo/ColorPickerNL"
-, "repository":  { "type": "git", "url": "git+https://github.com/NetLogo/ColorPickerNL.git" }
-, "bugs":        { "url": "https://github.com/NetLogo/ColorPickerNL/issues" }
+, "homepage":    "https://github.com/NetLogo/ColorPicker"
+, "repository":  { "type": "git", "url": "git+https://github.com/NetLogo/ColorPicker.git" }
+, "bugs":        { "url": "https://github.com/NetLogo/ColorPicker/issues" }
 , "author":      "TheBizzle"
 , "license":     "GPL-2"
 , "private":     true
