@@ -1,9 +1,13 @@
 import { findElemByID, findElems } from "./common/DOM.js"
 import { unsafe                  } from "./common/Util.js"
 
-import { Picker       } from "./advanced/Picker.js"
-import { OutputType   } from "./advanced/OutputType.js"
+import { OutputType } from "./advanced/OutputType.js"
+import { Picker     } from "./advanced/Picker.js"
+
+import { applyTheme   } from "./ColorTheme.js"
 import { SimpleSwatch } from "./SimpleSwatch.js"
+
+import type { ColorThemeConfig } from "./ColorTheme.js"
 
 declare global {
   interface Window {
@@ -11,10 +15,10 @@ declare global {
     simple:   SimpleSwatch
     advanced: Picker
 
-    useNumberOnlyPicker: () => void
-    useNonPickPicker:    () => void
-    useRGBAOnlyPicker:   () => void
-    syncTheme:           (colors: { [ id: string ] : string }) => void
+    useNumberOnlyPicker: ()                         => void
+    useNonPickPicker:    ()                         => void
+    useRGBAOnlyPicker:   ()                         => void
+    syncTheme:           (config: ColorThemeConfig) => void
 
     nlBabyMonitor: {
       onPick:   (str: string) => void
@@ -70,6 +74,8 @@ window.addEventListener("load", () => {
     }
   )
 
+  window.syncTheme({})
+
 });
 
 window.useNumberOnlyPicker = (): void => {
@@ -87,14 +93,8 @@ window.useRGBAOnlyPicker = (): void => {
   window.advanced = new Picker(document, new Set([OutputType.RGBA]))
 }
 
-window.syncTheme = (colors: { [ id: string ] : string }): void => {
-  let style = document.body.style
-
-  for (let key in colors) {
-    if (colors[key]) {
-      style.setProperty(key, colors[key])
-    }
-  }
+window.syncTheme = (config: ColorThemeConfig): void => {
+  applyTheme(config, document.body)
 }
 
 const getOutputValue = (): string => {

@@ -1,17 +1,3 @@
-:root {
-  --dialog-background:        white;
-  --dialog-text:              white;
-  --tab-background:           white;
-  --tab-background-selected:  white;
-  --tab-border:               white;
-  --tab-text:                 white;
-  --tab-text-selected:        white;
-  --control-background:       white;
-  --control-background-hover: white;
-  --control-border:           white;
-  --control-text:             white;
-}
-
 * {
   font-family: "Segoe UI", "Open Sans", sans-serif;
   font-size:   12px;
@@ -54,6 +40,10 @@ body {
   background: var(--control-background-hover);
 }
 
+.form-button:active {
+  background: var(--control-background-active);
+}
+
 .hidden {
   display: none !important;
 }
@@ -82,6 +72,10 @@ body {
 
 .tab-button:not(:first-child) {
   margin-left: -1px;
+}
+
+.tab-button:hover {
+  background-color: var(--tab-background-hover);
 }
 
 .tab-button.selected {
