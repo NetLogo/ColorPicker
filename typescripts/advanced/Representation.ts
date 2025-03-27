@@ -1,6 +1,6 @@
 import { colorToRGB, nearestColorNumberOfRGB } from "../ColorModel.js"
 
-import { unsafe } from "../common/DOM.js"
+import { unsafe } from "../common/Util.js"
 
 import { calcHueDegrees, nlWordsToNumbers } from "./Util.js"
 

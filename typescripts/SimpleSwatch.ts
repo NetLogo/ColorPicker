@@ -1,4 +1,4 @@
-import { unsafe } from "./common/DOM.js"
+import { unsafe } from "./common/Util.js"
 
 import { colorToRGB } from "./ColorModel.js"
 

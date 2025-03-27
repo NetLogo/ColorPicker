@@ -1,3 +1,5 @@
+import { unsafe } from "./Util.js"
+
 const findElems = (container: Document | Element, selector: string): Array<HTMLElement> => {
   return Array.from(container.querySelectorAll(selector))
 }
@@ -22,8 +24,4 @@ const setInputByID = (doc: Document) => (id: string, value: { toString: () => st
   setInput(findInputByID(doc)(id), value)
 }
 
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-const unsafe = <T>(x: T | undefined | null): T => x!
-/* eslint-enable @typescript-eslint/no-non-null-assertion */
-
-export { findElemByID, findElems, findInputByID, findInputs, setInput, setInputByID, unsafe }
+export { findElemByID, findElems, findInputByID, findInputs, setInput, setInputByID }

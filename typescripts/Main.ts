@@ -1,4 +1,5 @@
-import { findElemByID, findElems, unsafe } from "./common/DOM.js"
+import { findElemByID, findElems } from "./common/DOM.js"
+import { unsafe                  } from "./common/Util.js"
 
 import { Picker       } from "./advanced/Picker.js"
 import { OutputType   } from "./advanced/OutputType.js"

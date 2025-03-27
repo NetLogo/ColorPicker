@@ -1,4 +1,4 @@
-import { unsafe } from "../common/DOM.js"
+import { switchMap, unsafe } from "../common/Util.js"
 
 import { DOMManager          } from "./DOMManager.js"
 import { DragManager         } from "./DragManager.js"
@@ -7,7 +7,7 @@ import { ReadsReprFromInputs } from "./ReadsReprFromInputs.js"
 import { GUI_HSLA            } from "./Representation.js"
 import { WritesReprToInputs  } from "./WritesReprToInputs.js"
 
-import { calcHueDegrees, clamp, optionValueToContainerID, outputTypeToHTMLValue, switchMap } from "./Util.js"
+import { calcHueDegrees, clamp, optionValueToContainerID, outputTypeToHTMLValue } from "./Util.js"
 
 import type { Representation } from "./Representation.js"
 import type { Elem, Num, Str } from "./Types.js"

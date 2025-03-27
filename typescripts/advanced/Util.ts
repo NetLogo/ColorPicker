@@ -50,8 +50,4 @@ const outputTypeToHTMLValue =
   , [OutputType.HSLA    , "hsla"     ]
   ]) as Map<OutputType, Str>
 
-const switchMap = <T, U>(target: T, map: Map<T, U>, orElse: (target: T) => U): U => {
-  return map.get(target) || orElse(target)
-}
-
-export { calcHueDegrees, clamp, nlWordsToNumbers, optionValueToContainerID, outputTypeToHTMLValue, switchMap }
+export { calcHueDegrees, clamp, nlWordsToNumbers, optionValueToContainerID, outputTypeToHTMLValue }

@@ -1,4 +1,5 @@
-import { findElemByID, findElems, findInputByID, findInputs, setInputByID, unsafe } from "../common/DOM.js"
+import { findElemByID, findElems, findInputByID, findInputs, setInputByID } from "../common/DOM.js"
+import { unsafe                                                           } from "../common/Util.js"
 
 import { optionValueToContainerID } from "./Util.js"
 
