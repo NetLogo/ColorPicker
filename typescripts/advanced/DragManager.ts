@@ -7,6 +7,7 @@ export class DragManager {
     let mouseDown = false
 
     const setPosition = (x: number): void => {
+
       const { left, right, width } = elem.getBoundingClientRect()
 
       const absX       = x
@@ -15,12 +16,12 @@ export class DragManager {
       const percentage = Math.round(relX / width * 100)
 
       setter(percentage)
+
     }
 
     const onMouseDown = (e: MouseEvent): void => {
       if (e.button == 0) {
         mouseDown = true
-
         setPosition(e.clientX)
       }
     }
@@ -37,10 +38,10 @@ export class DragManager {
       }
     }
 
-    elem.addEventListener("mousedown", onMouseDown, false)
-    elem.addEventListener("mousemove", onMouseMove, false)
-    elem.addEventListener("mouseup", onMouseUp, false)
-    elem.addEventListener("mouseleave", onMouseUp, false)
+    elem.addEventListener("mousedown" , onMouseDown, false)
+    elem.addEventListener("mousemove" , onMouseMove, false)
+    elem.addEventListener("mouseup"   , onMouseUp  , false)
+    elem.addEventListener("mouseleave", onMouseUp  , false)
 
   }
 
@@ -49,6 +50,7 @@ export class DragManager {
     let mouseDown = false
 
     const setPosition = (y: number): void => {
+
       const { bottom, top, height } = elem.getBoundingClientRect()
 
       const absY       = y
@@ -57,12 +59,12 @@ export class DragManager {
       const percentage = Math.round(relY / height * 100)
 
       setter(percentage)
+
     }
 
     const onMouseDown = (e: MouseEvent): void => {
       if (e.button == 0) {
         mouseDown = true
-
         setPosition(e.clientY)
       }
     }
@@ -79,10 +81,10 @@ export class DragManager {
       }
     }
 
-    elem.addEventListener("mousedown", onMouseDown, false)
-    elem.addEventListener("mousemove", onMouseMove, false)
-    elem.addEventListener("mouseup", onMouseUp, false)
-    elem.addEventListener("mouseleave", onMouseUp, false)
+    elem.addEventListener("mousedown" , onMouseDown, false)
+    elem.addEventListener("mousemove" , onMouseMove, false)
+    elem.addEventListener("mouseup"   , onMouseUp  , false)
+    elem.addEventListener("mouseleave", onMouseUp  , false)
 
   }
 
@@ -91,6 +93,7 @@ export class DragManager {
     let mouseDown = false
 
     const setPosition = (x: number, y: number): void => {
+
       const { left, right, width } = elem.getBoundingClientRect()
 
       const absX        = x
@@ -106,12 +109,12 @@ export class DragManager {
       const yPercentage = Math.round(relY / height * 100)
 
       setter(xPercentage, yPercentage)
+
     }
 
     const onMouseDown = (e: MouseEvent): void => {
       if (e.button == 0) {
         mouseDown = true
-
         setPosition(e.clientX, e.clientY)
       }
     }
@@ -128,10 +131,10 @@ export class DragManager {
       }
     }
 
-    elem.addEventListener("mousedown", onMouseDown, false)
-    elem.addEventListener("mousemove", onMouseMove, false)
-    elem.addEventListener("mouseup", onMouseUp, false)
-    elem.addEventListener("mouseleave", onMouseUp, false)
+    elem.addEventListener("mousedown" , onMouseDown, false)
+    elem.addEventListener("mousemove" , onMouseMove, false)
+    elem.addEventListener("mouseup"   , onMouseUp  , false)
+    elem.addEventListener("mouseleave", onMouseUp  , false)
 
   }
 

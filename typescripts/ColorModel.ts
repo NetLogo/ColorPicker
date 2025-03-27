@@ -9,7 +9,8 @@ declare global {
   }
 }
 
-const colorToRGB              = (c: number):      [number, number, number] => window.NLColorModel.colorToRGB(c)
+const colorToRGB = (c: number): [number, number, number] => window.NLColorModel.colorToRGB(c)
+
 const nearestColorNumberOfRGB = (r: number, g: number, b: number): number  => window.NLColorModel.nearestColorNumberOfRGB(r, g, b)
 
 export { colorToRGB, nearestColorNumberOfRGB }

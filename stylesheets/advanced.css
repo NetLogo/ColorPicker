@@ -71,16 +71,16 @@
 .repr-dropdown-label {
   display:        flex;
   flex-direction: column;
-  color: var(--dialog-text);
+  color:          var(--dialog-text);
 }
 
 .repr-input {
-  text-align: right;
-  background: var(--control-background);
-  border: 1px solid var(--control-border);
+  text-align:    right;
+  background:    var(--control-background);
+  border:        1px solid var(--control-border);
   border-radius: 4px;
-  color: var(--control-text);
-  padding: 3px 6px;
+  color:         var(--control-text);
+  padding:       3px 6px;
 }
 
 .repr-input:hover {
@@ -108,11 +108,11 @@
 }
 
 .dropdown {
-  background: var(--control-background);
-  border: 1px solid var(--control-border);
+  background:    var(--control-background);
+  border:        1px solid var(--control-border);
   border-radius: 4px;
-  color: var(--control-text);
-  padding: 3px;
+  color:         var(--control-text);
+  padding:       3px;
 }
 
 .dropdown:hover {

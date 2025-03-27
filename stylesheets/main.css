@@ -1,20 +1,20 @@
 :root {
-  --dialog-background: white;
-  --dialog-text: white;
-  --tab-background: white;
-  --tab-background-selected: white;
-  --tab-border: white;
-  --tab-text: white;
-  --tab-text-selected: white;
-  --control-background: white;
+  --dialog-background:        white;
+  --dialog-text:              white;
+  --tab-background:           white;
+  --tab-background-selected:  white;
+  --tab-border:               white;
+  --tab-text:                 white;
+  --tab-text-selected:        white;
+  --control-background:       white;
   --control-background-hover: white;
-  --control-border: white;
-  --control-text: white;
+  --control-border:           white;
+  --control-text:             white;
 }
 
 * {
   font-family: "Segoe UI", "Open Sans", sans-serif;
-  font-size: 12px;
+  font-size:   12px;
 }
 
 body {
@@ -44,10 +44,10 @@ body {
 }
 
 .form-button {
-  background: var(--control-background);
-  border: 1px solid var(--control-border);
+  background:    var(--control-background);
+  border:        1px solid var(--control-border);
   border-radius: 4px;
-  color: var(--control-text);
+  color:         var(--control-text);
 }
 
 .form-button:hover {
@@ -67,16 +67,16 @@ body {
 }
 
 .tab-button {
-  background-color: var(--tab-background);
-  border: 1px solid var(--tab-border);
-  border-bottom: 0;
-  border-radius: 6px 6px 0 0;
-  color: var(--tab-text);
-  height: 2rem;
-  line-height: 2rem;
-  margin: 0.2rem 0;
-  padding: 0.2rem 0.7rem;
-  user-select: none;
+  background-color:    var(--tab-background);
+  border:              1px solid var(--tab-border);
+  border-bottom:       0;
+  border-radius:       6px 6px 0 0;
+  color:               var(--tab-text);
+  height:              2rem;
+  line-height:         2rem;
+  margin:              0.2rem 0;
+  padding:             0.2rem 0.7rem;
+  user-select:         none;
   -webkit-user-select: none;
 }
 
@@ -86,7 +86,7 @@ body {
 
 .tab-button.selected {
   background-color: var(--tab-background-selected);
-  color: var(--tab-text-selected);
+  color:            var(--tab-text-selected);
 }
 
 .tab-strip {

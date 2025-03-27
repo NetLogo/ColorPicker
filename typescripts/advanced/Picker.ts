@@ -180,7 +180,8 @@ export class Picker {
       (ot) => {
 
         const optionValue =
-          switchMap(ot
+          switchMap(
+              ot
             , outputTypeToHTMLValue
             , (target: OutputType) => {
               throw new Error(`Impossible output type: ${JSON.stringify(target)}`)
