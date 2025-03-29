@@ -109,15 +109,30 @@
 
 .dropdown {
   appearance:    none;
-  background:    var(--dropdown-arrow) 100% center no-repeat, var(--control-background);
+  background:    var(--control-background);
   border:        1px solid var(--control-border);
   border-radius: 4px;
   color:         var(--control-text);
   padding:       3px;
 }
 
-.dropdown:hover {
-  background: var(--dropdown-arrow) 100% center no-repeat, var(--control-background-hover);
+.dropdown:hover, .dropdown-arrow:hover + .dropdown {
+  background: var(--control-background-hover);
+}
+
+.dropdown-arrow {
+
+  border-color:  var(--dropdown-arrow);
+  border-bottom: 1px solid;
+  border-right:  1px solid;
+  height:        9px;
+  width:         9px;
+  transform:     rotate(45deg);
+
+  position: relative;
+  right:    -315px;
+  bottom:   -14px;
+
 }
 
 .slider-background {

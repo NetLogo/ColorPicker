@@ -31,7 +31,7 @@ const defaultTheme: ColorTheme =
   , controlBackgroundHover:  "#d3d3d3"
   , controlBorder:           "black"
   , controlText:             "black"
-  , dropdownArrow:           "url(\"data:image/svg+xml;utf8,<svg width='24' height='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5' style='fill: none;stroke: white;stroke-width: 1'/></svg>\")"
+  , dropdownArrow:           "black"
   }
 
 const applyTheme = (theme: ColorThemeConfig, element: HTMLElement): void => {
