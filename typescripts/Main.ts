@@ -9,6 +9,8 @@ import { SimpleSwatch } from "./SimpleSwatch.js"
 
 import type { ColorThemeConfig } from "./ColorTheme.js"
 
+const { HSB, HSBA, HSL, HSLA, NLNumber, NLWord, RGB, RGBA } = OutputType
+
 declare global {
   interface Window {
 
@@ -86,18 +88,16 @@ window.injectCSS = (css: string): void => {
 }
 
 window.useNumberOnlyPicker = (): void => {
-  window.advanced = new Picker(document, new Set([OutputType.NLNumber]))
+  window.advanced = new Picker(document, new Set([NLNumber]))
 }
 
 window.useNonPickPicker = (): void => {
   findElemByID(document)("pick-button").classList.add("hidden")
-  const types = [ OutputType.NLNumber, OutputType.NLWord, OutputType.RGB, OutputType.RGBA, OutputType.HSB, OutputType.HSBA
-                , OutputType.HSL, OutputType.HSLA]
-  window.advanced = new Picker(document, new Set(types))
+  window.advanced = new Picker(document, new Set([RGBA, NLNumber, NLWord, RGB, HSB, HSBA, HSL, HSLA]))
 }
 
 window.useNumAndRGBAPicker = (): void => {
-  window.advanced = new Picker(document, new Set([OutputType.RGBA, OutputType.NLNumber]))
+  window.advanced = new Picker(document, new Set([RGBA, NLNumber]))
 }
 
 window.syncTheme = (config: ColorThemeConfig): void => {
