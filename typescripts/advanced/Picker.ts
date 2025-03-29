@@ -184,8 +184,8 @@ export class Picker {
               ot
             , outputTypeToHTMLValue
             , (target: OutputType) => {
-              throw new Error(`Impossible output type: ${JSON.stringify(target)}`)
-            }
+                throw new Error(`Impossible output type: ${JSON.stringify(target)}`)
+              }
           )
 
         const elem    = this.dom.findElems(`#output-format-dropdown > option[value=${optionValue}]`)[0] as HTMLOptionElement
