@@ -93,11 +93,11 @@ window.useNumberOnlyPicker = (): void => {
 
 window.useNonPickPicker = (): void => {
   findElemByID(document)("pick-button").classList.add("hidden")
-  window.advanced = new Picker(document, new Set([RGBA, NLNumber, NLWord, RGB, HSB, HSBA, HSL, HSLA]))
+  window.advanced = new Picker(document, new Set([NLNumber, NLWord, RGB, HSB, HSBA, HSL, HSLA, RGBA]))
 }
 
 window.useNumAndRGBAPicker = (): void => {
-  window.advanced = new Picker(document, new Set([RGBA, NLNumber]))
+  window.advanced = new Picker(document, new Set([NLNumber, RGBA]))
 }
 
 window.syncTheme = (config: ColorThemeConfig): void => {
