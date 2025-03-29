@@ -16,9 +16,9 @@ declare global {
     advanced: Picker
 
     injectCSS:           (css: string)              => void
+    useNumAndRGBAPicker: ()                         => void
     useNumberOnlyPicker: ()                         => void
     useNonPickPicker:    ()                         => void
-    useRGBAOnlyPicker:   ()                         => void
     syncTheme:           (config: ColorThemeConfig) => void
 
     nlBabyMonitor: {
@@ -96,8 +96,8 @@ window.useNonPickPicker = (): void => {
   window.advanced = new Picker(document, new Set(types))
 }
 
-window.useRGBAOnlyPicker = (): void => {
-  window.advanced = new Picker(document, new Set([OutputType.RGBA]))
+window.useNumAndRGBAPicker = (): void => {
+  window.advanced = new Picker(document, new Set([OutputType.RGBA, OutputType.NLNumber]))
 }
 
 window.syncTheme = (config: ColorThemeConfig): void => {
