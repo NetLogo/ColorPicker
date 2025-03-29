@@ -14,6 +14,7 @@ interface ColorTheme {
   controlBackgroundActive: string;
   controlBorder:           string;
   controlText:             string;
+  dropdownArrow:           string;
 }
 
 const defaultTheme: ColorTheme =
@@ -30,6 +31,7 @@ const defaultTheme: ColorTheme =
   , controlBackgroundHover:  "#d3d3d3"
   , controlBorder:           "black"
   , controlText:             "black"
+  , dropdownArrow:           "url(\"data:image/svg+xml;utf8,<svg width='24' height='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5' style='fill: none;stroke: white;stroke-width: 1'/></svg>\")"
   }
 
 const applyTheme = (theme: ColorThemeConfig, element: HTMLElement): void => {
@@ -50,6 +52,7 @@ const applyTheme = (theme: ColorThemeConfig, element: HTMLElement): void => {
   set("--control-background-hover" , t.controlBackgroundHover )
   set("--control-border"           , t.controlBorder          )
   set("--control-text"             , t.controlText            )
+  set("--dropdown-arrow"           , t.dropdownArrow          )
 
 }
 

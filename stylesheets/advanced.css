@@ -108,7 +108,8 @@
 }
 
 .dropdown {
-  background:    var(--control-background);
+  appearance:    none;
+  background:    var(--dropdown-arrow) 100% center no-repeat, var(--control-background);
   border:        1px solid var(--control-border);
   border-radius: 4px;
   color:         var(--control-text);
@@ -116,7 +117,7 @@
 }
 
 .dropdown:hover {
-  background: var(--control-background-hover);
+  background: var(--dropdown-arrow) 100% center no-repeat, var(--control-background-hover);
 }
 
 .slider-background {
