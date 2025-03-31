@@ -63,9 +63,9 @@ export class Picker {
     )
 
     const dragMan = new DragManager()
-    dragMan.setupDrag2D (this.dom.findElemByID("swatch-container"), (x: Num, y: Num) => this.setSwatchCoords(x, y))
-    dragMan.setupDrag1DY(this.dom.findElemByID(    "alpha-slider"), (a: Num)         => this.setAlpha(a))
-    dragMan.setupDrag1DY(this.dom.findElemByID(      "hue-slider"), (h: Num)         => this.setHue(h))
+    dragMan.setupDrag2D (this.dom.findElemByID("swatch-container"), doc, (x: Num, y: Num) => this.setSwatchCoords(x, y))
+    dragMan.setupDrag1DY(this.dom.findElemByID(    "alpha-slider"), doc, (a: Num)         => this.setAlpha(a))
+    dragMan.setupDrag1DY(this.dom.findElemByID(      "hue-slider"), doc, (h: Num)         => this.setHue(h))
 
   }
 

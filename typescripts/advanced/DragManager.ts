@@ -2,7 +2,7 @@ import type { Elem, Num } from "./Types.js"
 
 export class DragManager {
 
-  setupDrag1DX(elem: Elem, setter: (x: Num) => void): void {
+  setupDrag1DX(elem: Elem, doc: Document, setter: (x: Num) => void): void {
 
     let mouseDown = false
 
@@ -23,6 +23,7 @@ export class DragManager {
       if (e.button == 0) {
         mouseDown = true
         setPosition(e.clientX)
+        doc.body.classList.add("dragging")
       }
     }
 
@@ -35,17 +36,18 @@ export class DragManager {
     const onMouseUp = (e: MouseEvent): void => {
       if (e.button == 0) {
         mouseDown = false
+        doc.body.classList.remove("dragging")
       }
     }
 
     elem.addEventListener("mousedown" , onMouseDown, false)
-    elem.addEventListener("mousemove" , onMouseMove, false)
-    elem.addEventListener("mouseup"   , onMouseUp  , false)
-    elem.addEventListener("mouseleave", onMouseUp  , false)
+    doc .addEventListener("mousemove" , onMouseMove, false)
+    doc .addEventListener("mouseup"   , onMouseUp  , false)
+    doc .addEventListener("mouseleave", onMouseUp  , false)
 
   }
 
-  setupDrag1DY(elem: Elem, setter: (y: Num) => void): void {
+  setupDrag1DY(elem: Elem, doc: Document, setter: (y: Num) => void): void {
 
     let mouseDown = false
 
@@ -66,6 +68,7 @@ export class DragManager {
       if (e.button == 0) {
         mouseDown = true
         setPosition(e.clientY)
+        doc.body.classList.add("dragging")
       }
     }
 
@@ -78,17 +81,18 @@ export class DragManager {
     const onMouseUp = (e: MouseEvent): void => {
       if (e.button == 0) {
         mouseDown = false
+        doc.body.classList.remove("dragging")
       }
     }
 
     elem.addEventListener("mousedown" , onMouseDown, false)
-    elem.addEventListener("mousemove" , onMouseMove, false)
-    elem.addEventListener("mouseup"   , onMouseUp  , false)
-    elem.addEventListener("mouseleave", onMouseUp  , false)
+    doc .addEventListener("mousemove" , onMouseMove, false)
+    doc .addEventListener("mouseup"   , onMouseUp  , false)
+    doc .addEventListener("mouseleave", onMouseUp  , false)
 
   }
 
-  setupDrag2D(elem: Elem, setter: (x: Num, y: Num) => void): void {
+  setupDrag2D(elem: Elem, doc: Document, setter: (x: Num, y: Num) => void): void {
 
     let mouseDown = false
 
@@ -116,6 +120,7 @@ export class DragManager {
       if (e.button == 0) {
         mouseDown = true
         setPosition(e.clientX, e.clientY)
+        doc.body.classList.add("dragging")
       }
     }
 
@@ -128,13 +133,14 @@ export class DragManager {
     const onMouseUp = (e: MouseEvent): void => {
       if (e.button == 0) {
         mouseDown = false
+        doc.body.classList.remove("dragging")
       }
     }
 
     elem.addEventListener("mousedown" , onMouseDown, false)
-    elem.addEventListener("mousemove" , onMouseMove, false)
-    elem.addEventListener("mouseup"   , onMouseUp  , false)
-    elem.addEventListener("mouseleave", onMouseUp  , false)
+    doc .addEventListener("mousemove" , onMouseMove, false)
+    doc .addEventListener("mouseup"   , onMouseUp  , false)
+    doc .addEventListener("mouseleave", onMouseUp  , false)
 
   }
 
