@@ -132,8 +132,10 @@ export class Picker {
         const rgb = this.repr.toRGB()
         return `(rgb ${rgb.red} ${rgb.green} ${rgb.blue})`
       case OutputType.RGBA:
-        const rgba = this.repr.toRGBA()
-        return `[${rgba.red} ${rgba.green} ${rgba.blue} ${scaleAlpha(rgba.alpha)}]`
+        const rgba        = this.repr.toRGBA()
+        const alpha       = scaleAlpha(rgba.alpha)
+        const alphaSuffix = (alpha < 255) ? ` ${alpha}` : ""
+        return `[${rgba.red} ${rgba.green} ${rgba.blue}${alphaSuffix}]`
       case OutputType.HSB:
         const hsb = this.repr.toHSB()
         return `(hsb ${hsb.hue} ${hsb.saturation} ${hsb.brightness})`
