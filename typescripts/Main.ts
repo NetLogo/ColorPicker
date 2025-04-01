@@ -23,6 +23,7 @@ declare global {
     useNumberOnlyPicker: ()                         => void
     useNonPickPicker:    ()                         => void
     syncTheme:           (config: ColorThemeConfig) => void
+    switchToAdvPicker:   ()                         => void
 
     setValue: (typ: string, value: any) => void
 
@@ -122,6 +123,10 @@ window.setValue = (typ: string, value: any): void => {
   window.simple.setColor(repr.toNLNumber().number)
   window.advanced.setRepr(repr)
 
+}
+
+window.switchToAdvPicker = (): void => {
+  unsafe(document.getElementById("advanced-tab")).click()
 }
 
 window.syncTheme = (config: ColorThemeConfig): void => {
