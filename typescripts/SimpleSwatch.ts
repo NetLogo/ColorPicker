@@ -47,6 +47,8 @@ export class SimpleSwatch {
           div.classList.add("selected")
         }
 
+        div.dataset["color_num"] = (num * 10).toString()
+
         swatch.append(div)
 
       }
@@ -56,6 +58,27 @@ export class SimpleSwatch {
 
   getOutputValue(): string {
     return this.colorNum.toString()
+  }
+
+  setColor(num: number): void {
+
+    const amped = Math.round(num * 10)
+
+    const elems = Array.from(document.querySelectorAll(".swatch-color")) as Array<HTMLDivElement>
+
+    const closestDiv =
+      elems.slice(1).reduce(
+        (best, elem) => {
+          const bestDist = Math.abs(amped - parseInt(unsafe(best.dataset["color_num"])))
+          const elemDist = Math.abs(amped - parseInt(unsafe(elem.dataset["color_num"])))
+          const isBetter = elemDist < bestDist
+          return isBetter ? elem : best
+        }
+      , unsafe(elems[0])
+      )
+
+    closestDiv.click()
+
   }
 
 }

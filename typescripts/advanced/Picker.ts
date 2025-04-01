@@ -27,18 +27,6 @@ export class Picker {
 
     this.repr = new GUI_HSLA(0, 0, 0, 0)
 
-    const setRepr = (repr: Representation) => {
-
-      this.repr = repr
-
-      const hsla = repr.toGUI_HSLA()
-
-      this.setHue(hsla.hue)
-      this.setSwatchCoords(hsla.saturation, hsla.lightness)
-      this.setAlpha(hsla.alpha)
-
-    }
-
     this.reprReader = new ReadsReprFromInputs()
     this.reprWriter = new WritesReprToInputs()
 
@@ -58,7 +46,7 @@ export class Picker {
 
     Array.from(this.dom.findInputs(doc, ".repr-input")).forEach(
       (input) => {
-        input.addEventListener("change", () => this.reprReader.read(this.dom, setRepr))
+        input.addEventListener("change", () => this.reprReader.read(this.dom, this.setRepr))
       }
     )
 
@@ -101,6 +89,18 @@ export class Picker {
 
     this.updateColor()
     this.updateAlphaGradient()
+
+  }
+
+  setRepr(repr: Representation): void {
+
+    this.repr = repr
+
+    const hsla = repr.toGUI_HSLA()
+
+    this.setHue(hsla.hue)
+    this.setSwatchCoords(hsla.saturation, hsla.lightness)
+    this.setAlpha(hsla.alpha)
 
   }
 

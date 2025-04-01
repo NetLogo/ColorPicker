@@ -3,6 +3,7 @@ import { unsafe                  } from "./common/Util.js"
 
 import { OutputType } from "./advanced/OutputType.js"
 import { Picker     } from "./advanced/Picker.js"
+import * as Repr      from "./advanced/Representation.js"
 
 import { applyTheme   } from "./ColorTheme.js"
 import { SimpleSwatch } from "./SimpleSwatch.js"
@@ -22,6 +23,8 @@ declare global {
     useNumberOnlyPicker: ()                         => void
     useNonPickPicker:    ()                         => void
     syncTheme:           (config: ColorThemeConfig) => void
+
+    setValue: (typ: string, value: any) => void
 
     nlBabyMonitor: {
       onPick:   (str: string) => void
@@ -98,6 +101,27 @@ window.useNonPickPicker = (): void => {
 
 window.useNumAndRGBAPicker = (): void => {
   window.advanced = new Picker(document, new Set([NLNumber, RGBA]))
+}
+
+window.setValue = (typ: string, value: any): void => {
+
+  let repr = undefined
+
+  if (typ === "number") {
+    repr = new Repr.NLNumber(value as number)
+  } else if (typ === "rgb") {
+    const { red, green, blue } = value as { red: number, green: number, blue: number }
+    repr = new Repr.RGB(red, green, blue)
+  } else if (typ === "rgba") {
+    const { red, green, blue, alpha } = value as { red: number, green: number, blue: number, alpha: number }
+    repr = new Repr.RGBA(red, green, blue, alpha)
+  } else {
+    throw new Error(`Unknown value type: ${value}`)
+  }
+
+  window.simple.setColor(repr.toNLNumber().number)
+  window.advanced.setRepr(repr)
+
 }
 
 window.syncTheme = (config: ColorThemeConfig): void => {
