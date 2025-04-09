@@ -46,7 +46,7 @@ export class Picker {
 
     Array.from(this.dom.findInputs(doc, ".repr-input")).forEach(
       (input) => {
-        input.addEventListener("change", () => this.reprReader.read(this.dom, this.setRepr))
+        input.addEventListener("change", () => this.reprReader.read(this.dom, (x) => this.setRepr(x)))
       }
     )
 
