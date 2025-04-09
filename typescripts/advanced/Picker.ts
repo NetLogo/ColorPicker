@@ -30,8 +30,8 @@ export class Picker {
     this.reprReader = new ReadsReprFromInputs()
     this.reprWriter = new WritesReprToInputs()
 
-    const outputDropdown = this.dom.findElemByID("output-format-dropdown")
-    outputDropdown.addEventListener("change", () => this.updateOutput())
+    const outputDropdown = this.dom.findOutputDropdown()
+    outputDropdown.addEventListener("change", () => this.updateOutputControl())
 
     this.activateOutputs(outputTypes)
 
@@ -111,6 +111,11 @@ export class Picker {
     this.updateOutput()
   }
 
+  updateOutputControl(): void {
+    this.updateAlphaVis()
+    this.updateOutput()
+  }
+
   updateOutput(): void {
     this.dom.findElemByID("output-field").innerText = this.getOutputValue()
   }
@@ -172,7 +177,28 @@ export class Picker {
     const targetElemID = unsafe(optionValueToContainerID[dropdown.value])
     this.dom.findElemByID(targetElemID).style.display = "flex"
 
+    this.updateAlphaVis()
+
     this.updateColor()
+
+  }
+
+  private updateAlphaVis(): void {
+
+    const reprHasAlpha   = (repr: Str) => ["hsba", "hsla", "rgba", "hex"].includes(repr)
+    const innie          = this.dom.findReprDropdown()
+    const outie          = this.dom.findOutputDropdown()
+    const inputHasAlpha  = reprHasAlpha(innie.value)
+    const outputHasAlpha = reprHasAlpha(outie.value)
+
+    const alphaWrapper = this.dom.findElemByID("alpha-wrapper")
+
+    if (inputHasAlpha || outputHasAlpha) {
+      alphaWrapper.classList.remove("hidden")
+    } else {
+      alphaWrapper.classList.add("hidden")
+      this.setAlpha(100)
+    }
 
   }
 

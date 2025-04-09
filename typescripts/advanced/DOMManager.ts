@@ -42,6 +42,10 @@ export class DOMManager {
     return findInputs(container, ".repr-input").map((i: Input) => i.value)
   }
 
+  findOutputDropdown(): HTMLInputElement {
+    return this.findInputByID("output-format-dropdown")
+  }
+
   findReprDropdown(): HTMLInputElement {
     return this.findInputByID("repr-dropdown")
   }
