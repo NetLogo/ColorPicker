@@ -218,9 +218,9 @@ class RGB implements Representation, RGBLike {
         const rd = (x: Num): Num => Math.round(x * 10) / 10
 
         const diff = (colorNumber === nearestValue) ? "" :
-                     (colorNumber   > nearestValue) ? `+ ${rd(colorNumber - nearestValue)}` : `- ${rd(nearestValue - colorNumber)}`
+                     (colorNumber   > nearestValue) ? ` + ${rd(colorNumber - nearestValue)}` : ` - ${rd(nearestValue - colorNumber)}`
 
-        return `${nearestWord} ${diff}`
+        return `${nearestWord}${diff}`
 
       }
 
