@@ -2,6 +2,10 @@
   --checkerboard: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAADFJREFUOE9jZGBgEGHAD97gk2YcNYBhmIQBgWSAP52AwoAQwJvQRg1gACckQoC2gQgAIF8IscwEtKYAAAAASUVORK5CYII=);
 }
 
+.alpha-warning {
+  box-shadow: rgba(255, 130, 0, 0.8) 0px 0px 1px 1px, rgba(255, 130, 0, 0.4) 0px 0px 3px 3px;
+}
+
 .form-label {
   color: var(--dialog-text);
   user-select: none;

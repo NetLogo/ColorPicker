@@ -12,6 +12,8 @@ import { calcHueDegrees, clamp, optionValueToContainerID, outputTypeToHTMLValue 
 import type { Representation } from "./Representation.js"
 import type { Elem, Num, Str } from "./Types.js"
 
+const reprHasAlpha = (repr: Str) => ["hsba", "hsla", "rgba", "hex"].includes(repr)
+
 export class Picker {
 
   public dom: DOMManager
@@ -118,6 +120,25 @@ export class Picker {
 
   updateOutput(): void {
     this.dom.findElemByID("output-field").innerText = this.getOutputValue()
+    this.validateControls()
+  }
+
+  validateControls(): void {
+
+    const alpha = this.repr.toGUI_HSLA().alpha
+
+    const outie          = this.dom.findOutputDropdown()
+    const outputHasAlpha = reprHasAlpha(outie.value)
+
+    if ((alpha === 100) || outputHasAlpha) {
+      outie.classList.remove("alpha-warning")
+      outie.title = ""
+    } else {
+      outie.classList.add("alpha-warning")
+      outie.title = "You have chosen a color with alpha (transparency), but this output format does not support\
+ transparency, so the output color will be entirely opaque."
+    }
+
   }
 
   getOutputValue(): Str {
@@ -187,7 +208,6 @@ export class Picker {
 
   private updateAlphaVis(): void {
 
-    const reprHasAlpha   = (repr: Str) => ["hsba", "hsla", "rgba", "hex"].includes(repr)
     const innie          = this.dom.findReprDropdown()
     const outie          = this.dom.findOutputDropdown()
     const inputHasAlpha  = reprHasAlpha(innie.value)
