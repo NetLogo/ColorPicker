@@ -7,8 +7,9 @@
 }
 
 .form-label {
-  color: var(--dialog-text);
-  user-select: none;
+  color:               var(--dialog-text);
+  user-select:         none;
+  -webkit-user-select: none;
 }
 
 .input-bar {

@@ -8,8 +8,9 @@ body {
 }
 
 body.dragging, body.dragging * {
-  cursor:      grabbing;
-  user-select: none;
+  cursor:              grabbing;
+  user-select:         none;
+  -webkit-user-select: none;
 }
 
 #content-pane {
