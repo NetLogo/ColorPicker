@@ -51,7 +51,7 @@ window.addEventListener("load", () => {
 
   window.nlBabyMonitor = {
     onPick:   (_: string) => { return }
-  , onCopy:   (_: string) => { return }
+  , onCopy:   (s: string) => { navigator.clipboard.writeText(s) }
   , onCancel: ()          => { return }
   }
 
