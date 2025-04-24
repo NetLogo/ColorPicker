@@ -1,10 +1,8 @@
-import { colorToRGB, nearestColorNumberOfRGB } from "../ColorModel.js"
+import { colorToRGB, colorWordToNumber, nearestColorNumberOfRGB, rgbToWord } from "../ColorModel.js"
 
-import { unsafe } from "../common/Util.js"
+import { calcHueDegrees } from "./Util.js"
 
-import { calcHueDegrees, nlWordsToNumbers } from "./Util.js"
-
-import type { Num, Num4, Str, Str3 } from "../common/Types.js"
+import type { Num, Num4, Str } from "../common/Types.js"
 
 interface Representation {
 
@@ -123,15 +121,7 @@ class NLWord implements Representation {
   }
 
   toNLNumber(): NLNumber {
-    const [word, operator, value] = this.word.split(" ") as Str3
-    if (nlWordsToNumbers.hasOwnProperty(word)) {
-      const baseNum = unsafe(nlWordsToNumbers[word])
-      const diff    = ((operator !== "+" && operator !== "-") || isNaN(Number(value))) ? 0 :
-                       (operator === "+") ? Number(value) : -Number(value)
-      return new NLNumber(baseNum + diff)
-    } else {
-      throw new Error(`Invalid NLWord: ${this.word}`)
-    }
+    return new NLNumber(colorWordToNumber(this.word))
   }
 
   toNLWord(): NLWord {
@@ -196,38 +186,7 @@ class RGB implements Representation, RGBLike {
   }
 
   toNLWord(): NLWord {
-
-    const findColorWord = (r: Num, g: Num, b: Num): Str => {
-
-      const colorNumber = nearestColorNumberOfRGB(r, g, b)
-
-      if (colorNumber === 0) {
-        return "black"
-      } else if (colorNumber === 9.9) {
-        return "white"
-      } else {
-
-        const pairs = Object.entries(nlWordsToNumbers).slice(2)
-
-        const [nearestWord, nearestValue] =
-          pairs.reduce(
-            (acc, x) => Math.abs(colorNumber - x[1]) < Math.abs(colorNumber - acc[1]) ? x : acc
-          , ["nonsense", 1e9]
-          )
-
-        const rd = (x: Num): Num => Math.round(x * 10) / 10
-
-        const diff = (colorNumber === nearestValue) ? "" :
-                     (colorNumber   > nearestValue) ? ` + ${rd(colorNumber - nearestValue)}` : ` - ${rd(nearestValue - colorNumber)}`
-
-        return `${nearestWord}${diff}`
-
-      }
-
-    }
-
-    return new NLWord(findColorWord(this.red, this.green, this.blue))
-
+    return new NLWord(rgbToWord(this.red, this.green, this.blue))
   }
 
   toRGB(): RGB {
