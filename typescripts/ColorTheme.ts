@@ -18,11 +18,11 @@ interface ColorTheme {
 }
 
 const defaultTheme: ColorTheme =
-  { dialogBackground:        "white"
+  { dialogBackground:        "#dcdcdc"
   , dialogText:              "black"
-  , tabBackground:           "#aaaaaa"
+  , tabBackground:           "#f0f0f0"
   , tabBackgroundHover:      "#d3d3d3"
-  , tabBackgroundSelected:   "#f0f0f0"
+  , tabBackgroundSelected:   "#aaaaaa"
   , tabBorder:               "black"
   , tabText:                 "black"
   , tabTextSelected:         "black"
