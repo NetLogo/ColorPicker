@@ -9,8 +9,9 @@ import { WritesReprToInputs  } from "./WritesReprToInputs.js"
 
 import { calcHueDegrees, clamp, optionValueToContainerID, outputTypeToHTMLValue } from "./Util.js"
 
+import type { Elem, Num, Str } from "../common/Types.js"
+
 import type { Representation } from "./Representation.js"
-import type { Elem, Num, Str } from "./Types.js"
 
 const reprHasAlpha = (repr: Str) => ["hsba", "hsla", "rgba", "hex"].includes(repr)
 

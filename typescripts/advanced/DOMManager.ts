@@ -3,7 +3,7 @@ import { unsafe                                                           } from
 
 import { optionValueToContainerID } from "./Util.js"
 
-import type { Elem, Input, Str } from "./Types.js"
+import type { Elem, Input, Str } from "../common/Types.js"
 
 export class DOMManager {
 

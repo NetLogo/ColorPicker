@@ -1,4 +1,4 @@
-import type { Elem, Num } from "./Types.js"
+import type { Elem, Num } from "../common/Types.js"
 
 export class DragManager {
 

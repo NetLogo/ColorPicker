@@ -1,8 +1,9 @@
 import { DOMManager                                                     } from "./DOMManager.js"
 import { Hexadecimal, HSB, HSBA, HSL, HSLA, NLNumber, NLWord, RGB, RGBA } from "./Representation.js"
 
-import type { Representation                    } from "./Representation.js"
-import type { Num3, Num4, Str1, Str3, Str4 } from "./Types.js"
+import type { Num3, Num4, Str1, Str3, Str4 } from "../common/Types.js"
+
+import type { Representation               } from "./Representation.js"
 
 type SetReprF = (repr: Representation) => void
 

@@ -4,7 +4,7 @@ import { unsafe } from "../common/Util.js"
 
 import { calcHueDegrees, nlWordsToNumbers } from "./Util.js"
 
-import type { Num, Num4, Str, Str3 } from "./Types.js"
+import type { Num, Num4, Str, Str3 } from "../common/Types.js"
 
 interface Representation {
 
