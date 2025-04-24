@@ -55,6 +55,8 @@ export class SimpleSwatch {
       }
     )
 
+    this.setColor(0)
+
   }
 
   getOutputValue(): string {
