@@ -5,12 +5,13 @@ import { colorToRGB } from "./ColorModel.js"
 export class SimpleSwatch {
 
   private colorNum: number
+  private pane:     HTMLDivElement
 
   constructor(doc: Document) {
 
     this.colorNum = 0
 
-    const swatch = unsafe(doc.getElementById("simple-pane"))
+    this.pane = doc.getElementById("simple-pane") as HTMLDivElement
 
     const nums =
       [...Array(11 * 14).keys()].map(
@@ -43,13 +44,13 @@ export class SimpleSwatch {
 
         div.onclick = () => {
           this.colorNum = num
-          Array.from(doc.querySelectorAll(".swatch-color.selected")).forEach((sc) => sc.classList.remove("selected"))
+          Array.from(this.pane.querySelectorAll(".swatch-color.selected")).forEach((sc) => sc.classList.remove("selected"))
           div.classList.add("selected")
         }
 
         div.dataset["color_num"] = (num * 10).toString()
 
-        swatch.append(div)
+        unsafe(this.pane.querySelector(".swatches")).append(div)
 
       }
     )
@@ -64,7 +65,7 @@ export class SimpleSwatch {
 
     const amped = Math.round(num * 10)
 
-    const elems = Array.from(document.querySelectorAll(".swatch-color")) as Array<HTMLDivElement>
+    const elems = Array.from(this.pane.querySelectorAll(".swatch-color")) as Array<HTMLDivElement>
 
     const closestDiv =
       elems.slice(1).reduce(
