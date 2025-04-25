@@ -1,6 +1,6 @@
 import { unsafe } from "./common/Util.js"
 
-import { colorToRGB } from "./ColorModel.js"
+import { colorToRGB, rgbToWord } from "./ColorModel.js"
 
 export class SimpleSwatch {
 
@@ -43,9 +43,15 @@ export class SimpleSwatch {
         div.style.cssText = `background-color: ${rgbCSS}; border-color: ${rgbCSS};`
 
         div.onclick = () => {
-          this.colorNum = num
+
+          this.colorNum   = num
+          const [r, g, b] = colorToRGB(num)
+          const word      = rgbToWord(r, g, b);
+          (this.pane.querySelector(".output-field") as HTMLOutputElement).value = word
+
           Array.from(this.pane.querySelectorAll(".swatch-color.selected")).forEach((sc) => sc.classList.remove("selected"))
           div.classList.add("selected")
+
         }
 
         div.dataset["color_num"] = (num * 10).toString()
@@ -59,8 +65,14 @@ export class SimpleSwatch {
 
   }
 
-  getOutputValue(): string {
-    return this.colorNum.toString()
+  getOutputValue(isCopy: boolean): string {
+    if (isCopy) {
+      const word      = (this.pane.querySelector(".output-field") as HTMLOutputElement).value
+      const isLiteral = !word.includes(" ")
+      return isLiteral ? word : `(${word})`
+    } else {
+      return this.colorNum.toString()
+    }
   }
 
   setColor(num: number): void {

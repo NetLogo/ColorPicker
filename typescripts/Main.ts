@@ -65,7 +65,7 @@ window.addEventListener("load", () => {
 
   findElemByID(document)("pick-button").addEventListener("click",
     (_: MouseEvent) => {
-      window.nlBabyMonitor.onPick(getOutputValue())
+      window.nlBabyMonitor.onPick(getOutputValue(false))
     }
   )
 
@@ -75,9 +75,31 @@ window.addEventListener("load", () => {
     }
   )
 
-  findElemByID(document)("copy-button").addEventListener("click",
-    () => {
-      window.nlBabyMonitor.onCopy(getOutputValue())
+  Array.from(findElems(document, ".copy-button")).forEach(
+    (btn) => {
+
+      var isChilling = false
+
+      btn.addEventListener("click", () => {
+
+        if (!isChilling) {
+
+          btn.classList.add("on-cooldown")
+          isChilling = true
+
+          setTimeout(
+            () => {
+              btn.classList.remove("on-cooldown")
+              isChilling = false
+            }
+          , 1200)
+
+          window.nlBabyMonitor.onCopy(getOutputValue(true))
+
+        }
+
+      })
+
     }
   )
 
@@ -133,13 +155,13 @@ window.syncTheme = (config: ColorThemeConfig): void => {
   applyTheme(config, document.body)
 }
 
-const getOutputValue = (): string => {
+const getOutputValue = (isClipboard: boolean): string => {
 
   const selected = unsafe(Array.from(findElems(document, "#tab-strip .tab-button.selected"))[0])
 
   switch (selected.id) {
     case "simple-tab":
-      return window.simple.getOutputValue()
+      return window.simple.getOutputValue(isClipboard)
     case "advanced-tab":
       return window.advanced.getOutputValue()
     default:

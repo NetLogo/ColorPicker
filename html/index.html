@@ -20,7 +20,19 @@
 
       <div id="content-pane">
 
-        <div id="simple-pane" class="simple pane"></div>
+        <div id="simple-pane" class="simple pane">
+          <div id="simple-swatch-container" class="swatches"></div>
+          <div class="main-outputs">
+            <output class="output-field"></output>
+            <div class="copy-button">
+              <div class="inner">
+                <div class="copy-button-layer front"></div>
+                <div class="copy-button-layer back"></div>
+              </div>
+              <div class="checkmark"></div>
+            </div>
+          </div>
+        </div>
 
         <div id="advanced-pane" class="advanced pane hidden">
 
@@ -242,10 +254,20 @@
 
           </div>
 
+          <div class="main-outputs">
+            <output class="output-field"></output>
+            <div class="copy-button">
+              <div class="inner">
+                <div class="copy-button-layer front"></div>
+                <div class="copy-button-layer back"></div>
+              </div>
+              <div class="checkmark hidden"></div>
+            </div>
+          </div>
+
         </div>
 
         <div class="form-buttons">
-          <input type="button" id=  "copy-button" class="form-button" value="Copy" />
           <div class="main-buttons">
             <input type="button" id=  "pick-button" class="form-button" value="OK"     />
             <input type="button" id="cancel-button" class="form-button" value="Cancel" />
