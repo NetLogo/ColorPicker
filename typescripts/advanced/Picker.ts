@@ -9,7 +9,7 @@ import { WritesReprToInputs  } from "./WritesReprToInputs.js"
 
 import { calcHueDegrees, clamp, optionValueToContainerID, outputTypeToHTMLValue } from "./Util.js"
 
-import type { Elem, Num, Str } from "../common/Types.js"
+import type { El, InputEl, Num, Str } from "../common/Types.js"
 
 import type { Representation } from "./Representation.js"
 
@@ -47,7 +47,7 @@ export class Picker {
     this.setSwatchCoords(75, 20)
     this.setAlpha(100)
 
-    Array.from(this.dom.findInputs(doc, ".repr-input")).forEach(
+    Array.from(this.dom.findElems<InputEl>(".repr-input")).forEach(
       (input) => {
         input.addEventListener("change", () => this.reprReader.read(this.dom, (x) => this.setRepr(x)))
       }
@@ -188,14 +188,14 @@ export class Picker {
     const { hue, saturation, lightness } = this.repr.toHSL()
 
     const hslStr = `${hue}, ${saturation}%, ${lightness}%`
-    const [elem] = this.dom.findElems(".slider-background.alpha") as [Elem]
+    const [elem] = this.dom.findElems(".slider-background.alpha") as [El]
     elem.style.background = `linear-gradient(to top, hsla(${hslStr}, 0) 0%, hsl(${hslStr}) 100%)`
 
   }
 
   private updateReprControls(): void {
 
-    this.dom.findElems(".repr-controls-container .repr-controls").forEach((c: Elem) => { c.style.display = "" })
+    this.dom.findElems(".repr-controls-container .repr-controls").forEach((c: El) => { c.style.display = "" })
 
     const dropdown     = this.dom.findReprDropdown()
     const targetElemID = unsafe(optionValueToContainerID[dropdown.value])

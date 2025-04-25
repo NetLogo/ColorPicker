@@ -1,8 +1,8 @@
-import type { Elem, Num } from "../common/Types.js"
+import type { El, Num } from "../common/Types.js"
 
 export class DragManager {
 
-  setupDrag1DX(elem: Elem, doc: Document, setter: (x: Num) => void): void {
+  setupDrag1DX(elem: El, doc: Document, setter: (x: Num) => void): void {
 
     let mouseDown = false
 
@@ -47,7 +47,7 @@ export class DragManager {
 
   }
 
-  setupDrag1DY(elem: Elem, doc: Document, setter: (y: Num) => void): void {
+  setupDrag1DY(elem: El, doc: Document, setter: (y: Num) => void): void {
 
     let mouseDown = false
 
@@ -92,7 +92,7 @@ export class DragManager {
 
   }
 
-  setupDrag2D(elem: Elem, doc: Document, setter: (x: Num, y: Num) => void): void {
+  setupDrag2D(elem: El, doc: Document, setter: (x: Num, y: Num) => void): void {
 
     let mouseDown = false
 

@@ -8,6 +8,8 @@ import * as Repr      from "./advanced/Representation.js"
 import { applyTheme   } from "./ColorTheme.js"
 import { SimpleSwatch } from "./SimpleSwatch.js"
 
+import type { El, TemplateEl } from "./common/Types.js"
+
 import type { ColorThemeConfig } from "./ColorTheme.js"
 
 const { NLNumber, NLWord, RGBA } = OutputType
@@ -39,9 +41,9 @@ declare global {
 const setUpTabListener = (tabID: string, contentID: string): void => {
   findElemByID(document)(tabID).addEventListener("click",
     (e: MouseEvent) => {
-      findElems(document, "#tab-strip .tab-button").forEach((tb) => tb.classList.remove("selected"));
+      findElems(document)("#tab-strip .tab-button").forEach((tb) => tb.classList.remove("selected"));
       (e.target as HTMLElement).classList.add("selected")
-      findElems(document, "#content-pane .pane").forEach((p: HTMLElement) => p.classList.add("hidden"))
+      findElems(document)("#content-pane .pane").forEach((p: El) => p.classList.add("hidden"))
       findElemByID(document)(contentID).classList.remove("hidden")
     }
   )
@@ -49,9 +51,9 @@ const setUpTabListener = (tabID: string, contentID: string): void => {
 
 const instantiateTemplates = (doc: Document): void => {
 
-  const outputsTemplate = (findElemByID(document)("outputs-template") as HTMLTemplateElement).content
+  const outputsTemplate = (findElemByID<TemplateEl>(doc)("outputs-template")).content
 
-  Array.from(findElems(doc, ".outputs-placeholder")).forEach(
+  Array.from(findElems(doc)(".outputs-placeholder")).forEach(
     (placeholder: Element) => {
       const outputs = outputsTemplate.cloneNode(true)
       unsafe(placeholder.parentNode).replaceChild(outputs, placeholder)
@@ -88,7 +90,7 @@ window.addEventListener("load", () => {
     }
   )
 
-  Array.from(findElems(document, ".copy-button")).forEach(
+  Array.from(findElems(document)(".copy-button")).forEach(
     (btn) => {
 
       var isChilling = false
@@ -170,7 +172,7 @@ window.syncTheme = (config: ColorThemeConfig): void => {
 
 const getOutputValue = (isClipboard: boolean): string => {
 
-  const selected = unsafe(Array.from(findElems(document, "#tab-strip .tab-button.selected"))[0])
+  const selected = unsafe(Array.from(findElems(document)("#tab-strip .tab-button.selected"))[0])
 
   switch (selected.id) {
     case "simple-tab":

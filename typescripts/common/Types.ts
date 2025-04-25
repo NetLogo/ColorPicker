@@ -1,5 +1,8 @@
-export type Elem  = HTMLElement
-export type Input = HTMLInputElement
+export type DivEl      = HTMLDivElement
+export type El         = HTMLElement
+export type InputEl    = HTMLInputElement
+export type TemplateEl = HTMLTemplateElement
+
 export type Num   = number
 export type Str   = string
 
