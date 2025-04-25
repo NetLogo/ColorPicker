@@ -70,16 +70,24 @@ body.dragging, body.dragging * {
 .tab-button {
   background-color:    var(--tab-background);
   border:              1px solid var(--tab-border);
-  border-bottom:       0;
-  border-radius:       6px 6px 0 0;
   color:               var(--tab-text);
   cursor:              default;
   height:              2rem;
   line-height:         2rem;
   margin:              0.2rem 0;
+  min-width:           10rem;
   padding:             0.2rem 0.7rem;
+  text-align:          center;
   user-select:         none;
   -webkit-user-select: none;
+}
+
+.tab-button:first-child {
+  border-radius: 0.6rem 0 0 0.6rem;
+}
+
+.tab-button:last-child {
+  border-radius: 0 0.6rem 0.6rem 0;
 }
 
 .tab-button:not(:first-child) {
@@ -98,6 +106,6 @@ body.dragging, body.dragging * {
 .tab-strip {
   display:        flex;
   flex-direction: row;
-  margin-bottom:  -2px;
+  margin-bottom:  1.5rem;
   position:       relative;
 }
