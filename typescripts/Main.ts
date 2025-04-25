@@ -68,8 +68,6 @@ window.addEventListener("load", () => {
   , onCancel: ()          => { return }
   }
 
-  window.nlBabyMonitor.onCopy = (str: string) => navigator.clipboard.writeText(str)
-
   setUpTabListener(  "simple-tab",   "simple-pane")
   setUpTabListener("advanced-tab", "advanced-pane")
 
