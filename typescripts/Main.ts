@@ -47,6 +47,19 @@ const setUpTabListener = (tabID: string, contentID: string) => {
   )
 }
 
+const instantiateTemplates = (doc: Document): void => {
+
+  const outputsTemplate = (findElemByID(document)("outputs-template") as HTMLTemplateElement).content
+
+  Array.from(findElems(doc, ".outputs-placeholder")).forEach(
+    (placeholder: Element) => {
+      const outputs = outputsTemplate.cloneNode(true)
+      unsafe(placeholder.parentNode).replaceChild(outputs, placeholder)
+    }
+  )
+
+}
+
 window.addEventListener("load", () => {
 
   window.nlBabyMonitor = {
@@ -59,6 +72,8 @@ window.addEventListener("load", () => {
 
   setUpTabListener(  "simple-tab",   "simple-pane")
   setUpTabListener("advanced-tab", "advanced-pane")
+
+  instantiateTemplates(document)
 
   window.simple   = new SimpleSwatch(document)
   window.advanced = new Picker(document, new Set([]))

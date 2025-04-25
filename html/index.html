@@ -22,16 +22,7 @@
 
         <div id="simple-pane" class="simple pane">
           <div id="simple-swatch-container" class="swatches"></div>
-          <div class="main-outputs">
-            <output class="output-field"></output>
-            <div class="copy-button">
-              <div class="inner">
-                <div class="copy-button-layer front"></div>
-                <div class="copy-button-layer back"></div>
-              </div>
-              <div class="checkmark"></div>
-            </div>
-          </div>
+          <div class="outputs-placeholder"></div>
         </div>
 
         <div id="advanced-pane" class="advanced pane hidden">
@@ -254,16 +245,7 @@
 
           </div>
 
-          <div class="main-outputs">
-            <output class="output-field"></output>
-            <div class="copy-button">
-              <div class="inner">
-                <div class="copy-button-layer front"></div>
-                <div class="copy-button-layer back"></div>
-              </div>
-              <div class="checkmark hidden"></div>
-            </div>
-          </div>
+          <div class="outputs-placeholder"></div>
 
         </div>
 
@@ -279,6 +261,19 @@
     </div>
 
   </body>
+
+  <template id="outputs-template">
+    <div class="main-outputs">
+      <output class="output-field"></output>
+      <div class="copy-button">
+        <div class="inner">
+          <div class="copy-button-layer front"></div>
+          <div class="copy-button-layer back"></div>
+        </div>
+        <div class="checkmark"></div>
+      </div>
+    </div>
+  </template>
 
   <script src="./javascripts/realmain.js"></script>
 
