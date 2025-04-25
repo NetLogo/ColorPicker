@@ -1,4 +1,5 @@
-import { unsafe } from "./common/Util.js"
+import { findElems } from "./common/DOM.js"
+import { unsafe    } from "./common/Util.js"
 
 import { colorToRGB, rgbToWord } from "./ColorModel.js"
 
@@ -48,8 +49,8 @@ export class SimpleSwatch {
 
           this.colorNum   = num
           const [r, g, b] = colorToRGB(num)
-          const word      = rgbToWord(r, g, b);
-          (this.pane.querySelector(".output-field") as OutputEl).value = word
+          const word      = rgbToWord(r, g, b)
+          unsafe(findElems<OutputEl>(this.pane)(".output-field")[0]).value = word
 
           Array.from(this.pane.querySelectorAll(".swatch-color.selected")).forEach((sc) => sc.classList.remove("selected"))
           div.classList.add("selected")
