@@ -8,7 +8,7 @@ import * as Repr      from "./advanced/Representation.js"
 import { applyTheme   } from "./ColorTheme.js"
 import { SimpleSwatch } from "./SimpleSwatch.js"
 
-import type { El, TemplateEl } from "./common/Types.js"
+import type { El, Num, Str, TemplateEl } from "./common/Types.js"
 
 import type { ColorThemeConfig } from "./ColorTheme.js"
 
@@ -20,25 +20,25 @@ declare global {
     simple:   SimpleSwatch
     advanced: Picker
 
-    injectCSS:           (css: string)              => void
+    injectCSS:           (css: Str)                 => void
     useNumAndRGBAPicker: ()                         => void
     useNumberOnlyPicker: ()                         => void
     useNonPickPicker:    ()                         => void
     syncTheme:           (config: ColorThemeConfig) => void
     switchToAdvPicker:   ()                         => void
 
-    setValue: (typ: string, value: any) => void
+    setValue: (typ: Str, value: any) => void
 
     nlBabyMonitor: {
-      onPick:   (str: string) => void
-      onCopy:   (str: string) => void
-      onCancel: ()            => void
+      onPick:   (str: Str) => void
+      onCopy:   (str: Str) => void
+      onCancel: ()         => void
     }
 
   }
 }
 
-const setUpTabListener = (tabID: string, contentID: string): void => {
+const setUpTabListener = (tabID: Str, contentID: Str): void => {
   findElemByID(document)(tabID).addEventListener("click",
     (e: MouseEvent) => {
       findElems(document)("#tab-strip .tab-button").forEach((tb) => tb.classList.remove("selected"));
@@ -65,9 +65,9 @@ const instantiateTemplates = (doc: Document): void => {
 window.addEventListener("load", () => {
 
   window.nlBabyMonitor = {
-    onPick:   (_: string) => { return }
-  , onCopy:   (s: string) => { navigator.clipboard.writeText(s) }
-  , onCancel: ()          => { return }
+    onPick:   (_: Str) => { return }
+  , onCopy:   (s: Str) => { navigator.clipboard.writeText(s) }
+  , onCancel: ()       => { return }
   }
 
   setUpTabListener(  "simple-tab",   "simple-pane")
@@ -122,7 +122,7 @@ window.addEventListener("load", () => {
 
 })
 
-window.injectCSS = (css: string): void => {
+window.injectCSS = (css: Str): void => {
   const elem       = document.createElement("style")
   elem.textContent = css
   document.head.append(elem)
@@ -141,17 +141,17 @@ window.useNumAndRGBAPicker = (): void => {
   window.advanced = new Picker(document, new Set([NLNumber, RGBA]))
 }
 
-window.setValue = (typ: string, value: any): void => {
+window.setValue = (typ: Str, value: any): void => {
 
   let repr = undefined
 
   if (typ === "number") {
-    repr = new Repr.NLNumber(value as number)
+    repr = new Repr.NLNumber(value as Num)
   } else if (typ === "rgb") {
-    const { red, green, blue } = value as { red: number, green: number, blue: number }
+    const { red, green, blue } = value as { red: Num, green: Num, blue: Num }
     repr = new Repr.RGB(red, green, blue)
   } else if (typ === "rgba") {
-    const { red, green, blue, alpha } = value as { red: number, green: number, blue: number, alpha: number }
+    const { red, green, blue, alpha } = value as { red: Num, green: Num, blue: Num, alpha: Num }
     repr = new Repr.RGBA(red, green, blue, alpha)
   } else {
     throw new Error(`Unknown value type: ${value}`)
@@ -170,7 +170,7 @@ window.syncTheme = (config: ColorThemeConfig): void => {
   applyTheme(config, document.body)
 }
 
-const getOutputValue = (isClipboard: boolean): string => {
+const getOutputValue = (isClipboard: boolean): Str => {
 
   const selected = unsafe(Array.from(findElems(document)("#tab-strip .tab-button.selected"))[0])
 
