@@ -1,5 +1,5 @@
-import { findElems } from "./common/DOM.js"
-import { unsafe    } from "./common/Util.js"
+import { findElemByID, findElems } from "./common/DOM.js"
+import { unsafe                  } from "./common/Util.js"
 
 import { colorToRGB, rgbToWord } from "./ColorModel.js"
 
@@ -14,7 +14,7 @@ export class SimpleSwatch {
 
     this.colorNum = 0
 
-    this.pane = doc.getElementById("simple-pane") as DivEl
+    this.pane = findElemByID<DivEl>(doc)("simple-pane")
 
     const nums =
       [...Array(11 * 14).keys()].map(
@@ -70,7 +70,7 @@ export class SimpleSwatch {
 
   getOutputValue(isCopy: boolean): string {
     if (isCopy) {
-      const word      = (this.pane.querySelector(".output-field") as OutputEl).value
+      const word      = unsafe(findElems<OutputEl>(this.pane)(".output-field")[0]).value
       const isLiteral = !word.includes(" ")
       return isLiteral ? word : `(${word})`
     } else {
@@ -82,7 +82,7 @@ export class SimpleSwatch {
 
     const amped = Math.round(num * 10)
 
-    const elems = Array.from(this.pane.querySelectorAll(".swatch-color")) as Array<DivEl>
+    const elems = findElems<DivEl>(this.pane)(".swatch-color")
 
     const closestDiv =
       elems.slice(1).reduce(

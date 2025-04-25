@@ -144,7 +144,7 @@ export class Picker {
 
   getOutputValue(): Str {
 
-    const value       = unsafe((this.dom.findElemByID("output-format-dropdown") as SelectEl).selectedOptions[0]).value
+    const value       = unsafe(this.dom.findElemByID<SelectEl>("output-format-dropdown").selectedOptions[0]).value
     const pairs       = Array.from(outputTypeToHTMLValue.entries()) as Array<[OutputType, Str]>
     const reversedMap = new Map(pairs.map(([a, b]) => [b, a]))
 
@@ -188,7 +188,7 @@ export class Picker {
     const { hue, saturation, lightness } = this.repr.toHSL()
 
     const hslStr = `${hue}, ${saturation}%, ${lightness}%`
-    const [elem] = this.dom.findElems(".slider-background.alpha") as [El]
+    const elem   = unsafe(this.dom.findElems<El>(".slider-background.alpha")[0])
     elem.style.background = `linear-gradient(to top, hsla(${hslStr}, 0) 0%, hsl(${hslStr}) 100%)`
 
   }
@@ -239,7 +239,7 @@ export class Picker {
               }
           )
 
-        const elem    = this.dom.findElems(`#output-format-dropdown > option[value=${optionValue}]`)[0] as OptionEl
+        const elem    = unsafe(this.dom.findElems<OptionEl>(`#output-format-dropdown > option[value=${optionValue}]`)[0])
         elem.disabled = false
         elem.selected = true
 
