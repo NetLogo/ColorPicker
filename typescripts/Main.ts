@@ -36,7 +36,7 @@ declare global {
   }
 }
 
-const setUpTabListener = (tabID: string, contentID: string) => {
+const setUpTabListener = (tabID: string, contentID: string): void => {
   findElemByID(document)(tabID).addEventListener("click",
     (e: MouseEvent) => {
       findElems(document, "#tab-strip .tab-button").forEach((tb) => tb.classList.remove("selected"));
