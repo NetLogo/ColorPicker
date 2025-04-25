@@ -188,7 +188,7 @@ export class Picker {
     const { hue, saturation, lightness } = this.repr.toHSL()
 
     const hslStr = `${hue}, ${saturation}%, ${lightness}%`
-    const elem   = unsafe(this.dom.findElems<El>(".slider-background.alpha")[0])
+    const elem   = this.dom.findFirstElem<El>(".slider-background.alpha")
     elem.style.background = `linear-gradient(to top, hsla(${hslStr}, 0) 0%, hsl(${hslStr}) 100%)`
 
   }
@@ -239,7 +239,7 @@ export class Picker {
               }
           )
 
-        const elem    = unsafe(this.dom.findElems<OptionEl>(`#output-format-dropdown > option[value=${optionValue}]`)[0])
+        const elem    = this.dom.findFirstElem<OptionEl>(`#output-format-dropdown > option[value=${optionValue}]`)
         elem.disabled = false
         elem.selected = true
 

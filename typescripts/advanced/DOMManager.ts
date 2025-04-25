@@ -1,5 +1,5 @@
-import { findElemByID, findElems, setInputByID } from "../common/DOM.js"
-import { unsafe                                } from "../common/Util.js"
+import { findElemByID, findElems, findFirstElem, setInputByID } from "../common/DOM.js"
+import { unsafe                                               } from "../common/Util.js"
 
 import { optionValueToContainerID } from "./Util.js"
 
@@ -7,14 +7,16 @@ import type { El, InputEl, Str } from "../common/Types.js"
 
 export class DOMManager {
 
-  public findElemByID: <T extends El>(id:       Str)                                 => T
-  public findElems:    <T extends El>(selector: Str)                                 => Array<T>
-  public setInputByID:               (id: string, value: { toString: () => string }) => void
+  public findElemByID:  <T extends El>(id:       Str)                                 => T
+  public findElems:     <T extends El>(selector: Str)                                 => Array<T>
+  public findFirstElem: <T extends El>(selector: Str)                                 => T
+  public setInputByID:                (id: string, value: { toString: () => string }) => void
 
   constructor(doc: Document) {
-    this.findElemByID = findElemByID(doc)
-    this.findElems    = findElems   (doc)
-    this.setInputByID = setInputByID(doc)
+    this.findElemByID  = findElemByID (doc)
+    this.findElems     = findElems    (doc)
+    this.findFirstElem = findFirstElem(doc)
+    this.setInputByID  = setInputByID (doc)
   }
 
   findActiveControls(): El {

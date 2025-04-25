@@ -1,5 +1,5 @@
-import { findElemByID, findElems } from "./common/DOM.js"
-import { unsafe                  } from "./common/Util.js"
+import { findElemByID, findElems, findFirstElem } from "./common/DOM.js"
+import { unsafe                                 } from "./common/Util.js"
 
 import { OutputType } from "./advanced/OutputType.js"
 import { Picker     } from "./advanced/Picker.js"
@@ -172,7 +172,7 @@ window.syncTheme = (config: ColorThemeConfig): void => {
 
 const getOutputValue = (isClipboard: boolean): Str => {
 
-  const selected = unsafe(Array.from(findElems(document)("#tab-strip .tab-button.selected"))[0])
+  const selected = findFirstElem(document)("#tab-strip .tab-button.selected")
 
   switch (selected.id) {
     case "simple-tab":
