@@ -3,20 +3,20 @@ import type { El } from "./common/Types.js"
 type ColorThemeConfig = Partial<ColorTheme>
 
 interface ColorTheme {
-  dialogBackground:        string;
-  dialogText:              string;
-  tabBackground:           string;
-  tabBackgroundHover:      string;
-  tabBackgroundSelected:   string;
-  tabBorder:               string;
-  tabText:                 string;
-  tabTextSelected:         string;
-  controlBackground:       string;
-  controlBackgroundHover:  string;
-  controlBackgroundActive: string;
-  controlBorder:           string;
-  controlText:             string;
-  dropdownArrow:           string;
+  dialogBackground:        string
+  dialogText:              string
+  tabBackground:           string
+  tabBackgroundHover:      string
+  tabBackgroundSelected:   string
+  tabBorder:               string
+  tabText:                 string
+  tabTextSelected:         string
+  controlBackground:       string
+  controlBackgroundHover:  string
+  controlBackgroundActive: string
+  controlBorder:           string
+  controlText:             string
+  dropdownArrow:           string
 }
 
 const defaultTheme: ColorTheme =

@@ -120,7 +120,7 @@ window.addEventListener("load", () => {
 
   window.syncTheme({})
 
-});
+})
 
 window.injectCSS = (css: string): void => {
   const elem       = document.createElement("style")

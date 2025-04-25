@@ -25,4 +25,4 @@ serveDirAs(            "deps",        "deps",  "js")
 
 const port     = 8007
 const onLaunch = (): void => { console.log(`Server is running at https://localhost:${port}`) }
-app.listen(port, onLaunch);
+app.listen(port, onLaunch)

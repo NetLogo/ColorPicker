@@ -20,47 +20,47 @@ export class ReadsReprFromInputs {
       case "nl-number": {
         const [colorNumber] = inputValues as Str1
         setRepr(new NLNumber(parseFloat(colorNumber)))
-        break;
+        break
       }
       case "nl-word": {
         const [colorWord] = inputValues as Str1
         setRepr(new NLWord(colorWord))
-        break;
+        break
       }
       case "hsb": {
         const [hue, saturation, brightness] = (inputValues as Str3).map((v) => parseInt(v)) as Num3
         setRepr(new HSB(hue, saturation, brightness))
-        break;
+        break
       }
       case "hsba": {
         const [hue, saturation, brightness, alpha] = (inputValues as Str4).map((v) => parseInt(v)) as Num4
         setRepr(new HSBA(hue, saturation, brightness, alpha))
-        break;
+        break
       }
       case "hsl": {
         const [hue, saturation, lightness] = (inputValues as Str3).map((v) => parseInt(v)) as Num3
         setRepr(new HSL(hue, saturation, lightness))
-        break;
+        break
       }
       case "hsla": {
         const [hue, saturation, lightness, alpha] = (inputValues as Str4).map((v) => parseInt(v)) as Num4
         setRepr(new HSLA(hue, saturation, lightness, alpha))
-        break;
+        break
       }
       case "rgb": {
         const [red, green, blue] = (inputValues as Str3).map((v) => parseInt(v)) as Num3
         setRepr(new RGB(red, green, blue))
-        break;
+        break
       }
       case "rgba": {
         const [red, green, blue, alpha] = (inputValues as Str4).map((v) => parseInt(v)) as Num4
         setRepr(new RGBA(red, green, blue, alpha))
-        break;
+        break
       }
       case "hex": {
         const [hex] = inputValues as Str1
         setRepr(Hexadecimal.parse(hex))
-        break;
+        break
       }
       default: {
         alert(`Invalid representation dropdown value: ${dropdown.value}`)
