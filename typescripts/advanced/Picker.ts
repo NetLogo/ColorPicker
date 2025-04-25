@@ -9,7 +9,7 @@ import { WritesReprToInputs  } from "./WritesReprToInputs.js"
 
 import { calcHueDegrees, clamp, optionValueToContainerID, outputTypeToHTMLValue } from "./Util.js"
 
-import type { El, InputEl, Num, Str } from "../common/Types.js"
+import type { El, InputEl, Num, OptionEl, SelectEl, Str } from "../common/Types.js"
 
 import type { Representation } from "./Representation.js"
 
@@ -144,7 +144,7 @@ export class Picker {
 
   getOutputValue(): Str {
 
-    const value       = unsafe((this.dom.findElemByID("output-format-dropdown") as HTMLSelectElement).selectedOptions[0]).value
+    const value       = unsafe((this.dom.findElemByID("output-format-dropdown") as SelectEl).selectedOptions[0]).value
     const pairs       = Array.from(outputTypeToHTMLValue.entries()) as Array<[OutputType, Str]>
     const reversedMap = new Map(pairs.map(([a, b]) => [b, a]))
 
@@ -239,7 +239,7 @@ export class Picker {
               }
           )
 
-        const elem    = this.dom.findElems(`#output-format-dropdown > option[value=${optionValue}]`)[0] as HTMLOptionElement
+        const elem    = this.dom.findElems(`#output-format-dropdown > option[value=${optionValue}]`)[0] as OptionEl
         elem.disabled = false
         elem.selected = true
 

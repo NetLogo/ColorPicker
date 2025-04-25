@@ -1,3 +1,5 @@
+import type { El } from "./common/Types.js"
+
 type ColorThemeConfig = Partial<ColorTheme>
 
 interface ColorTheme {
@@ -34,7 +36,7 @@ const defaultTheme: ColorTheme =
   , dropdownArrow:           "black"
   }
 
-const applyTheme = (theme: ColorThemeConfig, element: HTMLElement): void => {
+const applyTheme = (theme: ColorThemeConfig, element: El): void => {
 
   const t   = { ...defaultTheme, ...theme }
   const set = (k: string, v: string) => element.style.setProperty(k, v)

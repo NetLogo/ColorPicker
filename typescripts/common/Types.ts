@@ -1,6 +1,9 @@
 export type DivEl      = HTMLDivElement
 export type El         = HTMLElement
 export type InputEl    = HTMLInputElement
+export type OptionEl   = HTMLOptionElement
+export type OutputEl   = HTMLOutputElement
+export type SelectEl   = HTMLSelectElement
 export type TemplateEl = HTMLTemplateElement
 
 export type Num   = number

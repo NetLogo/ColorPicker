@@ -2,16 +2,18 @@ import { unsafe } from "./common/Util.js"
 
 import { colorToRGB, rgbToWord } from "./ColorModel.js"
 
+import type { DivEl, OutputEl } from "./common/Types.js"
+
 export class SimpleSwatch {
 
   private colorNum: number
-  private pane:     HTMLDivElement
+  private pane:     DivEl
 
   constructor(doc: Document) {
 
     this.colorNum = 0
 
-    this.pane = doc.getElementById("simple-pane") as HTMLDivElement
+    this.pane = doc.getElementById("simple-pane") as DivEl
 
     const nums =
       [...Array(11 * 14).keys()].map(
@@ -47,7 +49,7 @@ export class SimpleSwatch {
           this.colorNum   = num
           const [r, g, b] = colorToRGB(num)
           const word      = rgbToWord(r, g, b);
-          (this.pane.querySelector(".output-field") as HTMLOutputElement).value = word
+          (this.pane.querySelector(".output-field") as OutputEl).value = word
 
           Array.from(this.pane.querySelectorAll(".swatch-color.selected")).forEach((sc) => sc.classList.remove("selected"))
           div.classList.add("selected")
@@ -67,7 +69,7 @@ export class SimpleSwatch {
 
   getOutputValue(isCopy: boolean): string {
     if (isCopy) {
-      const word      = (this.pane.querySelector(".output-field") as HTMLOutputElement).value
+      const word      = (this.pane.querySelector(".output-field") as OutputEl).value
       const isLiteral = !word.includes(" ")
       return isLiteral ? word : `(${word})`
     } else {
@@ -79,7 +81,7 @@ export class SimpleSwatch {
 
     const amped = Math.round(num * 10)
 
-    const elems = Array.from(this.pane.querySelectorAll(".swatch-color")) as Array<HTMLDivElement>
+    const elems = Array.from(this.pane.querySelectorAll(".swatch-color")) as Array<DivEl>
 
     const closestDiv =
       elems.slice(1).reduce(

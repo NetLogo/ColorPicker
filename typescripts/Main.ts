@@ -42,7 +42,7 @@ const setUpTabListener = (tabID: string, contentID: string): void => {
   findElemByID(document)(tabID).addEventListener("click",
     (e: MouseEvent) => {
       findElems(document)("#tab-strip .tab-button").forEach((tb) => tb.classList.remove("selected"));
-      (e.target as HTMLElement).classList.add("selected")
+      (e.target as El).classList.add("selected")
       findElems(document)("#content-pane .pane").forEach((p: El) => p.classList.add("hidden"))
       findElemByID(document)(contentID).classList.remove("hidden")
     }
