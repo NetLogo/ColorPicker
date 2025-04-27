@@ -120,7 +120,7 @@ export class Picker {
   }
 
   updateOutput(): void {
-    this.dom.findElemByID("output-field").innerText = this.getOutputValue()
+    this.dom.findFirstElem(".output-field").innerText = this.getOutputValue()
     this.validateControls()
   }
 
