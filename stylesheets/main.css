@@ -42,6 +42,11 @@ body.dragging, body.dragging * {
   flex-direction: row;
 }
 
+#content-pane {
+  height: 40rem;
+  width:  70%;
+}
+
 .checkmark {
   display:           inline-block;
   height:            2.5rem;

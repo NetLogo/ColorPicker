@@ -108,8 +108,10 @@ export class Picker {
   }
 
   updateColor(): void {
-    const hsla = this.repr.toHSLA()
-    this.dom.findElemByID("preview-color").style.background = `hsla(${hsla.hue}deg, ${hsla.saturation}%, ${hsla.lightness}%, ${hsla.alpha}%)`
+    const hsla   = this.repr.toHSLA()
+    const hslStr = `${hsla.hue}deg, ${hsla.saturation}%, ${hsla.lightness}%`
+    this.dom.findElemByID("preview-color-opaque"     ).style.background = `hsl(${hslStr})`
+    this.dom.findElemByID("preview-color-transparent").style.background = `hsla(${hslStr}, ${hsla.alpha}%)`
     this.reprWriter.write(this.dom, this.repr)
     this.updateOutput()
   }
