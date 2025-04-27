@@ -13,10 +13,14 @@ export class DOMManager {
   public setInputByID:                (id: string, value: { toString: () => string }) => void
 
   constructor(doc: Document) {
+
+    const pane = findElemByID(doc)("advanced-pane")
+
     this.findElemByID  = findElemByID (doc)
-    this.findElems     = findElems    (doc)
-    this.findFirstElem = findFirstElem(doc)
+    this.findElems     = findElems    (pane)
+    this.findFirstElem = findFirstElem(pane)
     this.setInputByID  = setInputByID (doc)
+
   }
 
   findActiveControls(): El {
