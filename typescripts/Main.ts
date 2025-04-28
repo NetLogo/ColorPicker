@@ -178,7 +178,7 @@ const getOutputValue = (isClipboard: boolean): Str => {
     case "simple-tab":
       return window.simple.getOutputValue(isClipboard)
     case "advanced-tab":
-      return window.advanced.getOutputValue()
+      return window.advanced.getOutputValue(isClipboard)
     default:
       throw new Error(`Unknown picker type tab ID: ${selected.id}`)
   }

@@ -122,7 +122,7 @@ export class Picker {
   }
 
   updateOutput(): void {
-    this.dom.findFirstElem(".output-field").innerText = this.getOutputValue()
+    this.dom.findFirstElem(".output-field").innerText = this.getOutputValue(false)
     this.validateControls()
   }
 
@@ -144,7 +144,7 @@ export class Picker {
 
   }
 
-  getOutputValue(): Str {
+  getOutputValue(isCopy: boolean): Str {
 
     const value       = unsafe(this.dom.findElemByID<SelectEl>("output-format-dropdown").selectedOptions[0]).value
     const pairs       = Array.from(outputTypeToHTMLValue.entries()) as Array<[OutputType, Str]>
@@ -156,9 +156,9 @@ export class Picker {
       case OutputType.NLNumber:
         return this.repr.toNLNumber().number.toString()
       case OutputType.NLWord:
-        const word = this.repr.toNLWord().word
-        const str  = word.includes(" ") ? `(${word})` : word
-        return str
+        const word      = this.repr.toNLWord().word
+        const isLiteral = !word.includes(" ")
+        return (!isCopy || isLiteral) ? word : `(${word})`
       case OutputType.RGB:
         const rgb = this.repr.toRGB()
         return `(rgb ${rgb.red} ${rgb.green} ${rgb.blue})`
