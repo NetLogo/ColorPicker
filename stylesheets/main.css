@@ -83,7 +83,7 @@ body.dragging, body.dragging * {
 }
 
 .copy-button:not(.on-cooldown):hover {
-  background-color: #c5c5c5;
+  background-color: var(--copy-hover);
 }
 
 .copy-button.on-cooldown .inner {
@@ -103,7 +103,7 @@ body.dragging, body.dragging * {
 
 .copy-button-layer {
   background-color: var(--dialog-background);
-  border-color:     black;
+  border-color:     var(--dialog-text);
   border-style:     solid;
   border-radius:    0.2rem;
   border-width:     0.15rem;
@@ -128,20 +128,39 @@ body.dragging, body.dragging * {
 }
 
 .form-button {
-  background:    var(--control-background);
-  border:        1px solid var(--control-border);
+  border-style:  solid;
+  border-width:  1px;
   border-radius: 0.5rem;
-  color:         var(--control-text);
   min-width:     5rem;
   padding:       0.313rem 1rem;
 }
 
-.form-button:hover {
-  background: var(--control-background-hover);
+.form-button.ok {
+  background:   var(--ok-button-background);
+  border-color: var(--ok-button-border);
+  color:        var(--ok-button-text);
 }
 
-.form-button:active {
-  background: var(--control-background-active);
+.form-button.ok:hover {
+  background: var(--ok-button-background-hover);
+}
+
+.form-button.ok:active {
+  background: var(--ok-button-active);
+}
+
+.form-button.cancel {
+  background:   var(--cancel-button-background);
+  border-color: var(--cancel-button-border);
+  color:        var(--cancel-button-text);
+}
+
+.form-button.cancel:hover {
+  background: var(--cancel-button-background-hover);
+}
+
+.form-button.cancel:active {
+  background: var(--cancel-button-active);
 }
 
 .hidden {
@@ -158,12 +177,12 @@ body.dragging, body.dragging * {
 }
 
 .output-field {
-  background-color: #7d7d7d;
-  border-color:     #a0a0a0;
+  background-color: var(--output-background);
+  border-color:     var(--generic-border);
   border-radius:    0.5rem;
   border-style:     solid;
   border-width:     1px;
-  color:            white;
+  color:            var(--tab-text-selected);
   font-size:        1.2rem;
   line-height:      2rem;
   padding:          0.2rem 0.4rem;
@@ -173,7 +192,9 @@ body.dragging, body.dragging * {
 
 .tab-button {
   background-color:    var(--tab-background);
-  border:              1px solid var(--tab-border);
+  border-color:        var(--tab-border);
+  border-style:        solid;
+  border-width:        1px;
   color:               var(--tab-text);
   cursor:              default;
   height:              2rem;

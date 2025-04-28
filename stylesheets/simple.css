@@ -1,5 +1,5 @@
 .simple .swatches {
-  border-color:          gray;
+  border-color:          var(--generic-border);
   border-style:          solid;
   border-radius:         0.35rem;
   border-width:          2px;
