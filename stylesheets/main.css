@@ -55,26 +55,26 @@ body.dragging, body.dragging * {
   transform:         rotate(45deg);
 }
 
-/* Checkmark stem (the long part) */
-.checkmark:before {
+.checkmark:before, .checkmark:after {
   background-color: #3eb84f;
   content:          "";
   position:         absolute;
-  left:             16px;
-  top:              5px;
-  height:           18px;
-  width:            2px;
+}
+
+/* Checkmark stem (the long part) */
+.checkmark:before {
+  left:   16px;
+  top:    5px;
+  height: 18px;
+  width:  2px;
 }
 
 /* Checkmark stub (the short part) */
 .checkmark:after {
-  background-color: #3eb84f;
-  content:          "";
-  position:         absolute;
-  left:             9px;
-  top:              21px;
-  height:           2px;
-  width:            8px;
+  left:   9px;
+  top:    21px;
+  height: 2px;
+  width:  8px;
 }
 
 .copy-button {
