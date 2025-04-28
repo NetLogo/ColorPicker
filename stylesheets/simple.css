@@ -1,9 +1,11 @@
 .simple .swatches {
-  border:                2px solid gray;
-  border-radius:         0.313rem;
+  border-color:          gray;
+  border-style:          solid;
+  border-radius:         0.35rem;
+  border-width:          2px;
   display:               grid;
   grid-template-columns: repeat(11, 1fr);
-  padding:               3px;
+  padding:               5px;
   height:                30rem;
   width:                 30rem;
 }
