@@ -195,7 +195,7 @@
 }
 
 .sliders-container {
-  padding: 0.7rem 0.5rem 0 0.5rem;
+  padding: 0.7rem 0.5rem;
 }
 
 .sliders {
@@ -253,5 +253,6 @@ input[type=number]::-webkit-outer-spin-button {
   border-radius: 0.35rem;
   border-width:  2px;
   flex-grow:     1;
+  gap:           0.5rem;
   padding:       1rem;
 }
