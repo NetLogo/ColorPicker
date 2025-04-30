@@ -127,6 +127,10 @@ body.dragging, body.dragging * {
   gap: 0.8rem;
 }
 
+.apple2025 .form-buttons .main-buttons .ok {
+  order: 10;
+}
+
 .form-button {
   border-style:  solid;
   border-width:  1px;

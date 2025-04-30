@@ -64,6 +64,13 @@ const instantiateTemplates = (doc: Document): void => {
 
 window.addEventListener("load", () => {
 
+  // `navigator.platform` has been deprecated and replaced with `navigator.userAgentData.platform`,
+  // but JFX doesn't support that yet. --Jason B. (4/30/25)
+  const platform = navigator.platform
+  if (platform === "MacIntel" || platform.startsWith("iPad") || platform.startsWith("iPhone")) {
+    document.body.classList.add("apple2025")
+  }
+
   window.nlBabyMonitor = {
     onPick:   (_: Str) => { return }
   , onCopy:   (s: Str) => { navigator.clipboard.writeText(s) }
