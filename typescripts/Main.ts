@@ -38,6 +38,9 @@ declare global {
   }
 }
 
+const   SIMPLE_TAB_ID =   "simple-tab"
+const ADVANCED_TAB_ID = "advanced-tab"
+
 const setUpTabListener = (tabID: Str, contentID: Str): void => {
   findElemByID(document)(tabID).addEventListener("click",
     (e: MouseEvent) => {
@@ -77,8 +80,8 @@ window.addEventListener("load", () => {
   , onCancel: ()       => { return }
   }
 
-  setUpTabListener(  "simple-tab",   "simple-pane")
-  setUpTabListener("advanced-tab", "advanced-pane")
+  setUpTabListener(  SIMPLE_TAB_ID,   "simple-pane")
+  setUpTabListener(ADVANCED_TAB_ID, "advanced-pane")
 
   instantiateTemplates(document)
 
@@ -170,7 +173,7 @@ window.setValue = (typ: Str, value: any): void => {
 }
 
 window.switchToAdvPicker = (): void => {
-  unsafe(document.getElementById("advanced-tab")).click()
+  unsafe(document.getElementById(ADVANCED_TAB_ID)).click()
 }
 
 window.syncTheme = (config: ColorThemeConfig): void => {
@@ -182,9 +185,9 @@ const getOutputValue = (isClipboard: boolean): Str => {
   const selected = findFirstElem(document)("#tab-strip .tab-button.selected")
 
   switch (selected.id) {
-    case "simple-tab":
+    case SIMPLE_TAB_ID:
       return window.simple.getOutputValue(isClipboard)
-    case "advanced-tab":
+    case ADVANCED_TAB_ID:
       return window.advanced.getOutputValue(isClipboard)
     default:
       throw new Error(`Unknown picker type tab ID: ${selected.id}`)
