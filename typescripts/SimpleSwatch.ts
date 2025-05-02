@@ -68,6 +68,10 @@ export class SimpleSwatch {
 
   }
 
+  getNLNumberValue(): number {
+    return this.colorNum
+  }
+
   getOutputValue(isCopy: boolean): string {
     if (isCopy) {
       const word      = findFirstElem<OutputEl>(this.pane)(".output-field").value

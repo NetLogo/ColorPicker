@@ -144,6 +144,10 @@ export class Picker {
 
   }
 
+  getNLNumberValue(): number {
+    return this.repr.toNLNumber().number
+  }
+
   getOutputValue(isCopy: boolean): Str {
 
     const value       = unsafe(this.dom.findElemByID<SelectEl>("output-format-dropdown").selectedOptions[0]).value

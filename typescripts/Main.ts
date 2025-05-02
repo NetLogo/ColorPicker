@@ -41,13 +41,45 @@ declare global {
 const   SIMPLE_TAB_ID =   "simple-tab"
 const ADVANCED_TAB_ID = "advanced-tab"
 
+var hasInitialized = false
+
 const setUpTabListener = (tabID: Str, contentID: Str): void => {
   findElemByID(document)(tabID).addEventListener("click",
     (e: MouseEvent) => {
+
+      const prevID = findFirstElem(document)("#tab-strip .tab-button.selected").id
+      if (hasInitialized && tabID !== prevID) {
+        switch (tabID) {
+          case SIMPLE_TAB_ID: {
+            if (prevID === ADVANCED_TAB_ID) {
+              const value = window.advanced.getNLNumberValue()
+              window.simple.setColor(value)
+            } else {
+              throw new Error(`But what non-simple tab is '${prevID}'?`)
+            }
+            break
+          }
+          case ADVANCED_TAB_ID: {
+            if (prevID === SIMPLE_TAB_ID) {
+              const value = window.simple.getNLNumberValue()
+              const repr  = new Repr.NLNumber(value)
+              window.advanced.setRepr(repr)
+            } else {
+              throw new Error(`But what non-advanced tab is '${prevID}'?`)
+            }
+            break
+          }
+          default: {
+            throw new Error(`Which tab is this?  ${tabID}`)
+          }
+        }
+      }
+
       findElems(document)("#tab-strip .tab-button").forEach((tb) => tb.classList.remove("selected"));
       (e.target as El).classList.add("selected")
       findElems(document)("#content-pane .pane").forEach((p: El) => p.classList.add("hidden"))
       findElemByID(document)(contentID).classList.remove("hidden")
+
     }
   )
 }
@@ -129,6 +161,8 @@ window.addEventListener("load", () => {
   )
 
   window.syncTheme({})
+
+  hasInitialized = true
 
 })
 
