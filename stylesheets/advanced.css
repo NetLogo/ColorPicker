@@ -228,6 +228,7 @@ input[type=number]::-webkit-outer-spin-button {
 .swatch-container {
   cursor:         grab;
   flex-grow:      1;
+  min-width:      30rem;
   overflow:       hidden;
   padding-bottom: 55%;
   position:       relative;
