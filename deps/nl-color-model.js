@@ -1,5 +1,5 @@
 // This code is taken from Tortoise's 'colormodel.coffee' and should be replaced
-// --Jason B. (11/8/21)
+// --Jason B. (6/11/25)
 
 // type ColorNumber = Number
 // type RGB         = (Number, Number, Number)
