@@ -46,6 +46,9 @@ if [ "$CURR_HASH" != "$LAST_HASH" ]; then
   mkdir $OUTPUT_DIR/javascripts/common/
   cp ./dist/typescripts/common/*.js $OUTPUT_DIR/javascripts/common/
 
+  mkdir $OUTPUT_DIR/javascripts/color/
+  cp ./dist/typescripts/color/*.js $OUTPUT_DIR/javascripts/color/
+
   mkdir $OUTPUT_DIR/javascripts/advanced/
   cp ./dist/typescripts/advanced/*.js $OUTPUT_DIR/javascripts/advanced/
 

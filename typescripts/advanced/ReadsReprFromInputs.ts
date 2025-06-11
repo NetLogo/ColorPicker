@@ -1,9 +1,10 @@
-import { DOMManager                                                     } from "./DOMManager.js"
-import { Hexadecimal, HSB, HSBA, HSL, HSLA, NLNumber, NLWord, RGB, RGBA } from "./Representation.js"
+import { Hexadecimal, HSB, HSBA, HSL, HSLA, NLNumber, NLWord, RGB, RGBA } from "../color/Representation.js"
+
+import { DOMManager } from "./DOMManager.js"
+
+import type { Representation               } from "../color/Representation.js"
 
 import type { Num3, Num4, Str1, Str3, Str4 } from "../common/Types.js"
-
-import type { Representation               } from "./Representation.js"
 
 type SetReprF = (repr: Representation) => void
 
@@ -24,7 +25,7 @@ export class ReadsReprFromInputs {
       }
       case "nl-word": {
         const [colorWord] = inputValues as Str1
-        setRepr(new NLWord(colorWord))
+        setRepr(NLWord.parse(colorWord))
         break
       }
       case "hsb": {

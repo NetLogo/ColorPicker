@@ -2,8 +2,6 @@ import { OutputType } from "./OutputType.js"
 
 import type { Num, Str } from "../common/Types.js"
 
-const calcHueDegrees = (hue: Num): Num => Math.round(360 * (hue / 100))
-
 const clamp = (percentage: Num): Num => Math.max(0, Math.min(100, percentage))
 
 const optionValueToContainerID =
@@ -31,4 +29,4 @@ const outputTypeToHTMLValue =
   , [OutputType.HSLA    , "hsla"     ]
   ]) as Map<OutputType, Str>
 
-export { calcHueDegrees, clamp, optionValueToContainerID, outputTypeToHTMLValue }
+export { clamp, optionValueToContainerID, outputTypeToHTMLValue }

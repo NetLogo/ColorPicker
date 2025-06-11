@@ -1,5 +1,6 @@
-import type { DOMManager     } from "./DOMManager.js"
-import type { Representation } from "./Representation.js"
+import type { Representation } from "../color/Representation.js"
+
+import type { DOMManager } from "./DOMManager.js"
 
 export class WritesReprToInputs {
 
@@ -13,7 +14,7 @@ export class WritesReprToInputs {
         break
       }
       case "netlogo-word-controls": {
-        dom.setInputByID("netlogo-word", repr.toNLWord().word)
+        dom.setInputByID("netlogo-word", repr.toNLWord().toText())
         break
       }
       case "hsb-controls": {

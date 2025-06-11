@@ -1,17 +1,18 @@
+import { calcHueDegrees, GUI_HSLA } from "../color/Representation.js"
+
 import { switchMap, unsafe } from "../common/Util.js"
 
 import { DOMManager          } from "./DOMManager.js"
 import { DragManager         } from "./DragManager.js"
 import { OutputType          } from "./OutputType.js"
 import { ReadsReprFromInputs } from "./ReadsReprFromInputs.js"
-import { GUI_HSLA            } from "./Representation.js"
 import { WritesReprToInputs  } from "./WritesReprToInputs.js"
 
-import { calcHueDegrees, clamp, optionValueToContainerID, outputTypeToHTMLValue } from "./Util.js"
+import { clamp, optionValueToContainerID, outputTypeToHTMLValue } from "./Util.js"
+
+import type { Representation } from "../color/Representation.js"
 
 import type { El, InputEl, Num, OptionEl, SelectEl, Str } from "../common/Types.js"
-
-import type { Representation } from "./Representation.js"
 
 const reprHasAlpha = (repr: Str) => ["hsba", "hsla", "rgba", "hex"].includes(repr)
 
@@ -160,7 +161,7 @@ export class Picker {
       case OutputType.NLNumber:
         return this.repr.toNLNumber().number.toString()
       case OutputType.NLWord:
-        const word      = this.repr.toNLWord().word
+        const word      = this.repr.toNLWord().toText()
         const isLiteral = !word.includes(" ")
         return (!isCopy || isLiteral) ? word : `(${word})`
       case OutputType.RGB:

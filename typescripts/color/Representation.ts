@@ -1,8 +1,11 @@
-import { colorToRGB, colorWordToNumber, nearestColorNumberOfRGB, rgbToWord } from "../ColorModel.js"
+import { colorToRGB, nearestColorNumberOfRGB, rgbToWordPair } from "./ColorModel.js"
+import { colorLiterals                                      } from "./ColorLiteral.js"
 
-import { calcHueDegrees } from "./Util.js"
+import type { Num, Num4, Str, Str3 } from "../common/Types.js"
 
-import type { Num, Num4, Str } from "../common/Types.js"
+import type { ColorLiteral         } from "./ColorLiteral.js"
+
+const calcHueDegrees = (hue: Num): Num => Math.round(360 * (hue / 100))
 
 interface Representation {
 
@@ -111,17 +114,34 @@ class NLNumber implements Representation {
 
 class NLWord implements Representation {
 
-  public readonly word: Str
+  public readonly literal:  ColorLiteral
+  public readonly modifier: Num
 
   private readonly proxy: RGBA
 
-  constructor(word: Str) {
-    this.word  = word
-    this.proxy = this.toRGBA()
+  constructor(literal: ColorLiteral, modifier: Num = 0) {
+    this.literal  = literal
+    this.modifier = modifier
+    this.proxy    = this.toRGBA()
+  }
+
+  static parse(text: Str): NLWord {
+
+    const [word, operator, value] = text.split(" ") as Str3
+    const matchingLiteral         = colorLiterals.find((l) => l.name === word)
+
+    if (matchingLiteral !== undefined) {
+      const diff    = ((operator !== "+" && operator !== "-") || isNaN(Number(value))) ? 0 :
+                       (operator === "+") ? Number(value) : -Number(value)
+      return new NLWord(matchingLiteral, diff)
+    } else {
+      throw new Error(`Invalid NL color word: ${word}`)
+    }
+
   }
 
   toNLNumber(): NLNumber {
-    return new NLNumber(colorWordToNumber(this.word))
+    return new NLNumber(this.literal.value + this.modifier)
   }
 
   toNLWord(): NLWord {
@@ -160,6 +180,20 @@ class NLWord implements Representation {
     return this.proxy.toGUI_HSLA()
   }
 
+  toText(): Str {
+
+    const suffix =
+      (this.modifier === 0) ? "" :
+      (() => {
+        const sign      = (this.modifier > 0) ? "+" : "-"
+        const magnitude = Math.abs(this.modifier)
+        return ` ${sign} ${magnitude}`
+      })()
+
+    return `${this.literal.name}${suffix}`
+
+  }
+
   withAlpha(alpha: Num): Representation {
     return this.proxy.withAlpha(alpha)
   }
@@ -186,7 +220,8 @@ class RGB implements Representation, RGBLike {
   }
 
   toNLWord(): NLWord {
-    return new NLWord(rgbToWord(this.red, this.green, this.blue))
+    const [lit, mod] = rgbToWordPair(this.red, this.green, this.blue)
+    return new NLWord(lit, mod)
   }
 
   toRGB(): RGB {
@@ -783,6 +818,6 @@ class GUI_HSLA implements Representation, HasAlpha {
 }
 
 
-export { GUI_HSLA, NLNumber, NLWord, RGB, RGBA, HSB, HSBA, HSL, HSLA, Hexadecimal }
+export { calcHueDegrees, GUI_HSLA, NLNumber, NLWord, RGB, RGBA, HSB, HSBA, HSL, HSLA, Hexadecimal }
 
 export type { HasAlpha, Representation, RGBLike }

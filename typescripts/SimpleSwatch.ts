@@ -1,18 +1,19 @@
+import { colorToRGB } from "./color/ColorModel.js"
+import { NLNumber   } from "./color/Representation.js"
+
 import { findElemByID, findElems, findFirstElem } from "./common/DOM.js"
 import { unsafe                                 } from "./common/Util.js"
-
-import { colorToRGB, rgbToWord } from "./ColorModel.js"
 
 import type { DivEl, OutputEl } from "./common/Types.js"
 
 export class SimpleSwatch {
 
-  private colorNum: number
-  private pane:     DivEl
+  private color: NLNumber
+  private pane:  DivEl
 
   constructor(doc: Document) {
 
-    this.colorNum = 0
+    this.color = new NLNumber(0)
 
     this.pane = findElemByID<DivEl>(doc)("simple-pane")
 
@@ -47,10 +48,9 @@ export class SimpleSwatch {
 
         div.onclick = () => {
 
-          this.colorNum   = num
-          const [r, g, b] = colorToRGB(num)
-          const word      = rgbToWord(r, g, b)
-          findFirstElem<OutputEl>(this.pane)(".output-field").value = word
+          this.color = new NLNumber(num)
+
+          findFirstElem<OutputEl>(this.pane)(".output-field").value = this.color.toNLWord().toText()
 
           Array.from(this.pane.querySelectorAll(".swatch-color.selected")).forEach((sc) => sc.classList.remove("selected"))
           div.classList.add("selected")
@@ -69,7 +69,7 @@ export class SimpleSwatch {
   }
 
   getNLNumberValue(): number {
-    return this.colorNum
+    return this.color.number
   }
 
   getOutputValue(isCopy: boolean): string {
@@ -78,7 +78,7 @@ export class SimpleSwatch {
       const isLiteral = !word.includes(" ")
       return isLiteral ? word : `(${word})`
     } else {
-      return this.colorNum.toString()
+      return this.getNLNumberValue().toString()
     }
   }
 

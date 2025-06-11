@@ -3,7 +3,8 @@ import { unsafe                                 } from "./common/Util.js"
 
 import { OutputType } from "./advanced/OutputType.js"
 import { Picker     } from "./advanced/Picker.js"
-import * as Repr      from "./advanced/Representation.js"
+
+import * as Repr from "./color/Representation.js"
 
 import { applyTheme   } from "./ColorTheme.js"
 import { SimpleSwatch } from "./SimpleSwatch.js"
