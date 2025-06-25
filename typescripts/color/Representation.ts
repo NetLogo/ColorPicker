@@ -12,6 +12,7 @@ const round = (x: Num): Num => Math.round(x * 10) / 10
 interface Representation {
 
   equals(x: any): boolean
+  toString():     Str
 
   toNLNumber   (): NLNumber
   toNLWord     (): NLWord
@@ -76,6 +77,10 @@ class NLNumber implements Representation {
     } else {
       return false
     }
+  }
+
+  toString(): Str {
+    return `NLNumber(${this.number})`
   }
 
   toNLNumber(): NLNumber {
@@ -162,6 +167,10 @@ class NLWord implements Representation {
     }
   }
 
+  toString(): Str {
+    return `NLWord(${this.toText()})`
+  }
+
   toNLNumber(): NLNumber {
     return new NLNumber(this.literal.value + this.modifier)
   }
@@ -246,6 +255,10 @@ class RGB implements Representation, RGBLike {
     }
   }
 
+  toString(): Str {
+    return `RGB(${this.red}, ${this.green}, ${this.blue})`
+  }
+
   toNLNumber(): NLNumber {
     return new NLNumber(nearestColorNumberOfRGB(this.red, this.green, this.blue))
   }
@@ -314,6 +327,10 @@ class RGBA implements Representation, RGBLike, HasAlpha {
     } else {
       return false
     }
+  }
+
+  toString(): Str {
+    return `RGBA(${this.red}, ${this.green}, ${this.blue}, ${this.alpha})`
   }
 
   toNLNumber(): NLNumber {
@@ -418,6 +435,10 @@ class HSB implements Representation, HSBLike {
     }
   }
 
+  toString(): Str {
+    return `HSB(${this.hue}, ${this.saturation}, ${this.brightness})`
+  }
+
   toNLNumber(): NLNumber {
     return this.proxy.toNLNumber()
   }
@@ -486,6 +507,10 @@ class HSBA implements Representation, HSBLike, HasAlpha {
     } else {
       return false
     }
+  }
+
+  toString(): Str {
+    return `HSBA(${this.hue}, ${this.saturation}, ${this.brightness}, ${this.alpha})`
   }
 
   toNLNumber(): NLNumber {
@@ -570,6 +595,10 @@ class HSL implements Representation, HSLLike {
     }
   }
 
+  toString(): Str {
+    return `HSL(${this.hue}, ${this.saturation}, ${this.lightness})`
+  }
+
   toNLNumber(): NLNumber {
     return this.proxy.toNLNumber()
   }
@@ -638,6 +667,10 @@ class HSLA implements Representation, HSLLike, HasAlpha {
     } else {
       return false
     }
+  }
+
+  toString(): Str {
+    return `HSLA(${this.hue}, ${this.saturation}, ${this.lightness}, ${this.alpha})`
   }
 
   toNLNumber(): NLNumber {
@@ -771,6 +804,10 @@ class Hexadecimal implements Representation, RGBLike, HasAlpha {
     }
   }
 
+  toString(): Str {
+    return `Hexadecimal(${this.hex()})`
+  }
+
   toNLNumber(): NLNumber {
     return this.proxy.toNLNumber()
   }
@@ -845,6 +882,10 @@ class GUI_HSLA implements Representation, HasAlpha {
     } else {
       return false
     }
+  }
+
+  toString(): Str {
+    return `GUI_HSLA(${this.hue}, ${this.saturation}, ${this.lightness}, ${this.alpha})`
   }
 
   toNLNumber(): NLNumber {
