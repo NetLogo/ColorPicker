@@ -791,8 +791,8 @@ class Hexadecimal implements Representation, RGBLike, HasAlpha {
   hex(): Str {
     const hex   = (x: Num): Str => x.toString(16).padStart(2, "0")
     const rgba  = this.toRGBA()
-    const alpha = Math.round(rgba.alpha / 100 * 255)
-    return `#${hex(rgba.red)}${hex(rgba.green)}${hex(rgba.blue)}${hex(alpha)}`
+    const alpha = (rgba.alpha < 100) ? hex(Math.round(rgba.alpha / 100 * 255)) : ""
+    return `#${hex(rgba.red)}${hex(rgba.green)}${hex(rgba.blue)}${alpha}`
   }
 
   equals(x: any): boolean {
