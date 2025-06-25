@@ -778,7 +778,7 @@ class Hexadecimal implements Representation, RGBLike, HasAlpha {
     if (hex.length === 6 || hex.length === 8) {
 
       const [red, green, blue, a] = [0, 2, 4, 6].map((n) => parseInt(hex.slice(n, n + 2), 16)) as Num4
-      const alpha                 = (!isNaN(a)) ? Math.floor(a / 255 * 100) : 100
+      const alpha                 = (!isNaN(a)) ? Math.round(a / 255 * 100) : 100
 
       return new Hexadecimal(red, green, blue, alpha)
 
