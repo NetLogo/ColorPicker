@@ -728,7 +728,7 @@ class HSLA implements Representation, HSLLike, HasAlpha {
     // Courtesy of Roko C. Buljan at https://stackoverflow.com/a/31322636/5288538
     const getSBAsHSB = (s: Num, l: Num): [Num, Num] => {
       const temp = s * ((l < 50) ? l : (100 - l)) / 100
-      const hsbS = round(200 * temp / (l + temp)) | 0
+      const hsbS = round(200 * temp / (l + temp))
       const hsbB = round(temp + l)
       return [hsbS, hsbB]
     }
