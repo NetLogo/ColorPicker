@@ -5,9 +5,9 @@ import type { Num, Num4, Str, Str3 } from "../common/Types.js"
 
 import type { ColorLiteral         } from "./ColorLiteral.js"
 
-const calcHueDegrees = (hue: Num): Num => Math.round(360 * (hue / 100))
-
 const round = (x: Num): Num => Math.round(x * 10) / 10
+
+const calcHueDegrees = (hue: Num): Num => round(360 * (hue / 100))
 
 interface Representation {
 
