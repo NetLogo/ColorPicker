@@ -7,6 +7,8 @@ import type { ColorLiteral         } from "./ColorLiteral.js"
 
 const calcHueDegrees = (hue: Num): Num => Math.round(360 * (hue / 100))
 
+const round = (x: Num): Num => Math.round(x * 10) / 10
+
 interface Representation {
 
   equals(x: any): boolean
@@ -360,13 +362,13 @@ class RGBA implements Representation, RGBLike, HasAlpha {
                        (v === gx) ? (2 + (bx - rx) / c) :
                                     (4 + (rx - gx) / c)
                     ))
-      const hue   = Math.round(60 * (subH < 0 ? subH + 6 : subH))
+      const hue   = round(60 * (subH < 0 ? subH + 6 : subH))
 
       const subS  = (f !== 0) ? (c / f) : 0
-      const sat   = Math.round(subS * 100)
+      const sat   = round(subS * 100)
 
       const subL  = (v + v - c) / 2
-      const light = Math.round(subL * 100)
+      const light = round(subL * 100)
 
       return [hue, sat, light]
 
