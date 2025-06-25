@@ -526,7 +526,20 @@ class HSBA implements Representation, HSBLike, HasAlpha {
   }
 
   toRGBA(): RGBA {
-    return this.toHSLA().toRGBA()
+
+    // Courtesy of some bot at https://labex.io/tutorials/javascript-exploring-hsb-to-rgb-color-conversion-28377
+    const extract = (n: Num) => {
+      const g    = (x: Num) => (x + this.hue / 60) % 6
+      const comp = (this.brightness / 100) * (1 - (this.saturation / 100) * Math.max(0, Math.min(g(n), 4 - g(n), 1)))
+      return Math.round(255 * comp)
+    }
+
+    const red   = extract(5)
+    const green = extract(3)
+    const blue  = extract(1)
+
+    return new RGBA(red, green, blue, this.alpha)
+
   }
 
   toHSB(): HSB {
