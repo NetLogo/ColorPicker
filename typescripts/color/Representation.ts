@@ -935,7 +935,7 @@ class GUI_HSLA implements Representation, HasAlpha {
     const saturation = this.saturation
     const maxL       = 100 - this.lightness
     const minL       = maxL / 2
-    const lightness  = Math.round(minL + ((maxL - minL) * ((100 - saturation) / 100)))
+    const lightness  = round(minL + ((maxL - minL) * ((100 - saturation) / 100)))
     const alpha      = this.alpha
 
     return new HSLA(hue, saturation, lightness, alpha)
