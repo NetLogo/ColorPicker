@@ -68,7 +68,7 @@ class NLNumber implements Representation {
   }
 
   equals(x: any): boolean {
-    if ("toNLNumber" in x) {
+    if ((typeof x) === "object" && "toNLNumber" in x) {
       const other = x.toNLNumber()
       return this.number === other.number
     } else {
@@ -152,7 +152,7 @@ class NLWord implements Representation {
   }
 
   equals(x: any): boolean {
-    if ("toNLWord" in x) {
+    if ((typeof x) === "object" && "toNLWord" in x) {
       const other = x.toNLWord()
       return this.literal === other.literal && this.modifier === other.modifier
     } else {
@@ -236,7 +236,7 @@ class RGB implements Representation, RGBLike {
   }
 
   equals(x: any): boolean {
-    if ("toRGB" in x) {
+    if ((typeof x) === "object" && "toRGB" in x) {
       const other = x.toRGB()
       return this.red === other.red && this.green === other.green && this.blue === other.blue
     } else {
@@ -306,7 +306,7 @@ class RGBA implements Representation, RGBLike, HasAlpha {
   }
 
   equals(x: any): boolean {
-    if ("toRGBA" in x) {
+    if ((typeof x) === "object" && "toRGBA" in x) {
       const other = x.toRGBA()
       return this.red === other.red && this.green === other.green && this.blue === other.blue && this.alpha === other.alpha
     } else {
@@ -408,7 +408,7 @@ class HSB implements Representation, HSBLike {
   }
 
   equals(x: any): boolean {
-    if ("toHSB" in x) {
+    if ((typeof x) === "object" && "toHSB" in x) {
       const other = x.toHSB()
       return this.hue === other.hue && this.saturation === other.saturation && this.brightness === other.brightness
     } else {
@@ -477,7 +477,7 @@ class HSBA implements Representation, HSBLike, HasAlpha {
   }
 
   equals(x: any): boolean {
-    if ("toHSBA" in x) {
+    if ((typeof x) === "object" && "toHSBA" in x) {
       const other = x.toHSBA()
       return this.hue === other.hue && this.saturation === other.saturation && this.brightness === other.brightness &&
              this.alpha === other.alpha
@@ -560,7 +560,7 @@ class HSL implements Representation, HSLLike {
   }
 
   equals(x: any): boolean {
-    if ("toHSL" in x) {
+    if ((typeof x) === "object" && "toHSL" in x) {
       const other = x.toHSL()
       return this.hue === other.hue && this.saturation === other.saturation && this.lightness === other.lightness
     } else {
@@ -629,7 +629,7 @@ class HSLA implements Representation, HSLLike, HasAlpha {
   }
 
   equals(x: any): boolean {
-    if ("toHSLA" in x) {
+    if ((typeof x) === "object" && "toHSLA" in x) {
       const other = x.toHSLA()
       return this.hue === other.hue && this.saturation === other.saturation && this.lightness === other.lightness &&
              this.alpha === other.alpha
@@ -761,7 +761,7 @@ class Hexadecimal implements Representation, RGBLike, HasAlpha {
   }
 
   equals(x: any): boolean {
-    if ("toHexadecimal" in x) {
+    if ((typeof x) === "object" && "toHexadecimal" in x) {
       const other = x.toHexadecimal()
       return this.red === other.red && this.green === other.green && this.blue === other.blue && this.alpha === other.alpha
     } else {
@@ -836,7 +836,7 @@ class GUI_HSLA implements Representation, HasAlpha {
   }
 
   equals(x: any): boolean {
-    if ("toGUI_HSLA" in x) {
+    if ((typeof x) === "object" && "toGUI_HSLA" in x) {
       const other = x.toGUI_HSLA()
       return this.hue === other.hue && this.saturation === other.saturation && this.lightness === other.lightness &&
              this.alpha === other.alpha
