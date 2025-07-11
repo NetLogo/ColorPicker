@@ -1,9 +1,9 @@
 import { colorToRGB, nearestColorNumberOfRGB, rgbToWordPair } from "./ColorModel.js"
 import { colorLiterals                                      } from "./ColorLiteral.js"
 
-import type { Num, Num4, Str, Str3 } from "../common/Types.js"
+import type { Num, Num2, Num3, Num4, Str, Str3 } from "../common/Types.js"
 
-import type { ColorLiteral         } from "./ColorLiteral.js"
+import type { ColorLiteral } from "./ColorLiteral.js"
 
 const round = (x: Num): Num => Math.round(x * 10) / 10
 
@@ -379,15 +379,15 @@ class RGBA implements Representation, RGBLike, HasAlpha {
                        (v === gx) ? (2 + (bx - rx) / c) :
                                     (4 + (rx - gx) / c)
                     ))
-      const hue   = round(60 * (subH < 0 ? subH + 6 : subH))
+      const hue   = 60 * (subH < 0 ? subH + 6 : subH)
 
       const subS  = (f !== 0) ? (c / f) : 0
-      const sat   = round(subS * 100)
+      const sat   = subS * 100
 
       const subL  = (v + v - c) / 2
-      const light = round(subL * 100)
+      const light = subL * 100
 
-      return [hue, sat, light]
+      return [hue, sat, light].map(round) as Num3
 
     }
 
@@ -559,9 +559,9 @@ class HSBA implements Representation, HSBLike, HasAlpha {
     // Courtesy of Roko C. Buljan at https://stackoverflow.com/a/31322636/5288538
     const getSLAsHSL = (s: Num, b: Num): [Num, Num] => {
       const l          = (2 - s / 100) * b / 2
-      const saturation = round(s * b / ((l < 50) ? (l * 2) : (200 - (l * 2))))
-      const lightness  = round(l)
-      return [saturation, lightness]
+      const saturation = s * b / ((l < 50) ? (l * 2) : (200 - (l * 2)))
+      const lightness  = l
+      return [saturation, lightness].map(round) as Num2
     }
 
     const [s, l] = getSLAsHSL(this.saturation, this.brightness)
@@ -727,9 +727,10 @@ class HSLA implements Representation, HSLLike, HasAlpha {
 
     // Courtesy of Roko C. Buljan at https://stackoverflow.com/a/31322636/5288538
     const getSBAsHSB = (s: Num, l: Num): [Num, Num] => {
-      const temp = s * ((l < 50) ? l : (100 - l)) / 100
-      const hsbS = round(200 * temp / (l + temp))
-      const hsbB = round(temp + l)
+      const temp  = s * ((l < 50) ? l : (100 - l)) / 100
+      const semiB = l + temp
+      const hsbS = (semiB !== 0) ? round(200 * temp / semiB) : 0
+      const hsbB = round(semiB)
       return [hsbS, hsbB]
     }
 
