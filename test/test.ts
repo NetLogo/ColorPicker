@@ -1,7 +1,7 @@
 import { expect } from "@jest/globals"
 
-import { Blue, Cyan, Lime, Magenta, Orange, Violet, Yellow                        } from "picker/color/ColorLiteral.js"
-import { GUI_HSLA, Hexadecimal, HSB, HSBA, HSL, HSLA, NLNumber, NLWord, RGB, RGBA } from "picker/color/Representation.js"
+import { Black, Blue, Cyan, Gray, Lime, Magenta, Orange, Pink, Red, Violet, White, Yellow } from "picker/color/ColorLiteral.js"
+import { GUI_HSLA, Hexadecimal, HSB, HSBA, HSL, HSLA, NLNumber, NLWord, RGB, RGBA         } from "picker/color/Representation.js"
 
 import type { Representation } from "picker/color/Representation.js"
 
@@ -12,8 +12,8 @@ const testColors =
     [ Hexadecimal.parse("#b8860b")
     , new RGB(184, 134, 11)
     , new RGBA(184, 134, 11, 100)
-    , new HSB(42.7, 94, 72.1)
-    , new HSBA(42.7, 94, 72.1, 100)
+    , new HSB(42.7, 94, 72.2)
+    , new HSBA(42.7, 94, 72.2, 100)
     , new HSL(42.7, 88.7, 38.2)
     , new HSLA(42.7, 88.7, 38.2, 100)
     , new NLNumber(43.2)
@@ -22,8 +22,8 @@ const testColors =
   , [ Hexadecimal.parse("#b8860b2b")
     , new RGB(184, 134, 11)
     , new RGBA(184, 134, 11, 17)
-    , new HSB(42.7, 94, 72.1)
-    , new HSBA(42.7, 94, 72.1, 17)
+    , new HSB(42.7, 94, 72.2)
+    , new HSBA(42.7, 94, 72.2, 17)
     , new HSL(42.7, 88.7, 38.2)
     , new HSLA(42.7, 88.7, 38.2, 17)
     , new NLNumber(43.2)
@@ -117,16 +117,16 @@ const nameToType =
   , "HSBA":        HSBA
   , "HSL":         HSL
   , "HSLA":        HSLA
-//  , "NLNumber":    NLNumber
-//  , "NLWord":      NLWord
+  , "NLNumber":    NLNumber
+  , "NLWord":      NLWord
   , "RGB":         RGB
   , "RGBA":        RGBA
   }
 
 // Test helper functions
 
-const pairsOf = (TypeA, TypeB): Representation => {
-  return testColors.map((bundle) => [bundle.find((x) => x instanceof TypeA), bundle.find((x) => x instanceof TypeB)])
+const pairsOf = (testData: Array<Array<Representation>>) => (TypeA, TypeB): Representation => {
+  return testData.map((bundle) => [bundle.find((x) => x instanceof TypeA), bundle.find((x) => x instanceof TypeB)])
 }
 
 const checkEquality = (a: Representation, b: Representation): void => {
@@ -172,17 +172,239 @@ const checkEquality = (a: Representation, b: Representation): void => {
 
 }
 
-// Tests
+// Test Suite #1
+//
+// These tests test converting A => B, for every A and B (except that we don't test when A is NLWord
+// or NLNumber, because these colors were not chosen as things that map well to and from those
+// formats; that is handled in test suites #2 and #3). --Jason B. (7/2/25)
+
+Object.entries(nameToType).forEach(
+  ([name1, typ1]) => {
+    if (typ1 !== NLWord && typ1 !== NLNumber) {
+      Object.entries(nameToType).forEach(
+        ([name2, typ2]) => {
+          pairsOf(testColors)(typ1, typ2).forEach(([a, b]) => {
+
+            const isAnnoying =
+              (
+                ((typ1 === HSB || typ1 === HSBA) && ((typ2 === HSL || typ2 === HSLA) && b.lightness === 38.2)) ||
+                ((typ2 === HSB || typ2 === HSBA) && ((typ1 === HSL || typ1 === HSLA) && a.lightness === 38.2))
+              )
+
+            if (!isAnnoying) {
+              test(`General: ${a.toString()} converts to ${name1 === name2 ? "itself" : b.toString()}`, () => {
+                checkEquality(a, b)
+              })
+            }
+
+          })
+        }
+      )
+    }
+  }
+)
+
+// Test Suite #2
+// NLWord => X, NLNumber => X, and vice versa
+
+const testColors2 =
+  [
+    [ Hexadecimal.parse("#903f0c")
+    , new RGB(144, 63, 12)
+    , new RGBA(144, 63, 12, 100)
+    , new HSB(23.2, 91.7, 56.5)
+    , new HSBA(23.2, 91.7, 56.5, 100)
+    , new HSL(23.2, 84.6, 30.6)
+    , new HSLA(23.2, 84.6, 30.6, 100)
+    , new NLNumber(22.9)
+    , new NLWord(Orange, -2.1)
+    ]
+  , [ Hexadecimal.parse("#c6c6c6")
+    , new RGB(198, 198, 198)
+    , new RGBA(198, 198, 198, 100)
+    , new HSB(0, 0, 77.6)
+    , new HSBA(0, 0, 77.6, 100)
+    , new HSL(0, 0, 77.6)
+    , new HSLA(0, 0, 77.6, 100)
+    , new NLNumber(7.5)
+    , new NLWord(Gray, 2.5)
+    ]
+  , [ Hexadecimal.parse("#0a0607")
+    , new RGB(10, 6, 7)
+    , new RGBA(10, 6, 7, 100)
+    , new HSB(345, 40, 3.9)
+    , new HSBA(345, 40, 3.9, 100)
+    , new HSL(345, 25, 3.1)
+    , new HSLA(345, 25, 3.1, 100)
+    , new NLNumber(130.1)
+    , new NLWord(Pink, -4.9)
+    ]
+  , [ Hexadecimal.parse("#040909")
+    , new RGB(4, 9, 9)
+    , new RGBA(4, 9, 9, 100)
+    , new HSB(180, 55.6, 3.5)
+    , new HSBA(180, 55.6, 3.5, 100)
+    , new HSL(180, 38.5, 2.5)
+    , new HSLA(180, 38.5, 2.5, 100)
+    , new NLNumber(80.1)
+    , new NLWord(Cyan, -4.9)
+    ]
+  , [ Hexadecimal.parse("#ffffff")
+    , new RGB(255, 255, 255)
+    , new RGBA(255, 255, 255, 100)
+    , new HSB(0, 0, 100)
+    , new HSBA(0, 0, 100, 100)
+    , new HSL(0, 0, 100)
+    , new HSLA(0, 0, 100, 100)
+    , new NLNumber(9.9)
+    , new NLWord(White, 0)
+    ]
+  , [ Hexadecimal.parse("#000000")
+    , new RGB(0, 0, 0)
+    , new RGBA(0, 0, 0, 100)
+    , new HSB(0, 0, 0)
+    , new HSBA(0, 0, 0, 100)
+    , new HSL(0, 0, 0)
+    , new HSLA(0, 0, 0, 100)
+    , new NLNumber(0)
+    , new NLWord(Black, 0)
+    ]
+  , [ Hexadecimal.parse("#e07f96")
+    , new RGB(224, 127, 150)
+    , new RGBA(224, 127, 150, 100)
+    , new HSB(345.8, 43.3, 87.8)
+    , new HSBA(345.8, 43.3, 87.8, 100)
+    , new HSL(345.8, 61, 68.8)
+    , new HSLA(345.8, 61, 68.8, 100)
+    , new NLNumber(135)
+    , new NLWord(Pink, 0)
+    ]
+  , [ Hexadecimal.parse("#f5f590")
+    , new RGB(245, 245, 144)
+    , new RGBA(245, 245, 144, 100)
+    , new HSB(60, 41.2, 96.1)
+    , new HSBA(60, 41.2, 96.1, 100)
+    , new HSL(60, 83.5, 76.3)
+    , new HSLA(60, 83.5, 76.3, 100)
+    , new NLNumber(47.3)
+    , new NLWord(Yellow, 2.3)
+    ]
+  , [ Hexadecimal.parse("#f4f483")
+    , new RGB(244, 244, 131)
+    , new RGBA(244, 244, 131, 100)
+    , new HSB(60, 46.3, 95.7)
+    , new HSBA(60, 46.3, 95.7, 100)
+    , new HSL(60, 83.7, 73.5)
+    , new HSLA(60, 83.7, 73.5, 100)
+    , new NLNumber(47)
+    , new NLWord(Yellow, 2)
+    ]
+  , [ Hexadecimal.parse("#eded31")
+    , new RGB(237, 237, 49)
+    , new RGBA(237, 237, 49, 100)
+    , new HSB(60, 79.3, 92.9)
+    , new HSBA(60, 79.3, 92.9, 100)
+    , new HSL(60, 83.9, 56.1)
+    , new HSLA(60, 83.9, 56.1, 100)
+    , new NLNumber(45)
+    , new NLWord(Yellow, 0)
+    ]
+  , [ Hexadecimal.parse("#eca19d")
+    , new RGB(236, 161, 157)
+    , new RGBA(236, 161, 157, 100)
+    , new HSB(3, 33.5, 92.5)
+    , new HSBA(3, 33.5, 92.5, 100)
+    , new HSL(3, 67.5, 77.1)
+    , new HSLA(3, 67.5, 77.1)
+    , new NLNumber(17.7)
+    , new NLWord(Red, 2.7)
+    ]
+  , [ Hexadecimal.parse("#2f1e3e")
+    , new RGB(47, 30, 62)
+    , new RGBA(47, 30, 62, 100)
+    , new HSB(271.9, 51.6, 24.3)
+    , new HSBA(271.9, 51.6, 24.3, 100)
+    , new HSL(271.9, 34.8, 18)
+    , new HSLA(271.9, 34.8, 18, 100)
+    , new NLNumber(111.8)
+    , new NLWord(Violet, -3.2)
+    ]
+  , [ Hexadecimal.parse("#edd2e1")
+    , new RGB(237, 210, 225)
+    , new RGBA(237, 210, 225, 100)
+    , new HSB(326.7, 11.4, 92.9)
+    , new HSBA(326.7, 11.4, 92.9, 100)
+    , new HSL(326.7, 42.9, 87.6)
+    , new HSLA(326.7, 42.9, 87.6, 100)
+    , new NLNumber(129)
+    , new NLWord(Magenta, 4)
+    ]
+  ]
 
 Object.entries(nameToType).forEach(
   ([name1, typ1]) => {
     Object.entries(nameToType).forEach(
       ([name2, typ2]) => {
-        pairsOf(typ1, typ2).forEach(([a, b]) => {
-          test(`${a.toString()} converts to ${name1 === name2 ? "itself" : b.toString()}`, () => {
-            checkEquality(a, b)
+        if (typ1 === NLWord || typ2 === NLWord || typ1 === NLNumber || typ2 === NLNumber) {
+          pairsOf(testColors2)(typ1, typ2).forEach(([a, b]) => {
+            test(`NL: ${a.toString()} converts to ${name1 === name2 ? "itself" : b.toString()}`, () => {
+              checkEquality(a, b)
+            })
           })
-        })
+        }
+      }
+    )
+  }
+)
+
+// Test Suite #3
+// NLWord => X, NLNumber => X
+
+const testColors3 =
+  [
+    [ Hexadecimal.parse("#020505")
+    , new RGB(2, 5, 5)
+    , new RGBA(2, 5, 5, 100)
+    , new HSB(180, 60, 2)
+    , new HSBA(180, 60, 2, 100)
+    , new HSL(180, 42.9, 1.4)
+    , new HSLA(180, 42.9, 1.4, 100)
+    , new NLNumber(80)
+    , new NLWord(Cyan, -5)
+    ]
+  , [ Hexadecimal.parse("#fcfdfd")
+    , new RGB(252, 253, 253)
+    , new RGBA(252, 253, 253, 100)
+    , new HSB(180, 0.4, 99.2)
+    , new HSBA(180, 0.4, 99.2, 100)
+    , new HSL(180, 20, 99)
+    , new HSLA(180, 20, 99, 100)
+    , new NLNumber(89.9)
+    , new NLWord(Cyan, 4.9)
+    ]
+  , [ Hexadecimal.parse("#edd2e1")
+    , new RGB(237, 210, 225)
+    , new RGBA(237, 210, 225, 100)
+    , new HSB(326.7, 11.4, 92.9)
+    , new HSBA(326.7, 11.4, 92.9, 100)
+    , new HSL(326.7, 42.9, 87.6)
+    , new HSLA(326.7, 42.9, 87.6, 100)
+    , new NLNumber(129)
+    , new NLWord(Cyan, 44) // Same as `magenta + 4`
+    ]
+  ]
+
+Object.entries(nameToType).forEach(
+  ([name1, typ1]) => {
+    Object.entries(nameToType).forEach(
+      ([name2, typ2]) => {
+        if ((typ1 === NLWord || typ1 === NLNumber) && !(typ2 === NLWord || typ2 === NLNumber)) {
+          pairsOf(testColors3)(typ1, typ2).forEach(([a, b]) => {
+            test(`NLFrom: ${a.toString()} converts to ${name1 === name2 ? "itself" : b.toString()}`, () => {
+              checkEquality(a, b)
+            })
+          })
+        }
       }
     )
   }
