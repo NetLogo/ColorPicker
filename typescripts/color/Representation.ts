@@ -787,8 +787,8 @@ class HSLA implements Representation, HSLLike, HasAlpha {
 
   toGUI_HSLA(): GUI_HSLA {
 
-    const scalingFactor = 1 - ((this.saturation / 100) * 0.5)
-    const y             = 100 - (this.lightness / scalingFactor)
+    const scalingFactor = 1 + (this.saturation / 100)
+    const y             = 100 - Math.min(100, this.lightness * scalingFactor)
     const h             = this.hue / 360 * 100
 
     return new GUI_HSLA(h, this.saturation, y, this.alpha)
@@ -967,10 +967,12 @@ class GUI_HSLA implements Representation, HasAlpha {
 
     const hue        = calcHueDegrees(this.hue)
     const saturation = this.saturation
-    const maxL       = 100 - this.lightness
-    const minL       = maxL / 2
-    const lightness  = round(minL + ((maxL - minL) * ((100 - saturation) / 100)))
-    const alpha      = this.alpha
+
+    const mult          = 100 - this.lightness
+    const scalingFactor = 1 + (this.saturation / 100)
+    const lightness     = mult / scalingFactor
+
+    const alpha = this.alpha
 
     return new HSLA(hue, saturation, lightness, alpha)
 
