@@ -354,7 +354,40 @@ class RGBA implements Representation, RGBLike, HasAlpha {
   }
 
   toHSBA(): HSBA {
-    return this.toHSLA().toHSBA()
+
+    // Courtesy of Angelos at https://www.30secondsofcode.org/js/s/rgb-hex-hsl-hsb-color-format-conversion/
+    const rgbToHSB = (red: Num, green: Num, blue: Num): [Num, Num, Num] => {
+
+      const rx = red   / 255
+      const gx = green / 255
+      const bx = blue  / 255
+
+      const v = Math.max(rx, gx, bx)
+      const n = v - Math.min(rx, gx, bx)
+
+      let h = null
+      if (n === 0) {
+        h = 0
+      } else if (n && v === rx) {
+        h =     (gx - bx) / n
+      } else if (v === gx) {
+        h = 2 + (bx - rx) / n
+      } else {
+        h = 4 + (rx - gx) / n
+      }
+
+      const hue        = 60 * ((h < 0) ? (h + 6) : h)
+      const saturation = v && (n / v) * 100
+      const brightness = v * 100
+
+      return [hue, saturation, brightness].map(round) as Num3
+
+    }
+
+    const [h, s, b] = rgbToHSB(this.red, this.green, this.blue)
+
+    return new HSBA(h, s, b, this.alpha)
+
   }
 
   toHSL(): HSL {
