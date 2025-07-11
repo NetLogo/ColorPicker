@@ -185,17 +185,41 @@ Object.entries(nameToType).forEach(
         ([name2, typ2]) => {
           pairsOf(testColors)(typ1, typ2).forEach(([a, b]) => {
 
+            const floor = (n: Num) => Math.floor(n * 10) / 10
+
             const isAnnoying =
               (
                 ((typ1 === HSB || typ1 === HSBA) && ((typ2 === HSL || typ2 === HSLA) && b.lightness === 38.2)) ||
                 ((typ2 === HSB || typ2 === HSBA) && ((typ1 === HSL || typ1 === HSLA) && a.lightness === 38.2))
               )
 
-            if (!isAnnoying) {
-              test(`General: ${a.toString()} converts to ${name1 === name2 ? "itself" : b.toString()}`, () => {
-                checkEquality(a, b)
-              })
+            const deannoyify = (t: Type, r: Representation): Representation => {
+
+              const nudge = 0.1
+
+              let out = null
+              if (t === HSL) {
+                out = new HSL(r.hue, r.saturation, floor(r.lightness + nudge))
+              } else if (t === HSLA) {
+                out = new HSLA(r.hue, r.saturation, floor(r.lightness + nudge), r.alpha)
+              } else if (t === HSB) {
+                out = new HSB(r.hue, r.saturation, floor(r.brightness + nudge))
+              } else if (t === HSBA) {
+                out = new HSBA(r.hue, r.saturation, floor(r.brightness + nudge), r.alpha)
+              } else {
+                throw new Error(`Unpossible annoying value: ${JSON.stringify(r)}`)
+              }
+
+              return out
+
             }
+
+            const x = (!isAnnoying) ? a : deannoyify(typ1, a)
+            const y = (!isAnnoying) ? b : deannoyify(typ2, b)
+
+            test(`General: ${x.toString()} converts to ${name1 === name2 ? "itself" : y.toString()}`, () => {
+              checkEquality(x, y)
+            })
 
           })
         }
