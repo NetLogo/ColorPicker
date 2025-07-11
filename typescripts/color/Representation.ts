@@ -592,7 +592,7 @@ class HSBA implements Representation, HSBLike, HasAlpha {
     // Courtesy of Roko C. Buljan at https://stackoverflow.com/a/31322636/5288538
     const getSLAsHSL = (s: Num, b: Num): [Num, Num] => {
       const l          = (2 - s / 100) * b / 2
-      const saturation = s * b / ((l < 50) ? (l * 2) : (200 - (l * 2)))
+      const saturation = (l === 0) ? 0 : (s * b / ((l < 50) ? (l * 2) : (200 - (l * 2))))
       const lightness  = l
       return [saturation, lightness].map(round) as Num2
     }
