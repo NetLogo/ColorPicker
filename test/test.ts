@@ -433,3 +433,37 @@ Object.entries(nameToType).forEach(
     )
   }
 )
+
+// Test Suite #4
+// Hue-based conversions
+
+const testColors4 =
+  [
+    [ new HSB(1, 0, 0)
+    , new HSBA(1, 0, 0, 100)
+    , new HSL(1, 0, 0)
+    , new HSLA(1, 0, 0, 100)
+    ]
+  ]
+
+const nameToTypeH =
+  Object.fromEntries(
+    Object.
+      keys(nameToType).
+      filter((n) => n.startsWith("HS")).
+      map((n) => [n, nameToType[n]])
+  )
+
+Object.entries(nameToTypeH).forEach(
+  ([name1, typ1]) => {
+    Object.entries(nameToTypeH).forEach(
+      ([name2, typ2]) => {
+        pairsOf(testColors4)(typ1, typ2).forEach(([a, b]) => {
+          test(`Hue: ${a.toString()} converts to ${name1 === name2 ? "itself" : b.toString()}`, () => {
+            checkEquality(a, b)
+          })
+        })
+      }
+    )
+  }
+)
