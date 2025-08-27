@@ -62,6 +62,12 @@ document.addEventListener("DOMContentLoaded", () => {
         // @ts-expect-error setValue is defined in the global scope
         setValue(typ, value);
       }
+
+      window.addEventListener("keyup", (e) => {
+        if (e.key === "Escape") {
+          window.nlBabyMonitor.onCancel();
+        }
+      });
     }
   });
 });
