@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build && vite build --mode inlined",
     "build:inlined": "vite build --mode inlined",
+    "deploy": "npm run build && node deploy.js",
     "preview": "vite preview"
   },
   "devDependencies": {
