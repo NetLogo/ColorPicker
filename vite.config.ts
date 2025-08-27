@@ -1,16 +1,20 @@
-import { defineConfig } from 'vite'
-import { viteSingleFile } from "vite-plugin-singlefile"
+import { defineConfig } from "vite";
+import { viteSingleFile } from "vite-plugin-singlefile";
 
 export default defineConfig(({ mode }) => {
-  if (mode === 'inlined') {
+  if (mode === "inlined") {
     return {
       build: {
-        outDir: 'dist/inlined',
+        outDir: "dist/inlined",
       },
-      plugins: [viteSingleFile({
-        deleteInlinedFiles: true
-      })]
-    }
+      plugins: [
+        viteSingleFile({
+          deleteInlinedFiles: true,
+        }),
+      ],
+    };
   }
-  return {}
-})
+  return {
+    base: "./",
+  };
+});
