@@ -65,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       window.addEventListener("keyup", (e) => {
         if (e.key === "Escape") {
+          e.preventDefault();
           window.nlBabyMonitor.onCancel();
         }
       });

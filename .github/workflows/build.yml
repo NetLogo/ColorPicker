@@ -1,0 +1,52 @@
+# .github/workflows/build.yml
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - vite
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout vite branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Fetch build branch history
+        run: |
+          rm -rf dist
+          git clone --branch build --single-branch "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" dist
+
+          cd dist
+
+          git checkout build
+          git fetch
+
+          find . -mindepth 1 -maxdepth 1 ! -path "./.git" -type d -exec rm -rf {} +
+          find . -mindepth 1 -maxdepth 1 ! -path "./.git" -type f -exec rm -rf {} +
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.19.0
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build project
+        run: yarn run build
+
+      - name: Deploy dist to build branch
+        run: |
+          cd dist
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add .
+          git commit -m "Deploy to build from ${GITHUB_SHA}" || echo "Nothing to commit"
+          git push --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" build
