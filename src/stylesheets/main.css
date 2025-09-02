@@ -45,6 +45,7 @@ body.dragging, body.dragging * {
 
 #content-pane {
   padding-inline: 5%;
+  min-height: 38rem;
 }
 
 .checkmark {
