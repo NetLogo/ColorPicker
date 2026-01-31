@@ -22,6 +22,7 @@ declare global {
     advanced: Picker
 
     injectCSS:           (css: Str)                 => void
+    useRGBAOnlyPicker:   ()                         => void
     useNumAndRGBAPicker: ()                         => void
     useNumberOnlyPicker: ()                         => void
     useNonPickPicker:    ()                         => void
@@ -184,6 +185,10 @@ window.useNonPickPicker = (): void => {
 
 window.useNumAndRGBAPicker = (): void => {
   window.advanced = new Picker(document, new Set([NLNumber, RGBA]))
+}
+
+window.useRGBAOnlyPicker = (): void => {
+  window.advanced = new Picker(document, new Set([RGBA]))
 }
 
 window.setValue = (typ: Str, value: any): void => {
