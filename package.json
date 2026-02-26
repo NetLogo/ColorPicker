@@ -12,8 +12,8 @@
 , "main":        "dist/Main.js"
 , "type":        "module"
 
-, "engines" : { "npm":  "~10.8.0"
-              , "node": "~20.16.0"
+, "engines" : { "npm":  "~11.8.0"
+              , "node": "~24.13.0"
               }
 
 , "scripts": { "build": "npx tsc"
