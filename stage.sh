@@ -26,7 +26,7 @@ if [ "$CURR_HASH" != "$LAST_HASH" ]; then
 
   rm -rf ./dist/
 
-  npm install
+  npm ci
   npm run lint
 
   rm -rf $OUTPUT_DIR
