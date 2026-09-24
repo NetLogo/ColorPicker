@@ -53,8 +53,10 @@ const setUpTabListener = (tabID: Str, contentID: Str): void => {
         switch (tabID) {
           case SIMPLE_TAB_ID: {
             if (prevID === ADVANCED_TAB_ID) {
-              const value = window.advanced.getNLNumberValue()
-              window.simple.setColor(value)
+              const value = window.advanced.takeLastInputValue()
+              if (value !== null) {
+                window.simple.setColor(value)
+              }
             } else {
               throw new Error(`But what non-simple tab is '${prevID}'?`)
             }
@@ -62,9 +64,10 @@ const setUpTabListener = (tabID: Str, contentID: Str): void => {
           }
           case ADVANCED_TAB_ID: {
             if (prevID === SIMPLE_TAB_ID) {
-              const value = window.simple.getNLNumberValue()
-              const repr  = new Repr.NLNumber(value)
-              window.advanced.setRepr(repr)
+              const value = window.simple.takeLastInputValue()
+              if (value !== null) {
+                window.advanced.setRepr(new Repr.NLNumber(value))
+              }
             } else {
               throw new Error(`But what non-advanced tab is '${prevID}'?`)
             }
@@ -202,12 +205,26 @@ window.setValue = (typ: Str, value: any): void => {
     throw new Error(`Unknown value type: ${value}`)
   }
 
-  window.simple.setColor(repr.toNLNumber().number)
-  window.advanced.setRepr(repr)
+  const selected = findFirstElem(document)("#tab-strip .tab-button.selected")
+  switch (selected.id) {
+    case SIMPLE_TAB_ID: {
+      window.simple.setColorFromUserInput(repr.toNLNumber().number)
+      break
+    }
+    case ADVANCED_TAB_ID: {
+      window.advanced.setReprFromUserInput(repr)
+      break
+    }
+    default: {
+      throw new Error(`Unknown picker type tab ID: ${selected.id}`)
+    }
+  }
 
 }
 
 window.switchToAdvPicker = (): void => {
+  window.simple.takeLastInputValue()
+  window.advanced.refreshLastInput()
   unsafe(document.getElementById(ADVANCED_TAB_ID)).click()
 }
 

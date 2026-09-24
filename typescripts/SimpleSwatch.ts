@@ -9,12 +9,13 @@ import type { DivEl, OutputEl } from "./common/Types.js"
 export class SimpleSwatch {
 
   private color: NLNumber
+  private lastInput: NLNumber | null
   private pane:  DivEl
 
   constructor(doc: Document) {
 
     this.color = new NLNumber(0)
-
+    this.lastInput = null;
     this.pane = findElemByID<DivEl>(doc)("simple-pane")
 
     const nums =
@@ -46,9 +47,13 @@ export class SimpleSwatch {
 
         div.style.cssText = `background-color: ${rgbCSS}; border-color: ${rgbCSS};`
 
-        div.onclick = () => {
+        div.onclick = (event: MouseEvent) => {
 
           this.color = new NLNumber(num)
+
+          if (event.isTrusted) {
+            this.lastInput = this.color;
+          }
 
           findFirstElem<OutputEl>(this.pane)(".output-field").value = this.color.toNLWord().toText()
 
@@ -64,7 +69,7 @@ export class SimpleSwatch {
       }
     )
 
-    this.setColor(0)
+    this.setColorFromUserInput(0)
 
   }
 
@@ -101,6 +106,17 @@ export class SimpleSwatch {
 
     closestDiv.click()
 
+  }
+
+  setColorFromUserInput(num: number): void {
+    this.lastInput = new NLNumber(num);
+    this.setColor(num);
+  }
+
+  takeLastInputValue(): number | null {
+    let value = this.lastInput;
+    this.lastInput = null;
+    return value !== null ? value.number : null;
   }
 
 }

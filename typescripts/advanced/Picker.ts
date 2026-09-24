@@ -20,6 +20,7 @@ export class Picker {
 
   public dom: DOMManager
 
+  private lastInput: Representation | null
   private repr: Representation
 
   private reprReader: ReadsReprFromInputs
@@ -29,6 +30,7 @@ export class Picker {
 
     this.dom = new DOMManager(doc)
 
+    this.lastInput = null
     this.repr = new GUI_HSLA(0, 0, 0, 0)
 
     this.reprReader = new ReadsReprFromInputs()
@@ -50,15 +52,36 @@ export class Picker {
 
     Array.from(this.dom.findElems<InputEl>(".repr-input")).forEach(
       (input) => {
-        input.addEventListener("change", () => this.reprReader.read(this.dom, (x) => this.setRepr(x)))
+        input.addEventListener("change", () => {
+          this.reprReader.read(this.dom, (repr) => {
+            this.lastInput = repr
+            this.setReprFromUserInput(repr)
+          })
+        })
       }
     )
 
     const dragMan = new DragManager()
-    dragMan.setupDrag2D (this.dom.findElemByID("swatch-container"), doc, (x: Num, y: Num) => this.setSwatchCoords(x, y))
-    dragMan.setupDrag1DY(this.dom.findElemByID(    "alpha-slider"), doc, (a: Num)         => this.setAlpha(a))
-    dragMan.setupDrag1DY(this.dom.findElemByID(      "hue-slider"), doc, (h: Num)         => this.setHue(h))
 
+    dragMan.setupDrag2D (this.dom.findElemByID("swatch-container"), doc, (x: Num, y: Num) => {
+      this.setSwatchCoords(x, y)
+      this.refreshLastInput()
+    })
+
+    dragMan.setupDrag1DY(this.dom.findElemByID("alpha-slider"), doc, (a: Num) => {
+      this.setAlpha(a)
+      this.refreshLastInput()
+    })
+
+    dragMan.setupDrag1DY(this.dom.findElemByID("hue-slider"), doc, (h: Num) => {
+      this.setHue(h)
+      this.refreshLastInput()
+    })
+
+  }
+
+  refreshLastInput(): void {
+    this.lastInput = this.repr
   }
 
   setAlpha(alpha: Num): void {
@@ -106,6 +129,17 @@ export class Picker {
     this.setSwatchCoords(hsla.saturation, hsla.lightness)
     this.setAlpha(hsla.alpha)
 
+  }
+
+  setReprFromUserInput(repr: Representation): void {
+    this.lastInput = repr;
+    this.setRepr(repr);
+  }
+
+  takeLastInputValue(): number | null {
+    let repr = this.lastInput;
+    this.lastInput = null;
+    return repr !== null ? repr.toNLNumber().number : null
   }
 
   updateColor(): void {
