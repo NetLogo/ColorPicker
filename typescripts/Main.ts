@@ -212,7 +212,7 @@ window.setValue = (typ: Str, value: any): void => {
       break
     }
     case ADVANCED_TAB_ID: {
-      window.advanced.setReprFromUserInput(repr)
+      window.advanced.setReprFromInitial(repr)
       break
     }
     default: {

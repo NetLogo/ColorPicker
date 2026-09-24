@@ -1,4 +1,4 @@
-import { calcHueDegrees, GUI_HSLA } from "../color/Representation.js"
+import { calcHueDegrees, GUI_HSLA, NLNumber, NLWord, RGBA } from "../color/Representation.js"
 
 import { switchMap, unsafe } from "../common/Util.js"
 
@@ -128,6 +128,29 @@ export class Picker {
     this.setHue(hsla.hue)
     this.setSwatchCoords(hsla.saturation, hsla.lightness)
     this.setAlpha(hsla.alpha)
+
+  }
+
+  setReprFromInitial(repr: Representation): void {
+
+    let reprType = (repr instanceof NLNumber) ? OutputType.NLNumber :
+                   (repr instanceof NLWord  ) ? OutputType.NLWord   :
+                   (repr instanceof RGBA    ) ? OutputType.RGBA     :
+                                                OutputType.NLNumber
+    const optionValue =
+      switchMap(
+        reprType
+      , outputTypeToHTMLValue
+      , (target: OutputType) => {
+          throw new Error(`Impossible initial type: ${JSON.stringify(target)}`)
+        }
+      )
+
+    const elem = this.dom.findFirstElem<OptionEl>(`#repr-dropdown > option[value=${optionValue}]`)
+    elem.selected = true
+    this.updateReprControls()
+
+    this.setReprFromUserInput(repr);
 
   }
 
