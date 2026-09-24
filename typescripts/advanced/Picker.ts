@@ -239,11 +239,11 @@ export class Picker {
 
         const optionValue =
           switchMap(
-              ot
-            , outputTypeToHTMLValue
-            , (target: OutputType) => {
-                throw new Error(`Impossible output type: ${JSON.stringify(target)}`)
-              }
+            ot
+          , outputTypeToHTMLValue
+          , (target: OutputType) => {
+              throw new Error(`Impossible output type: ${JSON.stringify(target)}`)
+            }
           )
 
         const elem    = this.dom.findFirstElem<OptionEl>(`#output-format-dropdown > option[value=${optionValue}]`)
